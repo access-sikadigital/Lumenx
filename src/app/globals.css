@@ -1,0 +1,296 @@
+@import "tailwindcss";
+
+/* ============================================================
+   LUMENX Design system
+   Palette + type from the LUMENX Brand Guidelines.
+   Canvas is designed at 1920px.
+   Brand name is always "Lumenx" (capital L, lowercase x).
+   ============================================================ */
+@theme {
+  /* Primary palette */
+  --color-ember: #e8420a;
+  --color-ember-deep: #c8380a;
+  --color-blue: #0b143b;
+  --color-blue-2: #111d4f;
+  --color-blue-3: #1a2a63;
+  --color-yellow: #ffb120;
+  --color-white: #faf7f1;
+  --color-green: #81d553;
+  --color-green-deep: #63b93b;
+
+  /* Neutrals */
+  --color-ink: #3b425a;
+  --color-ink-soft: #767c92;
+  --color-mist: #e2e4ec;
+  --color-cloud: #f2f1eb;
+
+  /* Type */
+  --font-display: var(--font-inter-tight), system-ui, -apple-system, sans-serif;
+  --font-body: var(--font-roboto), system-ui, -apple-system, sans-serif;
+
+  /* System */
+  --radius-card: 22px;
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---------- Canvas / container: designed at 1920 ---------- */
+:root {
+  --shell-max: 1920px;
+  /* 1rem floor, not 1.25rem: at 320px that buys back 8px of content width,
+     which is the difference between a headline fitting and wrapping badly. */
+  --shell-pad: clamp(1rem, 4.2vw, 7rem);
+  --gutter: clamp(1.5rem, 2.5vw, 3.5rem);
+  /* Fixed header height. Full-height and pinned sections must offset by this
+     or their first line gets sliced by the header. */
+  --header-h: 72px;
+}
+@media (min-width: 768px) {
+  :root { --header-h: 80px; }
+}
+
+.shell {
+  width: 100%;
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  padding-inline: var(--shell-pad);
+}
+/* Narrow measure for long-form copy inside the wide shell */
+.measure { max-width: 68ch; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-white);
+  color: var(--color-blue);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  /* Structural guard for narrow screens: a long unbroken string (a URL, an
+     email, "Maribyrnong") can otherwise force the page wider than the
+     viewport. break-word only splits when a word genuinely cannot fit, so
+     normal copy is untouched. */
+  overflow-wrap: break-word;
+}
+
+/* Nothing may exceed its container. Cheap insurance against a stray asset
+   with large intrinsic dimensions blowing out the layout at 320px. */
+img,
+svg,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+}
+
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+::selection { background: var(--color-ember); color: var(--color-white); }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+/* ---------- Editorial type scale (1920 canvas) ---------- */
+/* Line-heights leave room for descenders (g, y, j), which is critical because the
+   masked-line reveal below clips anything that overflows the line box. */
+/* Minimums are set so the longest word in the copy still fits the ~288px of
+   content a 320px screen leaves after the shell padding. Above ~480px the vw
+   term takes over and the scale is unchanged. */
+.t-mega {
+  font-size: clamp(2.5rem, 10.5vw, 14rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+}
+.t-h1 {
+  font-size: clamp(2rem, 6vw, 7.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.032em;
+  font-weight: 800;
+}
+.t-h2 {
+  font-size: clamp(1.7rem, 4.2vw, 5rem);
+  line-height: 1.12;
+  letter-spacing: -0.028em;
+  font-weight: 700;
+}
+.t-h3 {
+  font-size: clamp(1.2rem, 1.9vw, 2.3rem);
+  line-height: 1.28;
+  letter-spacing: -0.018em;
+  font-weight: 700;
+}
+.t-lead {
+  font-size: clamp(1rem, 1.15vw, 1.5rem);
+  line-height: 1.6;
+}
+
+/* Tighter tracking on the smallest screens: 0.24em on a long eyebrow is what
+   pushes strings like "REBATES, HANDLED FOR YOU" past the viewport. */
+@media (max-width: 400px) {
+  .eyebrow {
+    letter-spacing: 0.16em;
+  }
+  .btn {
+    padding-inline: 1.4rem;
+  }
+}
+.t-body { font-size: clamp(0.98rem, 0.9vw, 1.18rem); line-height: 1.65; }
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.7rem, 0.62vw, 0.85rem);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+/* Oversized index numerals used as editorial furniture */
+.numeral {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+}
+
+/* ---------- Accents ---------- */
+.text-solar {
+  background: linear-gradient(100deg, var(--color-ember), var(--color-yellow));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.rule {
+  height: 1px;
+  background: currentColor;
+  opacity: 0.16;
+}
+
+/* Film grain overlay for cinematic panels */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.055;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.92rem, 0.82vw, 1.05rem);
+  padding: 1.05rem 1.9rem;
+  border-radius: 999px;
+  overflow: hidden;
+  transition: transform 0.5s var(--ease-brand), color 0.35s ease, border-color 0.35s ease;
+  will-change: transform;
+}
+.btn > * { position: relative; z-index: 1; }
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transform: translateY(101%);
+  transition: transform 0.55s var(--ease-brand);
+}
+.btn:hover { transform: translateY(-3px); }
+.btn:hover::before { transform: translateY(0); }
+
+.btn-primary { background: var(--color-yellow); color: var(--color-blue); }
+.btn-primary::before { background: var(--color-white); }
+.btn-ember { background: var(--color-ember); color: var(--color-white); }
+.btn-ember::before { background: var(--color-blue); }
+.btn-ghost { border: 1.5px solid color-mix(in oklab, currentColor 38%, transparent); }
+.btn-ghost::before { background: currentColor; }
+.btn-ghost:hover { color: var(--color-blue); }
+.btn-ghost:hover::before { background: var(--color-white); }
+
+/* ---------- Reveal primitives ---------- */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease-soft), transform 1s var(--ease-soft); }
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* Masked line reveal: wrap text in .line > span.
+   overflow:hidden is what makes the reveal work, but it also clips descenders.
+   The padding adds room below the baseline; the negative margin gives the
+   space back so the visual line rhythm is unchanged. */
+.line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
+}
+
+/* ---------- Process bento ----------
+   The tile spans live here rather than as Tailwind utilities: class strings
+   built in a JS array are not reliably picked up by the scanner, and when the
+   spans silently fail the grid collapses to four equal columns. */
+@media (min-width: 1024px) {
+  .pr-bento {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .pr-bento > :nth-child(1) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .pr-bento > :nth-child(2) {
+    grid-column: span 2;
+  }
+}
+
+/* ---------- Closing CTA split ----------
+   Same reason as .pr-bento above: this asymmetric template lives in CSS so it
+   cannot silently fail to compile as a Tailwind arbitrary utility, which is
+   exactly what happened to the earlier version of this section. */
+@media (min-width: 1024px) {
+  .cta-split { grid-template-columns: 1.08fr 0.92fr; }
+}
+
+/* ---------- Footer columns ----------
+   Four columns on a 1920 canvas. Three equal columns left the footer with
+   huge dead gaps; the brand and office columns carry more content, so they
+   get more room. In CSS for the same reason as the two blocks above. */
+@media (min-width: 768px) {
+  .ft-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .ft-grid { grid-template-columns: 1.5fr 1fr 1fr 1.4fr; }
+}
+
+/* Footer link nudge on hover */
+.ft-link {
+  display: inline-block;
+  transition: color 0.4s var(--ease-brand), transform 0.4s var(--ease-brand);
+}
+.ft-link:hover { transform: translateX(4px); }
+
+/* ---------- Motion ---------- */
+@keyframes marquee { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+@keyframes marquee-rev { from { transform: translate3d(-50%,0,0); } to { transform: translate3d(0,0,0); } }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+@keyframes sunpulse { 0%,100% { opacity: .45; transform: scale(1); } 50% { opacity: .85; transform: scale(1.07); } }
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
