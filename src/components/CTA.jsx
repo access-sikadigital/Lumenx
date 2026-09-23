@@ -82,21 +82,11 @@ export default function CTA() {
                 paddingRight: "clamp(1.75rem, 3.4vw, 4.5rem)",
               }}
             >
-              {/* warm glow behind the copy */}
+              {/* warm glow behind the copy — .glow, no blur filter */}
               <div
                 aria-hidden="true"
-                style={{
-                  position: "absolute",
-                  left: "-18%",
-                  top: "-30%",
-                  width: "min(640px, 85%)",
-                  aspectRatio: "1 / 1",
-                  borderRadius: "9999px",
-                  filter: "blur(120px)",
-                  background:
-                    "radial-gradient(circle, rgba(255,177,32,.34), rgba(232,66,10,.16) 55%, transparent 72%)",
-                  pointerEvents: "none",
-                }}
+                className="glow glow--solar left-[-18%] top-[-30%]"
+                style={{ width: "min(640px, 85%)" }}
               />
 
               <div className="relative">

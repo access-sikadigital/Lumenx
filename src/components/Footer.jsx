@@ -20,8 +20,7 @@ export default function Footer() {
       {/* soft solar glow */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full opacity-20 blur-3xl"
-        style={{ background: "radial-gradient(circle, #ffb120, transparent 70%)" }}
+        className="glow glow--solar -right-40 -top-40 h-[560px] w-[560px]"
       />
 
       <div

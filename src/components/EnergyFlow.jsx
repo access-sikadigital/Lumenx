@@ -62,8 +62,7 @@ export default function EnergyFlow() {
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute right-[-10%] top-[-12%] h-[32vw] w-[32vw] rounded-full blur-[110px]"
-        style={{ background: "radial-gradient(circle, rgba(255,177,32,.4), transparent 70%)" }}
+        className="glow glow--solar right-[-10%] top-[-12%] h-[34vw] w-[34vw]"
       />
 
       <div className="shell relative">

@@ -103,7 +103,10 @@ export default function Header() {
           />
         </Link>
 
-        <nav className="hidden items-center gap-8 lg:flex">
+        {/* Desktop nav starts at xl, not lg: with seven links plus the logo
+            and buttons, the bar overran the shell between 1024 and 1279 and
+            wrapped. Those widths get the full-screen menu instead. */}
+        <nav className="hidden items-center gap-6 xl:flex 2xl:gap-8">
           {NAV.map((l) => (
             <Link
               key={l.href}
@@ -116,14 +119,15 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
-          <a
-            href={SITE.phoneHref}
-            className="text-sm font-medium text-white/85 transition-colors hover:text-white"
-          >
-            {SITE.phone}
+        <div className="hidden items-center gap-2.5 xl:flex">
+          {/* Same ghost treatment as the hero, so the phone reads as an equal
+              action rather than a label beside a button. Held back to xl:
+              between 1024 and 1279 the six nav links plus two buttons do not
+              fit the shell, and the quote button is the one that matters. */}
+          <a href={SITE.phoneHref} className="btn btn-sm btn-ghost text-white">
+            <span>{SITE.phone}</span>
           </a>
-          <Link href="/get-a-quote" className="btn btn-primary">
+          <Link href="/get-a-quote" className="btn btn-sm btn-primary">
             <span>Get a Free Quote</span>
           </Link>
         </div>
@@ -135,7 +139,7 @@ export default function Header() {
           aria-expanded={open}
           aria-controls="mobile-menu"
           onClick={() => setOpen((v) => !v)}
-          className="relative z-30 -mr-2 flex h-11 w-11 flex-col items-center justify-center gap-[5px] lg:hidden"
+          className="relative z-30 -mr-2 flex h-11 w-11 flex-col items-center justify-center gap-[5px] xl:hidden"
         >
           <span
             className={`h-[2px] w-6 bg-white transition-transform duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -164,7 +168,7 @@ export default function Header() {
         // keyboard users in six invisible links. React 19 takes a real
         // boolean here; the empty-string form is the pre-19 spelling.
         inert={!open}
-        className={`fixed inset-0 z-20 lg:hidden ${
+        className={`fixed inset-0 z-20 xl:hidden ${
           open ? "pointer-events-auto" : "pointer-events-none"
         }`}
       >
@@ -179,13 +183,9 @@ export default function Header() {
         <div className="mm-sheet mm-sheet--base grain absolute inset-0 overflow-y-auto overflow-x-hidden bg-blue">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute right-[-30%] top-[-18%] rounded-full"
+            className="glow glow--solar right-[-30%] top-[-18%]"
             style={{
               width: "min(560px, 90%)",
-              aspectRatio: "1 / 1",
-              filter: "blur(100px)",
-              background:
-                "radial-gradient(circle, rgba(255,177,32,.34), rgba(232,66,10,.16) 55%, transparent 72%)",
             }}
           />
 

@@ -86,12 +86,9 @@ export default function Stats() {
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-[-8%] top-1/2 -translate-y-1/2 rounded-full"
+        className="glow glow--ember left-[-8%] top-1/2 -translate-y-1/2"
         style={{
           width: "min(620px, 42%)",
-          aspectRatio: "1 / 1",
-          filter: "blur(110px)",
-          background: "radial-gradient(circle, rgba(232,66,10,.34), transparent 70%)",
         }}
       />
 

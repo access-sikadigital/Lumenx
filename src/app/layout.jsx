@@ -3,7 +3,6 @@ import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ReviewBadge from "@/components/ReviewBadge";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -63,7 +62,6 @@ export default function RootLayout({ children }) {
         <Header />
         <main>{children}</main>
         <Footer />
-        <ReviewBadge />
       </body>
     </html>
   );

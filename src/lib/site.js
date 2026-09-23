@@ -6,18 +6,28 @@ export const SITE = {
   name: "Lumenx",
   legalName: "Lumenx",
   tagline: "Together, we build a brighter future.",
+  // Confirmed against the live site. Note the deliberate spelling split:
+  // the DOMAIN is lumenex.com.au, the EMAIL is @lumenx.com.au.
   domain: "https://lumenex.com.au",
-  email: "hello@lumenex.com.au", // TODO: confirm real inbox
-  phone: "1300 000 000", // TODO: replace with the real Lumenx number
-  phoneHref: "tel:1300000000",
+  email: "hello@lumenx.com.au",
+
+  // Two live numbers, used the way the current site uses them: the 1800 in
+  // the header and footer on every page, the 1300 on quote and contact
+  // blocks. Swap them here if that split is the wrong way round.
+  phone: "1800 577 319",
+  phoneHref: "tel:1800577319",
+  quotePhone: "1300 123 456",
+  quotePhoneHref: "tel:1300123456",
 };
 
+// Primary navigation. URLs follow the SEO blueprint's recommended sitemap.
 export const NAV = [
-  { label: "Solar", href: "/residential-solar" },
-  { label: "Batteries", href: "/solar-batteries" },
+  { label: "Residential", href: "/residential-solar" },
   { label: "Commercial", href: "/commercial-solar" },
-  { label: "EV Charging", href: "/ev-chargers" },
-  { label: "Rebates", href: "/solar-rebates" },
+  { label: "Batteries", href: "/solar-batteries" },
+  { label: "Inverters", href: "/solar-inverters" },
+  { label: "EV Chargers", href: "/ev-chargers" },
+  { label: "Rebates", href: "/solar-rebates-victoria" },
   { label: "About", href: "/about" },
 ];
 
@@ -49,68 +59,92 @@ export const TRUST = [
 ];
 
 // Core service cards (icons live in /public/icons).
+// Every card links to a real hub page from the SEO blueprint's sitemap, so
+// there are no cards here without a destination. "Monitoring & Support" was
+// dropped as a card for that reason and folded into the residential page.
 export const SERVICES = [
   {
     id: "residential-solar",
     n: "01",
     title: "Residential Solar",
     icon: "/icons/rooftop-solar.svg",
-    image: "/images/family-solar.webp",
-    line: "Rooftop systems sized to your home and your bill, from 5kW to 15kW, with premium tier-1 panels and a payback you can see on paper.",
+    image: "/images/svc-residential.webp",
+    line: "Rooftop systems sized to your home and your bill, from 5kW to 15kW, with premium panels and a payback you can see on paper.",
     href: "/residential-solar",
     tone: "yellow",
   },
   {
-    id: "solar-batteries",
-    n: "02",
-    title: "Solar Batteries",
-    icon: "/icons/solar-battery.svg",
-    image: "/images/panels-closeup.webp",
-    line: "Store your daytime power and run on it after dark. Tesla Powerwall, Sungrow and BYD, with the new federal battery rebate applied for you.",
-    href: "/solar-batteries",
-    tone: "ember",
-  },
-  {
     id: "commercial-solar",
-    n: "03",
+    n: "02",
     title: "Commercial Solar",
     icon: "/icons/smart-grid.svg",
-    image: "/images/commercial-solar.webp",
+    image: "/images/svc-commercial.webp",
     line: "Cut the biggest line on your operating budget. Scalable 20kW to 100kW+ systems with real ROI modelling and finance options.",
     href: "/commercial-solar",
     tone: "blue",
   },
   {
-    id: "ev-chargers",
+    id: "solar-batteries",
+    n: "03",
+    title: "Solar Batteries",
+    icon: "/icons/solar-battery.svg",
+    image: "/images/svc-batteries.webp",
+    line: "Store your daytime power and run on it after dark. Sungrow, BYD, AlphaESS and LG, with the federal battery rebate applied for you.",
+    href: "/solar-batteries",
+    tone: "ember",
+  },
+  {
+    id: "solar-inverters",
     n: "04",
-    title: "EV Charging",
-    icon: "/icons/ev-charging.svg",
-    image: "/images/installation.webp",
-    line: "Charge at home on your own sunshine. 7kW and 22kW home chargers installed and tuned to your solar and tariff.",
-    href: "/ev-chargers",
+    title: "Solar Inverters",
+    icon: "/icons/energy-monitor.svg",
+    image: "/images/svc-inverters.webp",
+    line: "The brain of the system. Fronius, Sungrow, GoodWe and SolarEdge, supplied, installed and replaced when an old one fails.",
+    href: "/solar-inverters",
     tone: "green",
   },
   {
-    id: "heat-pump-hot-water",
+    id: "ev-chargers",
     n: "05",
-    title: "Heat Pump Hot Water",
-    icon: "/icons/clean-energy.svg",
-    image: "/images/rooftop-home.webp",
-    line: "The most affordable hot water you can run. High-efficiency heat pumps that pair with solar and unlock their own rebate.",
-    href: "/heat-pump-hot-water",
+    title: "EV Charging",
+    icon: "/icons/ev-charging.svg",
+    image: "/images/svc-ev-chargers.webp",
+    line: "Charge at home on your own sunshine. 7kW and 22kW chargers installed and tuned to your solar and your tariff.",
+    href: "/ev-chargers",
     tone: "yellow",
   },
   {
-    id: "monitoring",
+    id: "heat-pump-hot-water",
     n: "06",
-    title: "Monitoring & Support",
-    icon: "/icons/energy-monitor.svg",
-    image: "/images/installer-field.webp",
-    line: "See every kilowatt in real time, and reach a local team when you need one. We look after the system long after switch-on.",
-    href: "/monitoring",
+    title: "Heat Pump Hot Water",
+    icon: "/icons/clean-energy.svg",
+    image: "/images/svc-heat-pump.webp",
+    line: "The most affordable hot water you can run. High-efficiency heat pumps that pair with solar and unlock their own rebate.",
+    href: "/heat-pump-hot-water",
+    tone: "ember",
+  },
+  {
+    id: "pool-heating",
+    n: "07",
+    title: "Pool Heating",
+    icon: "/icons/clean-energy.svg",
+    image: "/images/svc-pool-heating.webp",
+    line: "Swim months longer for a fraction of the running cost. Heat pumps and solar pool heating from Hayward, Supreme and SensaHeat.",
+    href: "/pool-heating",
     tone: "blue",
   },
+  {
+    id: "solar-packages",
+    n: "08",
+    title: "Solar Packages",
+    icon: "/icons/rooftop-solar.svg",
+    image: "/images/svc-packages.webp",
+    line: "Panels, inverter and battery bundled at one fixed price, with every rebate already taken off before you see the number.",
+    href: "/solar-packages",
+    tone: "green",
+  },
 ];
+
 
 // Scroll-driven energy flow (home page). Each stage lights up in sequence.
 export const ENERGY_FLOW = [
@@ -265,9 +299,27 @@ export const STATS = [
   },
 ];
 
-// Panel / battery / inverter brands installed.
+// Panel / battery / inverter brands installed, as supplied by Lumenx.
+// Logos live in /public/brands, trimmed of transparent margin and normalised
+// to 120px tall so they can be optically balanced by width rather than height.
+// `w` is the display width in px at the marquee's 30px logo height.
 export const BRANDS = [
-  "JA Solar", "Jinko", "Trina", "SunPower", "Tesla", "Sungrow", "BYD", "Fronius", "GoodWe",
+  { name: "Jinko Solar", file: "jinko-solar.webp", w: 90 },
+  { name: "Longi", file: "longi.webp", w: 80 },
+  { name: "Risen", file: "risen.webp", w: 99 },
+  { name: "Sunman", file: "sunman.webp", w: 126 },
+  { name: "Boss Solar", file: "boss-solar.webp", w: 117 },
+  { name: "LG Energy Solution", file: "lg-energy-solution.webp", w: 210 },
+  { name: "Alpha ESS", file: "alpha-ess.webp", w: 105 },
+  { name: "Sungrow", file: "sungrow.webp", w: 128 },
+  { name: "GoodWe", file: "goodwe.webp", w: 176 },
+  { name: "SolarEdge", file: "solaredge.webp", w: 148 },
+  { name: "Delta", file: "delta.webp", w: 97 },
+  { name: "GE", file: "ge.webp", w: 34 },
+  { name: "Wallbox", file: "wallbox.webp", w: 131 },
+  { name: "Hayward", file: "hayward.webp", w: 168 },
+  { name: "SensaHeat", file: "sensaheat.webp", w: 184 },
+  { name: "Supreme Heating", file: "supreme-heating.webp", w: 82 },
 ];
 
 // Testimonials (placeholders, swap for real Google reviews before launch).
@@ -358,14 +410,20 @@ export const CREDIT = {
 export const FOOTER_LINKS = {
   Services: [
     { label: "Residential Solar", href: "/residential-solar" },
-    { label: "Solar Batteries", href: "/solar-batteries" },
     { label: "Commercial Solar", href: "/commercial-solar" },
-    { label: "EV Charging", href: "/ev-chargers" },
+    { label: "Solar Batteries", href: "/solar-batteries" },
+    { label: "Solar Inverters", href: "/solar-inverters" },
+    { label: "EV Chargers", href: "/ev-chargers" },
     { label: "Heat Pump Hot Water", href: "/heat-pump-hot-water" },
+    { label: "Pool Heating", href: "/pool-heating" },
+    { label: "Solar Packages", href: "/solar-packages" },
   ],
+  // TODO: these five routes do not exist yet. They are the next batch in the
+  // blueprint (rebates hub, then the company pages). Until they are built
+  // they will 404, so either ship those pages or trim this list first.
   Company: [
     { label: "About Lumenx", href: "/about" },
-    { label: "Solar Rebates", href: "/solar-rebates" },
+    { label: "Solar Rebates Victoria", href: "/solar-rebates-victoria" },
     { label: "Reviews", href: "/reviews" },
     { label: "Contact", href: "/contact" },
     { label: "Get a Quote", href: "/get-a-quote" },

@@ -24,6 +24,11 @@
   --color-mist: #e2e4ec;
   --color-cloud: #f2f1eb;
 
+  /* True white. --color-white is the brand cream (#faf7f1), so Tailwind's
+     `bg-white` renders cream — correct for most surfaces, wrong for form
+     fields, cards that must read as paper, and third-party brand artwork. */
+  --color-paper: #ffffff;
+
   /* Type */
   --font-display: var(--font-inter-tight), system-ui, -apple-system, sans-serif;
   --font-body: var(--font-roboto), system-ui, -apple-system, sans-serif;
@@ -44,6 +49,10 @@
   /* Fixed header height. Full-height and pinned sections must offset by this
      or their first line gets sliced by the header. */
   --header-h: 72px;
+
+  /* Arrow used as a mask on the action buttons. Single quotes inside, so the
+     whole value can sit in double quotes without escaping. */
+  --btn-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.75 8h10.5M9 3.75 13.25 8 9 12.25'/%3E%3C/svg%3E");
 }
 @media (min-width: 768px) {
   :root { --header-h: 80px; }
@@ -104,10 +113,13 @@ h1, h2, h3, h4 {
 /* Minimums are set so the longest word in the copy still fits the ~288px of
    content a 320px screen leaves after the shell padding. Above ~480px the vw
    term takes over and the scale is unchanged. */
+/* Hero headline. Dialled back from 10.5vw/14rem: at 1920 that rendered at
+   224px, which pushed the lead and the CTA row below the fold on shorter
+   laptop screens. */
 .t-mega {
-  font-size: clamp(2.5rem, 10.5vw, 14rem);
-  line-height: 1;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.35rem, 7.6vw, 9.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
   font-weight: 800;
 }
 .t-h1 {
@@ -174,33 +186,76 @@ h1, h2, h3, h4 {
   opacity: 0.16;
 }
 
-/* Film grain overlay for cinematic panels */
+/* Film grain overlay for cinematic panels.
+   No mix-blend-mode: a blend mode forces the whole section into its own
+   compositing pass, which on a tall section with large cards shows up as
+   scroll jank. Plain low opacity looks near-identical and composites free. */
 .grain::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.055;
-  mix-blend-mode: overlay;
+  opacity: 0.045;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Ambient glow ----------
+   A soft radial wash, WITHOUT filter: blur(). A 120px blur on a 600px box
+   makes the browser sample an enormous kernel, and because Lenis scrolls by
+   transform the layer can end up repainting every frame. A multi-stop radial
+   gradient looks the same at these opacities and costs nothing.
+   `contain: paint` keeps its repaints inside its own box. */
+.glow {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 9999px;
+  aspect-ratio: 1 / 1;
+  contain: paint;
+  will-change: transform;
+}
+.glow--solar {
+  background: radial-gradient(
+    circle,
+    rgba(255, 177, 32, 0.26) 0%,
+    rgba(255, 177, 32, 0.17) 24%,
+    rgba(232, 66, 10, 0.1) 46%,
+    rgba(232, 66, 10, 0.035) 66%,
+    transparent 78%
+  );
+}
+.glow--ember {
+  background: radial-gradient(
+    circle,
+    rgba(232, 66, 10, 0.26) 0%,
+    rgba(232, 66, 10, 0.15) 30%,
+    rgba(232, 66, 10, 0.05) 55%,
+    transparent 74%
+  );
 }
 
 /* ---------- Buttons ---------- */
 .btn {
   position: relative;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  justify-content: center;
+  gap: 0.55rem;
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(0.92rem, 0.82vw, 1.05rem);
+  letter-spacing: -0.005em;
   padding: 1.05rem 1.9rem;
   border-radius: 999px;
   overflow: hidden;
-  transition: transform 0.5s var(--ease-brand), color 0.35s ease, border-color 0.35s ease;
+  white-space: nowrap;
+  transition: transform 0.45s var(--ease-brand), box-shadow 0.45s var(--ease-brand),
+    color 0.35s ease, border-color 0.35s ease;
   will-change: transform;
 }
 .btn > * { position: relative; z-index: 1; }
+
+/* the fill that wipes up on hover */
 .btn::before {
   content: "";
   position: absolute;
@@ -209,16 +264,83 @@ h1, h2, h3, h4 {
   transform: translateY(101%);
   transition: transform 0.55s var(--ease-brand);
 }
-.btn:hover { transform: translateY(-3px); }
+.btn:hover { transform: translateY(-2px); }
 .btn:hover::before { transform: translateY(0); }
 
-.btn-primary { background: var(--color-yellow); color: var(--color-blue); }
+/* A real press, not just a hover. Snappier than the lift so it feels
+   physical rather than floaty. */
+.btn:active {
+  transform: translateY(0) scale(0.985);
+  transition-duration: 0.12s;
+}
+
+/* Keyboard focus was invisible before this: the buttons had no focus style
+   at all, so tabbing through the site gave no indication of position. */
+.btn:focus-visible {
+  outline: 2px solid var(--color-yellow);
+  outline-offset: 3px;
+}
+.btn-primary:focus-visible { outline-color: var(--color-ember); }
+
+/* Arrow on the action buttons only. It is a masked SVG on ::after, which
+   sits in the flex flow after the label, so no markup changes are needed
+   and it inherits the label colour through every hover state. */
+.btn-primary::after,
+.btn-ember::after {
+  content: "";
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: 0.95em;
+  height: 0.95em;
+  background: currentColor;
+  -webkit-mask: var(--btn-arrow) center / contain no-repeat;
+  mask: var(--btn-arrow) center / contain no-repeat;
+  transition: transform 0.45s var(--ease-brand);
+}
+.btn-primary:hover::after,
+.btn-ember:hover::after { transform: translateX(4px); }
+
+/* Compact variant for the header bar, where two full-size buttons plus six
+   nav links overrun the shell at the lg breakpoint. */
+.btn-sm {
+  padding: 0.72rem 1.4rem;
+  font-size: clamp(0.84rem, 0.72vw, 0.95rem);
+}
+
+/* Flat fills read as placeholders at this size. A shallow vertical gradient
+   plus a 1px inner highlight gives the pill a lit edge, and the warm drop
+   shadow ties it to the brand rather than greying it out. */
+.btn-primary {
+  background: linear-gradient(180deg, #ffc04d 0%, var(--color-yellow) 52%, #f2a30d 100%);
+  color: var(--color-blue);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 6px 18px -8px rgba(232, 66, 10, 0.5);
+}
+.btn-primary:hover {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 16px 30px -12px rgba(232, 66, 10, 0.6);
+}
 .btn-primary::before { background: var(--color-white); }
-.btn-ember { background: var(--color-ember); color: var(--color-white); }
+
+.btn-ember {
+  background: linear-gradient(180deg, #f2551f 0%, var(--color-ember) 52%, #cf3808 100%);
+  color: var(--color-white);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 6px 18px -8px rgba(232, 66, 10, 0.55);
+}
+.btn-ember:hover {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 16px 30px -12px rgba(232, 66, 10, 0.65);
+}
 .btn-ember::before { background: var(--color-blue); }
+
 .btn-ghost { border: 1.5px solid color-mix(in oklab, currentColor 38%, transparent); }
 .btn-ghost::before { background: currentColor; }
-.btn-ghost:hover { color: var(--color-blue); }
+.btn-ghost:hover {
+  color: var(--color-blue);
+  border-color: transparent;
+}
 .btn-ghost:hover::before { background: var(--color-white); }
 
 /* ---------- Reveal primitives ---------- */
@@ -259,6 +381,61 @@ h1, h2, h3, h4 {
    exactly what happened to the earlier version of this section. */
 @media (min-width: 1024px) {
   .cta-split { grid-template-columns: 1.08fr 0.92fr; }
+}
+
+/* ---------- Hero spacing ----------
+   On phones the hero copy was vertically centred inside a 100svh box, which
+   left a large dead gap between the header and the eyebrow. Below md the copy
+   now starts 60px under the header and ends 60px above the fold; the
+   full-viewport centring returns at md and up, where there is room for it.
+   Declared here rather than inline because inline styles carry no media
+   query. */
+.hero-copy,
+.page-hero-copy {
+  padding-top: calc(var(--header-h) + 20px);
+  padding-bottom: 60px;
+}
+
+@media (min-width: 768px) {
+  .hero-copy {
+    padding-top: calc(var(--header-h) + clamp(1.5rem, 4vh, 3rem));
+    padding-bottom: clamp(2rem, 5vh, 3.5rem);
+  }
+  .page-hero-copy {
+    padding-top: calc(var(--header-h) + clamp(2.5rem, 7vh, 5.5rem));
+    padding-bottom: clamp(3rem, 8vh, 6rem);
+  }
+}
+
+/* ---------- Quote form selectable chips ----------
+   Radio/checkbox inputs are visually hidden (.sr-only) and the label face is
+   styled from :checked, so the control stays a real form input for keyboard
+   and screen-reader users while looking like a chip. */
+.qf-chip { cursor: pointer; }
+.qf-chip-face {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1.5px solid color-mix(in oklab, var(--color-blue) 15%, transparent);
+  border-radius: 999px;
+  padding: 0.6rem 1.05rem;
+  font-size: 0.88rem;
+  color: var(--color-ink);
+  background: var(--color-paper);
+  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+.qf-chip:hover .qf-chip-face {
+  border-color: color-mix(in oklab, var(--color-blue) 30%, transparent);
+}
+.qf-chip .peer:checked + .qf-chip-face {
+  border-color: var(--color-ember);
+  background: color-mix(in oklab, var(--color-ember) 8%, #fff);
+  color: var(--color-blue);
+  font-weight: 600;
+}
+.qf-chip .peer:focus-visible + .qf-chip-face {
+  outline: 2px solid var(--color-ember);
+  outline-offset: 2px;
 }
 
 /* ---------- Footer columns ----------

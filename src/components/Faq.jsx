@@ -4,7 +4,18 @@ import { useState } from "react";
 import Link from "next/link";
 import { FAQS } from "@/lib/site";
 
-export default function Faq() {
+/**
+ * Accordion FAQ with FAQPage schema.
+ *
+ * Defaults to the home page's questions; service pages pass their own set so
+ * each URL carries FAQ schema specific to that page rather than repeating the
+ * site-wide list, which search engines treat as duplication.
+ */
+export default function Faq({
+  items = FAQS,
+  heading = "Questions, answered.",
+  lead = "Still unsure? Send us your address and a recent bill, and you'll get honest numbers, not a hard sell.",
+}) {
   const [open, setOpen] = useState(0);
 
   return (
@@ -15,7 +26,7 @@ export default function Faq() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "FAQPage",
-            mainEntity: FAQS.map((f) => ({
+            mainEntity: items.map((f) => ({
               "@type": "Question",
               name: f.q,
               acceptedAnswer: { "@type": "Answer", text: f.a },
@@ -27,18 +38,15 @@ export default function Faq() {
       <div className="shell grid gap-[clamp(2.5rem,4vw,6rem)] lg:grid-cols-[0.8fr_1.2fr]">
         <div className="lg:sticky lg:top-[16vh] lg:self-start">
           <p className="eyebrow mb-5 text-ember">FAQ</p>
-          <h2 className="t-h1 text-blue">Questions, answered.</h2>
-          <p className="t-body mt-6 max-w-[34ch] text-ink">
-            Still unsure? Send us your address and a recent bill, and you'll get honest numbers, not a
-            hard sell.
-          </p>
+          <h2 className="t-h1 text-blue">{heading}</h2>
+          <p className="t-body mt-6 max-w-[34ch] text-ink">{lead}</p>
           <Link href="/get-a-quote" className="btn btn-ember mt-8">
             <span>Get a Free Quote</span>
           </Link>
         </div>
 
         <div className="border-t border-blue/12">
-          {FAQS.map((f, i) => {
+          {items.map((f, i) => {
             const isOpen = open === i;
             return (
               <div key={f.q} className="border-b border-blue/12">

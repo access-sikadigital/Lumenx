@@ -47,9 +47,12 @@ export default function Hero() {
     <section
       ref={root}
       id="hero"
-      /* min-h, not a fixed h: on short viewports a locked height clips the
+      /* Full-viewport only from md up. On phones the hero sizes to its own
+         content, so the copy sits directly under the header instead of being
+         centred in a tall box with dead space above it.
+         min-h, not a fixed h: on short viewports a locked height clips the
          CTA row into the credential strip instead of letting the hero grow. */
-      className="grain relative flex min-h-[100svh] flex-col overflow-hidden bg-blue"
+      className="grain relative flex flex-col overflow-hidden bg-blue md:min-h-[100svh]"
     >
       {/* full-bleed media */}
       <div className="hero-media absolute inset-0">
@@ -71,7 +74,7 @@ export default function Hero() {
       {/* sun glow */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute right-[-10%] top-[6%] h-[38vw] w-[38vw] rounded-full blur-[90px]"
+        className="glow glow--solar right-[-10%] top-[6%] h-[40vw] w-[40vw]"
         style={{
           background: "radial-gradient(circle, rgba(255,177,32,.85), rgba(232,66,10,.5) 45%, transparent 72%)",
           animation: "sunpulse 7s ease-in-out infinite",
@@ -97,20 +100,15 @@ export default function Hero() {
         </span>
       </div>
 
-      {/* copy. Inline padding: calc() needs real spaces around the operator. */}
-      <div
-        className="shell hero-copy relative z-10 flex flex-1 flex-col justify-center"
-        style={{
-          paddingTop: "calc(var(--header-h) + clamp(1.5rem, 4vh, 3rem))",
-          paddingBottom: "clamp(2rem, 5vh, 3.5rem)",
-        }}
-      >
+      {/* Vertical padding lives on .hero-copy in globals.css so it can change
+          at the md breakpoint — inline styles carry no media query. */}
+      <div className="shell hero-copy relative z-10 flex flex-1 flex-col justify-center">
         <p className="hero-eyebrow eyebrow mb-[clamp(1rem,2vw,2rem)] text-yellow">
           Make the switch to solar
         </p>
 
         {/* max-w stops "future." running into the frame edge */}
-        <h1 className="t-mega max-w-[15ch] text-white">
+        <h1 className="t-mega max-w-[16ch] text-white">
           <span className="line"><span className="hero-line-in block">Together, we build</span></span>
           <span className="line">
             <span className="hero-line-in block">
@@ -119,8 +117,11 @@ export default function Hero() {
           </span>
         </h1>
 
-        <div className="mt-[clamp(1.75rem,3vw,3rem)] flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
-          <p className="hero-lead t-lead max-w-[44ch] text-white/72">
+        {/* Single left-aligned column. The buttons used to sit far right on a
+            justify-between row, which on a 1920 canvas put them a screen's
+            width away from the headline they belong to. */}
+        <div className="mt-[clamp(1.75rem,3vw,3rem)] flex flex-col items-start gap-[clamp(1.75rem,2.6vw,2.5rem)]">
+          <p className="hero-lead t-lead max-w-[46ch] text-white/72">
             CEC-accredited solar, batteries and EV charging for homes and business across
             Victoria and New South Wales. Rebates handled, every install backed for 16 years.
           </p>

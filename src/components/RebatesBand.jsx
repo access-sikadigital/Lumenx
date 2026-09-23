@@ -45,10 +45,7 @@ export default function RebatesBand() {
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute right-[-10%] top-[-15%] h-[36vw] w-[36vw] rounded-full blur-[120px]"
-        style={{
-          background: "radial-gradient(circle, rgba(255,177,32,.38), rgba(232,66,10,.22) 55%, transparent 75%)",
-        }}
+        className="glow glow--solar right-[-10%] top-[-15%] h-[38vw] w-[38vw]"
       />
 
       <div className="shell relative grid items-center gap-[clamp(2.5rem,5vw,6rem)] lg:grid-cols-[0.95fr_1.05fr]">
@@ -62,7 +59,7 @@ export default function RebatesBand() {
             More than one program can apply to the same job. We check every one you qualify for,
             claim them, and handle the paperwork, so the discount is already in your quote.
           </p>
-          <Link href="/solar-rebates" className="btn btn-ember mt-9">
+          <Link href="/solar-rebates-victoria" className="btn btn-ember mt-9">
             <span>See what you qualify for</span>
           </Link>
         </div>
