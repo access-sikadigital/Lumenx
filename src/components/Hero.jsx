@@ -59,7 +59,7 @@ export default function Hero() {
         <div className="hero-img absolute inset-0">
           <Image
             src="/images/rooftop-home.webp"
-            alt="Australian home powered by rooftop solar at sunrise"
+            alt="Solar panels on a tiled roof against an evening sky"
             fill
             priority
             quality={90}

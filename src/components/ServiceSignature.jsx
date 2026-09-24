@@ -621,10 +621,10 @@ function Matrix({ d }) {
 
         <div className="mx-table mt-[clamp(2.5rem,5vw,4rem)] overflow-hidden rounded-[22px] border border-blue/12 bg-white">
           {/* header */}
-          <div className="grid grid-cols-[1fr_auto_auto] items-end gap-x-4 border-b border-blue/10 px-[clamp(1.1rem,2vw,2rem)] py-5 sm:gap-x-8">
+          <div className="grid grid-cols-[1fr_auto_auto] items-end gap-x-3 border-b border-blue/10 px-[clamp(0.85rem,2vw,2rem)] py-5 sm:gap-x-8">
             <span className="text-[0.66rem] uppercase tracking-[0.14em] text-ink-soft">What is included</span>
             {d.packages.map((p) => (
-              <span key={p.name} className="w-[clamp(84px,14vw,150px)] text-center">
+              <span key={p.name} className="w-[clamp(58px,12vw,150px)] text-center">
                 <span
                   className={`block font-[family-name:var(--font-display)] text-[0.82rem] font-bold leading-tight sm:text-[0.95rem] ${
                     p.featured ? "text-ember" : "text-blue"
@@ -640,13 +640,13 @@ function Matrix({ d }) {
           {d.rows.map((r) => (
             <div
               key={r.label}
-              className="mx-row grid grid-cols-[1fr_auto_auto] items-center gap-x-4 border-b border-blue/[0.07] px-[clamp(1.1rem,2vw,2rem)] py-3.5 last:border-b-0 sm:gap-x-8"
+              className="mx-row grid grid-cols-[1fr_auto_auto] items-center gap-x-3 border-b border-blue/[0.07] px-[clamp(0.85rem,2vw,2rem)] py-3.5 last:border-b-0 sm:gap-x-8"
             >
               <span className="text-[0.88rem] leading-snug text-ink sm:text-[0.94rem]">{r.label}</span>
-              <span className="flex w-[clamp(84px,14vw,150px)] justify-center">
+              <span className="flex w-[clamp(58px,12vw,150px)] justify-center">
                 <Tick on={r.a} />
               </span>
-              <span className="flex w-[clamp(84px,14vw,150px)] justify-center">
+              <span className="flex w-[clamp(58px,12vw,150px)] justify-center">
                 <Tick on={r.b} />
               </span>
             </div>

@@ -23,7 +23,7 @@ export const ABOUT = {
   lead: "We install solar, batteries, EV charging, hot water and pool heating across Victoria and New South Wales — and we would rather quote you honestly and lose the job than sell you a system you did not need.",
   hero: {
     image: "/images/real-install-2.webp",
-    alt: "Lumenx installation team completing a rooftop solar system",
+    alt: "A Lumenx van outside a home with a completed rooftop solar system",
   },
   chips: ["Solar Victoria Authorised Retailer", "Clean Energy Council Member", "NETCC Signatory"],
 
@@ -40,7 +40,7 @@ export const ABOUT = {
       "A 16-year workmanship warranty on the installation itself",
     ],
     image: "/images/real-install-1.webp",
-    imageAlt: "A completed Lumenx solar and battery installation",
+    imageAlt: "Equipment installed by Lumenx on the exterior wall of a property",
   },
 
   // The three pillars are Lumenx's own, from the live About page.

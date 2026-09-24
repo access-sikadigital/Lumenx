@@ -211,10 +211,10 @@ function Matrix() {
         </div>
 
         <div className="mx-grid mt-[clamp(2.5rem,5vw,4rem)] overflow-hidden rounded-[22px] border border-blue/12 bg-white">
-          <div className="mx-line grid grid-cols-[1fr_repeat(3,auto)] items-end gap-x-3 border-b border-blue/10 px-[clamp(1rem,2vw,2rem)] py-5 sm:gap-x-6">
+          <div className="mx-line grid grid-cols-[1fr_repeat(3,auto)] items-end gap-x-2 border-b border-blue/10 px-[clamp(0.85rem,2vw,2rem)] py-5 sm:gap-x-6">
             <span className="text-[0.66rem] uppercase tracking-[0.14em] text-ink-soft">Program</span>
             {matrix.columns.map((c) => (
-              <span key={c} className="w-[clamp(64px,10vw,120px)] text-center text-[0.68rem] font-semibold uppercase tracking-[0.1em] text-blue sm:text-[0.74rem]">
+              <span key={c} className="w-[clamp(44px,9vw,120px)] text-center text-[0.68rem] font-semibold uppercase tracking-[0.1em] text-blue sm:text-[0.74rem]">
                 {c}
               </span>
             ))}
@@ -223,11 +223,11 @@ function Matrix() {
           {matrix.rows.map((r) => (
             <div
               key={r.name}
-              className="mx-line grid grid-cols-[1fr_repeat(3,auto)] items-center gap-x-3 border-b border-blue/[0.07] px-[clamp(1rem,2vw,2rem)] py-4 last:border-b-0 sm:gap-x-6"
+              className="mx-line grid grid-cols-[1fr_repeat(3,auto)] items-center gap-x-2 border-b border-blue/[0.07] px-[clamp(0.85rem,2vw,2rem)] py-4 last:border-b-0 sm:gap-x-6"
             >
               <span className="text-[0.88rem] font-medium leading-snug text-blue sm:text-[0.96rem]">{r.name}</span>
               {r.marks.map((m, i) => (
-                <span key={i} className="flex w-[clamp(64px,10vw,120px)] justify-center">
+                <span key={i} className="flex w-[clamp(44px,9vw,120px)] justify-center">
                   <Mark v={m} />
                 </span>
               ))}

@@ -21,7 +21,7 @@ export const SERVICE_PAGES = {
     lead: "Most quotes start with a system and work backwards. We start with your roof, your bill and how your household actually uses power, then design around that.",
     hero: {
       image: "/images/svc-residential.webp",
-      alt: "A family outside their home with rooftop solar installed by Lumenx",
+      alt: "A family looking up at the solar panels on their roof",
     },
     chips: ["5kW to 15kW", "Solar Victoria authorised", "16-year workmanship warranty"],
 
@@ -38,7 +38,7 @@ export const SERVICE_PAGES = {
         "Monitoring set up before we leave, so you can see every kilowatt",
       ],
       image: "/images/real-install-3.webp",
-      imageAlt: "Lumenx installers fitting solar panels on a Melbourne rooftop",
+      imageAlt: "Solar panels installed by Lumenx on a rooftop at dusk",
     },
 
     // Savings figures are Lumenx's own published averages from lumenex.com.au.
@@ -105,7 +105,7 @@ export const SERVICE_PAGES = {
     lead: "Energy is one of the few operating costs you can permanently reduce with a single capital decision. We model it properly before you commit a cent.",
     hero: {
       image: "/images/svc-commercial.webp",
-      alt: "Engineer inspecting a commercial rooftop solar array",
+      alt: "Aerial view of a commercial roof covered in solar panels",
     },
     chips: ["20kW to 100kW+", "ROI modelled on your load", "Finance available"],
 
@@ -122,7 +122,7 @@ export const SERVICE_PAGES = {
         "Staged installs to avoid disrupting trading hours",
       ],
       image: "/images/svc-inverters.webp",
-      imageAlt: "Technician maintaining a commercial solar power installation",
+      imageAlt: "Two solar inverters mounted on a wall with cabling below",
     },
 
     features: [
@@ -159,7 +159,7 @@ export const SERVICE_PAGES = {
     lead: "Without storage, most households export the bulk of what they generate at a low feed-in rate, then buy power back at peak prices after dark. A battery closes that gap.",
     hero: {
       image: "/images/svc-batteries.webp",
-      alt: "Technician inspecting solar panels connected to a home battery system",
+      alt: "A wall-mounted inverter beneath a solar array",
     },
     chips: ["Federal rebate applied", "Blackout backup available", "Retrofits existing solar"],
 
@@ -176,7 +176,7 @@ export const SERVICE_PAGES = {
         "Federal battery rebate and any Victorian program claimed for you",
       ],
       image: "/images/real-install-2.webp",
-      imageAlt: "Battery and inverter installation completed by the Lumenx team",
+      imageAlt: "A Lumenx van outside a home with a completed rooftop solar system",
     },
 
     features: [
@@ -213,7 +213,7 @@ export const SERVICE_PAGES = {
     lead: "Panels get the attention, but the inverter is what converts, manages and reports everything your system does. It is also the part most likely to need replacing first.",
     hero: {
       image: "/images/svc-inverters.webp",
-      alt: "Solar inverter being serviced at an installation",
+      alt: "Two solar inverters mounted on a wall with cabling below",
     },
     chips: ["String and hybrid", "All major brands serviced", "Replacement and upgrade"],
 
@@ -230,7 +230,7 @@ export const SERVICE_PAGES = {
         "Monitoring configured and demonstrated before we leave",
       ],
       image: "/images/panels-closeup.webp",
-      imageAlt: "Close detail of solar panels feeding a Lumenx inverter installation",
+      imageAlt: "Close detail of the photovoltaic cells on a solar panel",
     },
 
     features: [
@@ -267,7 +267,7 @@ export const SERVICE_PAGES = {
     lead: "A home charger turns your roof into the cheapest fuel you will ever buy. Set up properly, it waits for your solar surplus instead of pulling from the grid at peak rates.",
     hero: {
       image: "/images/svc-ev-chargers.webp",
-      alt: "Electric vehicle charging at a home wall charger",
+      alt: "A man holding a charging cable beside an electric car at home",
     },
     chips: ["7kW and 22kW", "Solar-integrated charging", "Certified electricians"],
 
@@ -284,7 +284,7 @@ export const SERVICE_PAGES = {
         "Installed and certified by licensed electricians",
       ],
       image: "/images/installation.webp",
-      imageAlt: "Lumenx electrician completing a home electrical installation",
+      imageAlt: "An electrician working inside a home switchboard",
     },
 
     features: [
@@ -321,7 +321,7 @@ export const SERVICE_PAGES = {
     lead: "Electric resistance and gas storage systems both burn energy to make heat. A heat pump moves heat instead, which is why it runs on a fraction of the power.",
     hero: {
       image: "/images/svc-heat-pump.webp",
-      alt: "Heat pump hot water system installed at a home",
+      alt: "A heat pump hot water tank and plumbing in a plant room",
     },
     chips: ["VEU rebate handled", "Pairs with solar", "Replaces gas or electric"],
 
@@ -338,7 +338,7 @@ export const SERVICE_PAGES = {
         "Sized to your household, not just swapped like for like",
       ],
       image: "/images/real-install-1.webp",
-      imageAlt: "Lumenx installation work completed at a Victorian property",
+      imageAlt: "Equipment installed by Lumenx on the exterior wall of a property",
     },
 
     features: [
@@ -375,7 +375,7 @@ export const SERVICE_PAGES = {
     lead: "Heating changes that. The question is only which method suits your pool, your roof and how far into the shoulder seasons you actually want to swim.",
     hero: {
       image: "/images/svc-pool-heating.webp",
-      alt: "Home swimming pool with rooftop solar in the background",
+      alt: "Aerial view of a house with a swimming pool and rooftop solar",
     },
     chips: ["Heat pump or solar", "Season extension", "Hayward and Supreme Heating"],
 
@@ -391,8 +391,8 @@ export const SERVICE_PAGES = {
         "Heat pumps for reliable temperature into the shoulder seasons",
         "Pairs with rooftop solar to bring running costs down further",
       ],
-      image: "/images/rooftop-home.webp",
-      imageAlt: "Victorian home with rooftop solar panels installed by Lumenx",
+      image: "/images/pool-intro.webp",
+      imageAlt: "A swimming pool beside a modern open-plan home",
     },
 
     features: [
@@ -429,7 +429,7 @@ export const SERVICE_PAGES = {
     lead: "Buying the parts separately usually costs more and always takes longer. A package bundles the design, the hardware and the install into a single fixed number.",
     hero: {
       image: "/images/svc-packages.webp",
-      alt: "Installers fitting a complete solar and battery package",
+      alt: "Two installers fitting solar panels on a rooftop at sunset",
     },
     chips: ["Fixed pricing", "Rebates pre-applied", "Single install visit"],
 
@@ -446,7 +446,7 @@ export const SERVICE_PAGES = {
         "Everything commissioned and demonstrated in one visit",
       ],
       image: "/images/family-solar.webp",
-      imageAlt: "A family at home with a complete Lumenx solar and battery system",
+      imageAlt: "A family playing together in a field outside their home",
     },
 
     features: [

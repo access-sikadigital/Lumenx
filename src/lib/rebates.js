@@ -20,7 +20,7 @@ export const REBATES_PAGE = {
   lead: "They stack, they change, and each has its own paperwork. We check every one you qualify for, claim them, and take them off your quote before you see the price.",
   hero: {
     image: "/images/svc-packages.webp",
-    alt: "Lumenx installers fitting a solar system covered by Victorian rebates",
+    alt: "Two installers fitting solar panels on a rooftop at sunset",
   },
   chips: ["Eligibility checked for you", "Applied before you pay", "Paperwork filed by us"],
 
@@ -37,7 +37,7 @@ export const REBATES_PAGE = {
       "Written confirmation of what was claimed on your behalf",
     ],
     image: "/images/real-install-3.webp",
-    imageAlt: "A completed Lumenx rooftop solar installation in Victoria",
+    imageAlt: "Solar panels installed by Lumenx on a rooftop at dusk",
   },
 
   // Qualitative only — see the note at the top of this file.

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { SITE } from "@/lib/site";
 
 const INTERESTS = [
@@ -29,6 +30,7 @@ export default function QuoteForm() {
   const [errorKind, setErrorKind] = useState(null);
   const [fieldErrors, setFieldErrors] = useState([]);
   const liveRef = useRef(null);
+  const router = useRouter();
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -60,6 +62,12 @@ export default function QuoteForm() {
 
       if (res.ok && data.ok) {
         setState("sent");
+        // Send them to a dedicated URL rather than swapping the form for a
+        // message in place. A real /thank-you page is what analytics and ad
+        // platforms count as a conversion — an in-place state change is
+        // invisible to them, so every lead would go unattributed.
+        // No form data in the URL: this carries a name, phone and address.
+        router.push("/thank-you");
         return;
       }
       setFieldErrors(data.fields || []);
@@ -71,22 +79,22 @@ export default function QuoteForm() {
     }
   }
 
+  // Brief confirmation while the router navigates to /thank-you. Without this
+  // the form would sit there looking unresponsive for the moment it takes.
   if (state === "sent") {
     return (
-      <div className="rounded-[22px] border border-green/30 bg-green/[0.06] p-[clamp(1.75rem,3vw,3rem)]">
+      <div
+        role="status"
+        aria-live="polite"
+        className="rounded-[22px] border border-green/30 bg-green/[0.06] p-[clamp(1.75rem,3vw,3rem)]"
+      >
         <span className="grid h-12 w-12 place-items-center rounded-full bg-green/20">
           <svg width="20" height="20" viewBox="0 0 12 12" fill="none" aria-hidden="true">
             <path d="M2.5 6.2 4.8 8.5 9.5 3.8" stroke="#63b93b" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </span>
         <h2 className="t-h3 mt-6 text-blue">Thanks, we have it.</h2>
-        <p className="t-body mt-3 max-w-[48ch] text-ink">
-          One of our team will be in touch within one business day. If it is urgent, call us on{" "}
-          <a href={SITE.quotePhoneHref} className="font-semibold text-ember underline underline-offset-4">
-            {SITE.quotePhone}
-          </a>
-          .
-        </p>
+        <p className="t-body mt-3 max-w-[48ch] text-ink">Taking you through…</p>
       </div>
     );
   }

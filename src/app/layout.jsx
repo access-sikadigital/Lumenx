@@ -38,6 +38,9 @@ export const metadata = {
   ],
   alternates: { canonical: "/" },
   icons: { icon: "/favicon.png", apple: "/favicon.png" },
+  // Default share card. Pages that set their own openGraph.images override it;
+  // everything else inherits this, so no Lumenx link is ever shared as a bare
+  // grey box. JPEG rather than WebP: some social scrapers still do not read it.
   openGraph: {
     type: "website",
     siteName: "Lumenx",
@@ -46,12 +49,26 @@ export const metadata = {
       "Together, we build a brighter future. CEC-accredited solar, batteries and EV charging for Australian homes and business. Rebates handled, 16-year warranty.",
     url: "/",
     locale: "en_AU",
+    images: [
+      {
+        url: "/og-default.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Solar panels on a rooftop at sunset — Lumenx",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Lumenx | Solar, Batteries & EV Charging",
     description: "CEC-accredited solar, batteries and EV charging across VIC & NSW. Rebates handled.",
+    images: ["/og-default.jpg"],
   },
+};
+
+export const viewport = {
+  themeColor: "#0b143b",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }) {

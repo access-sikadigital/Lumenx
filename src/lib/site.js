@@ -418,9 +418,6 @@ export const FOOTER_LINKS = {
     { label: "Pool Heating", href: "/pool-heating" },
     { label: "Solar Packages", href: "/solar-packages" },
   ],
-  // TODO: these five routes do not exist yet. They are the next batch in the
-  // blueprint (rebates hub, then the company pages). Until they are built
-  // they will 404, so either ship those pages or trim this list first.
   Company: [
     { label: "About Lumenx", href: "/about" },
     { label: "Solar Rebates Victoria", href: "/solar-rebates-victoria" },
