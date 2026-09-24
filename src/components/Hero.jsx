@@ -112,7 +112,7 @@ export default function Hero() {
           <span className="line"><span className="hero-line-in block">Together, we build</span></span>
           <span className="line">
             <span className="hero-line-in block">
-              a <span className="text-solar">brighter future.</span>
+              a brighter future.
             </span>
           </span>
         </h1>

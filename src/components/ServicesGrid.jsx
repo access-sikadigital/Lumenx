@@ -35,7 +35,7 @@ export default function ServicesGrid() {
           </Reveal>
           <Reveal delay={0.05}>
             <h2 className="t-h2 max-w-[15ch] text-blue">
-              Everything you need to <span className="text-solar">run on the sun.</span>
+              Everything you need to run on the sun.
             </h2>
           </Reveal>
         </div>

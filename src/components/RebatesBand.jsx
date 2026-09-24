@@ -53,7 +53,7 @@ export default function RebatesBand() {
         <div className="rb-copy">
           <p className="eyebrow mb-5 text-yellow">Rebates, handled for you</p>
           <h2 className="t-h2 max-w-[13ch]">
-            Three rebates. <span className="text-solar">One lower price.</span>
+            Three rebates. One lower price.
           </h2>
           <p className="t-body mt-6 max-w-[42ch] text-white/65">
             More than one program can apply to the same job. We check every one you qualify for,

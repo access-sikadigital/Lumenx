@@ -47,7 +47,7 @@ export default function Process() {
         <div>
           <p className="eyebrow mb-5 text-ember">How it works</p>
           <h2 className="t-h2 max-w-[16ch] text-blue">
-            From first quote to <span className="text-solar">switch-on.</span>
+            From first quote to switch-on.
           </h2>
         </div>
 

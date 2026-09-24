@@ -70,7 +70,7 @@ export default function EnergyFlow() {
         <div>
           <p className="eyebrow mb-5 text-yellow">How your energy moves</p>
           <h2 className="t-h2 max-w-[16ch]">
-            Sun in. <span className="text-solar">Bills down.</span>
+            Sun in. Bills down.
           </h2>
         </div>
 

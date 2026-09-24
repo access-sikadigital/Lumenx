@@ -174,11 +174,13 @@ h1, h2, h3, h4 {
 }
 
 /* ---------- Accents ---------- */
+/* Was an ember-to-yellow gradient clipped to the text. Removed from every
+   heading on the site; what remains uses it are the oversized numerals (the
+   404, the stat suffixes, the system-size figures, the opening hours), all of
+   which sit on navy. A solid yellow reads cleaner at those sizes and does not
+   fall back to transparent text if background-clip fails. */
 .text-solar {
-  background: linear-gradient(100deg, var(--color-ember), var(--color-yellow));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--color-yellow);
 }
 .rule {
   height: 1px;

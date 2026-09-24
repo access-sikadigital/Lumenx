@@ -169,7 +169,7 @@ function Features({ items }) {
       <div className="shell">
         <p className="eyebrow mb-5 text-ember">What you get</p>
         <h2 className="t-h2 max-w-[16ch] text-blue">
-          Included as <span className="text-solar">standard.</span>
+          Included as standard.
         </h2>
 
         <div className="sf-grid mt-[clamp(2.5rem,5vw,4rem)] grid gap-[clamp(1rem,1.5vw,1.5rem)] sm:grid-cols-2 xl:grid-cols-3">
@@ -331,7 +331,7 @@ function Related({ slugs, current }) {
       <div className="shell">
         <div className="mb-[clamp(2rem,3.5vw,3rem)] flex flex-wrap items-end justify-between gap-6">
           <h2 className="t-h2 max-w-[16ch] text-blue">
-            Works well <span className="text-solar">with this.</span>
+            Works well with this.
           </h2>
           <Link href="/#services" className="btn btn-sm btn-ghost text-blue">
             <span>All services</span>

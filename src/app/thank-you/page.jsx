@@ -110,7 +110,7 @@ export default function Page() {
         <div className="shell">
           <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-5">
             <h2 className="t-h2 max-w-[20ch] text-blue">
-              While you wait, <span className="text-solar">have a read.</span>
+              While you wait, have a read.
             </h2>
             <Link href="/solar-rebates-victoria" className="btn btn-sm btn-ghost text-blue">
               <span>Rebates explained</span>

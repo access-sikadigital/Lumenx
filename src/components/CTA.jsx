@@ -93,7 +93,7 @@ export default function CTA() {
                 <p className="cta-in eyebrow mb-5 text-yellow">Get started</p>
 
                 <h2 className="cta-in t-h2 max-w-[15ch]">
-                  Ready for a <span className="text-solar">lower power bill?</span>
+                  Ready for a lower power bill?
                 </h2>
 
                 <p className="cta-in t-body mt-6 text-white/65" style={{ maxWidth: "44ch" }}>

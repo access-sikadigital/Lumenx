@@ -64,7 +64,7 @@ export default function WhyLumenx() {
           <div>
             <p className="eyebrow mb-5 text-ember">Why Lumenx</p>
             <h2 className="t-h2 max-w-[18ch] text-blue">
-              Premium solar, done properly, and <span className="text-solar">backed.</span>
+              Premium solar, done properly, and backed.
             </h2>
           </div>
           <div className="flex items-end gap-3 rounded-2xl bg-blue px-6 py-4 text-white">

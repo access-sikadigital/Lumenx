@@ -98,7 +98,7 @@ export default function Stats() {
           <div>
             <p className="eyebrow mb-5 text-yellow">By the numbers</p>
             <h2 className="t-h2 max-w-[14ch]">
-              Proof, not <span className="text-solar">promises.</span>
+              Proof, not promises.
             </h2>
           </div>
           <p className="t-body max-w-[40ch] text-white/60">

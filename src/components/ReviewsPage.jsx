@@ -122,7 +122,7 @@ function Wall() {
           <div>
             <p className="eyebrow mb-5 text-ember">In their words</p>
             <h2 className="t-h2 max-w-[20ch] text-blue">
-              What people say <span className="text-solar">afterwards.</span>
+              What people say afterwards.
             </h2>
           </div>
 
@@ -194,7 +194,7 @@ function Accreditations() {
       <div aria-hidden="true" className="glow glow--ember left-[-8%] top-1/2 -translate-y-1/2" style={{ width: "min(560px, 40%)" }} />
       <div className="shell relative flex flex-wrap items-center justify-between gap-x-10 gap-y-5">
         <p className="t-h3 max-w-[24ch]">
-          Reviews are one signal. <span className="text-solar">Accreditation is the other.</span>
+          Reviews are one signal. Accreditation is the other.
         </p>
         <ul className="flex flex-wrap gap-x-7 gap-y-2.5 text-[0.66rem] uppercase tracking-[0.14em] text-white/50">
           {TRUST.map((t) => (
