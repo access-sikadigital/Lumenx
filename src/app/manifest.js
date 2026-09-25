@@ -6,7 +6,7 @@ import { SITE } from "@/lib/site";
  */
 export default function manifest() {
   return {
-    name: `${SITE.name} — Solar, Batteries & EV Charging`,
+    name: `${SITE.name}: Solar, Batteries & EV Charging`,
     short_name: SITE.name,
     description: SITE.tagline,
     start_url: "/",

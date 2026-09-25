@@ -659,6 +659,86 @@ function Matrix({ d }) {
   );
 }
 
+/* ================= inverter replacement: symptom checker ================= */
+function Symptoms({ d }) {
+  const root = useRef(null);
+
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      headIn(root.current);
+      gsap.from(".sy-row", {
+        x: -24,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".sy-list", start: "top 85%" },
+      });
+      gsap.from(".sy-rule", {
+        scaleY: 0,
+        transformOrigin: "top center",
+        duration: 1.3,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".sy-list", start: "top 85%" },
+      });
+    },
+    { scope: root }
+  );
+
+  return (
+    <div ref={root}>
+      <Shell>
+        <Head eyebrow={d.eyebrow} heading={d.heading} lead={d.lead} />
+
+        <div className="sy-list relative mt-[clamp(2.5rem,5vw,4rem)]">
+          {/* spine the rows hang off, drawn top to bottom */}
+          <span
+            aria-hidden="true"
+            className="sy-rule absolute bottom-0 left-[9px] top-2 hidden w-px bg-white/15 sm:block"
+          />
+
+          <ol className="space-y-[clamp(1rem,1.5vw,1.4rem)]">
+            {d.items.map((it) => (
+              <li
+                key={it.n}
+                className="sy-row relative grid gap-x-6 gap-y-3 rounded-[18px] border border-white/12 bg-blue-2/40 p-[clamp(1.35rem,2vw,2.1rem)] transition-colors duration-500 hover:border-white/25 sm:ml-10 sm:grid-cols-[1fr_auto]"
+              >
+                <span
+                  aria-hidden="true"
+                  className="absolute -left-10 top-[clamp(1.35rem,2vw,2.1rem)] hidden h-5 w-5 place-items-center rounded-full border-2 sm:grid"
+                  style={{
+                    borderColor: TONE_BG[it.tone] || TONE_BG.ink,
+                    background: "#0b143b",
+                  }}
+                />
+                <div className="min-w-0">
+                  <span className="numeral text-[0.66rem] tracking-[0.16em] text-yellow">{it.n}</span>
+                  <h3 className="t-h3 mt-2.5">{it.sign}</h3>
+                  <p className="mt-3 max-w-[62ch] text-[0.93rem] leading-relaxed text-white/60">
+                    {it.means}
+                  </p>
+                </div>
+                <span
+                  className="h-fit whitespace-nowrap rounded-full px-3.5 py-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.12em] sm:justify-self-end"
+                  style={{
+                    background: `color-mix(in oklab, ${TONE_BG[it.tone] || TONE_BG.ink} 18%, transparent)`,
+                    color: TONE_BG[it.tone] || TONE_BG.ink,
+                  }}
+                >
+                  {it.urgency}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <p className="mt-7 max-w-[76ch] text-[0.82rem] leading-relaxed text-white/45">{d.note}</p>
+      </Shell>
+    </div>
+  );
+}
+
 /* ================= dispatcher ================= */
 export default function ServiceSignature({ slug }) {
   const d = getSignature(slug);
@@ -679,6 +759,8 @@ export default function ServiceSignature({ slug }) {
       return <Methods d={d} />;
     case "matrix":
       return <Matrix d={d} />;
+    case "symptoms":
+      return <Symptoms d={d} />;
     // "sizes" is rendered by ServicePage's own Options block
     default:
       return null;

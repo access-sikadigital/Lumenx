@@ -321,7 +321,7 @@ export default function AboutPage() {
       <Faq
         items={ABOUT.faqs}
         heading="About Lumenx, answered."
-        lead="Anything else you want to know before you talk to us? Ask — we would rather answer it now."
+        lead="Anything else you want to know before you talk to us? Ask. We would rather answer it now."
       />
       <CTA />
     </>

@@ -20,7 +20,7 @@ export const ABOUT = {
     "Lumenx is a Solar Victoria authorised retailer and Clean Energy Council member installing solar, batteries and EV charging across Victoria and New South Wales.",
   eyebrow: "Who we are",
   h1: "A solar company that would rather be trusted than be the biggest.",
-  lead: "We install solar, batteries, EV charging, hot water and pool heating across Victoria and New South Wales — and we would rather quote you honestly and lose the job than sell you a system you did not need.",
+  lead: "We install solar, batteries, EV charging, hot water and pool heating across Victoria and New South Wales. We would rather quote you honestly and lose the job than sell you a system you did not need.",
   hero: {
     image: "/images/real-install-2.webp",
     alt: "A Lumenx van outside a home with a completed rooftop solar system",
@@ -52,7 +52,7 @@ export const ABOUT = {
       {
         n: "01",
         title: "Empowerment",
-        line: "Put people in control of their own energy. That means explaining the trade-offs in plain language and handing over a system the owner understands, monitors and can make decisions about — not a black box on the roof.",
+        line: "Put people in control of their own energy. That means explaining the trade-offs in plain language and handing over a system the owner understands, monitors and can make decisions about, not a black box on the roof.",
       },
       {
         n: "02",
@@ -94,7 +94,7 @@ export const ABOUT = {
   offices: {
     eyebrow: "Where we work",
     heading: "Two offices, two states, local crews in both.",
-    lead: "Victoria and New South Wales, including the regional areas around each. If you are not sure whether your postcode is covered, ask — we would rather tell you no than send a truck four hours each way.",
+    lead: "Victoria and New South Wales, including the regional areas around each. If you are not sure whether your postcode is covered, ask. We would rather tell you no than send a truck four hours each way.",
   },
 
   faqs: [

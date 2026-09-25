@@ -69,6 +69,16 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* overflow-x on <body> alone is unreliable: when body is not the viewport's
+     scrolling element the value propagates back to <html>, and a stray wide
+     child can still produce a document-level horizontal scrollbar. Setting it
+     here as well closes that path. `clip` rather than `hidden` because hidden
+     makes the element a scroll container, which silently breaks every
+     position:sticky descendant (the FAQ index, the legal contents, the
+     calculator result panel all rely on sticky). The `hidden` line first is
+     the fallback for Safari 15 and older, which do not know `clip`. */
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -78,6 +88,7 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  overflow-x: clip;
   /* Structural guard for narrow screens: a long unbroken string (a URL, an
      email, "Maribyrnong") can otherwise force the page wider than the
      viewport. break-word only splits when a word genuinely cannot fit, so

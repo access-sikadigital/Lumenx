@@ -151,7 +151,7 @@ export const SERVICE_PAGES = {
   "solar-batteries": {
     slug: "solar-batteries",
     label: "Solar Batteries",
-    seoTitle: "Solar Batteries Melbourne — Sungrow, BYD, LG | Lumenx",
+    seoTitle: "Solar Batteries Melbourne: Sungrow, BYD, LG | Lumenx",
     seoDescription:
       "Store your solar and cut bills with a home battery. Sungrow, BYD, AlphaESS and LG Energy Solution, with the federal battery rebate applied. Free quote.",
     eyebrow: "Solar batteries",
@@ -182,7 +182,7 @@ export const SERVICE_PAGES = {
     features: [
       { title: "Honest modelling first", line: "We run your consumption against your generation and show you the case. If storage does not stack up for your household, we will tell you." },
       { title: "Rebates claimed for you", line: "The federal battery rebate and any applicable Victorian program are applied to your quote and the paperwork is ours." },
-      { title: "Blackout backup", line: "Configure essential circuits — fridge, lights, internet, a power point or two — to keep running when the grid goes down." },
+      { title: "Blackout backup", line: "Configure essential circuits (fridge, lights, internet, a power point or two) to keep running when the grid goes down." },
       { title: "Works with existing solar", line: "Most systems can be retrofitted. Where your current inverter will not take a battery, we will price both paths honestly." },
       { title: "Scalable capacity", line: "Several of the systems we fit are modular, so you can add capacity later rather than buying for a future you are guessing at." },
       { title: "Monitored from your phone", line: "See charge, discharge, solar generation and grid draw in real time, and know exactly what the battery is saving you." },
@@ -192,20 +192,20 @@ export const SERVICE_PAGES = {
     showRebates: true,
 
     faqs: [
-      { q: "Is a solar battery worth it?", a: "For most households with existing solar and meaningful evening usage, yes — the 2025 federal rebate substantially changed the payback. If you use most of your power during the day, the case is weaker. We model it on your real usage before you commit." },
+      { q: "Is a solar battery worth it?", a: "For most households with existing solar and meaningful evening usage, yes. The 2025 federal rebate substantially changed the payback. If you use most of your power during the day, the case is weaker. We model it on your real usage before you commit." },
       { q: "What size battery do I need?", a: "It depends on how much power you use after sunset. A common starting point is enough capacity to cover your evening and overnight load, which for many homes lands somewhere around 10 to 13kWh, but we size it from your bill rather than a default." },
-      { q: "Will it keep my power on in a blackout?", a: "With backup configured, yes — for selected essential circuits. Not every battery and inverter combination supports it, and whole-home backup needs a larger system, so tell us up front if outage protection is a priority." },
+      { q: "Will it keep my power on in a blackout?", a: "With backup configured, yes, for selected essential circuits. Not every battery and inverter combination supports it, and whole-home backup needs a larger system, so tell us up front if outage protection is a priority." },
       { q: "Can I add a battery to solar I already have?", a: "Usually. It depends on your existing inverter. If it is battery-ready, the retrofit is straightforward; if not, we will quote both a hybrid inverter upgrade and an AC-coupled battery so you can compare." },
       { q: "How long does a battery last?", a: "Manufacturer warranties typically run around ten years, usually expressed as a throughput or retained-capacity guarantee rather than a flat term. We will show you the specific warranty on whichever model we recommend." },
     ],
-    related: ["residential-solar", "solar-inverters", "solar-packages"],
+    related: ["tesla-powerwall", "residential-solar", "solar-inverters"],
   },
 
   /* ------------------------------------------------------------------ */
   "solar-inverters": {
     slug: "solar-inverters",
     label: "Solar Inverters",
-    seoTitle: "Solar Inverters Melbourne — Fronius, Sungrow | Lumenx",
+    seoTitle: "Solar Inverters Melbourne: Fronius, Sungrow | Lumenx",
     seoDescription:
       "Choose the right solar inverter. Fronius, Sungrow, GoodWe and SolarEdge, string and hybrid. Supply, installation and replacement. Free quote.",
     eyebrow: "Solar inverters",
@@ -252,7 +252,7 @@ export const SERVICE_PAGES = {
       { q: "Can I replace just the inverter?", a: "Yes, in most cases the array stays exactly as it is and only the inverter is swapped. We will check compatibility with your existing panel strings first and tell you if anything else needs to change." },
       { q: "Do I need optimisers?", a: "Only if your roof needs them. They help on arrays with shading or multiple orientations, where one underperforming panel would otherwise drag down its whole string. On a clean, single-orientation roof they add cost without adding output." },
     ],
-    related: ["solar-batteries", "residential-solar", "commercial-solar"],
+    related: ["solar-inverter-replacement", "solar-batteries", "residential-solar"],
   },
 
   /* ------------------------------------------------------------------ */
@@ -367,7 +367,7 @@ export const SERVICE_PAGES = {
   "pool-heating": {
     slug: "pool-heating",
     label: "Pool Heating",
-    seoTitle: "Pool Heating Melbourne — Heat Pumps & Solar | Lumenx",
+    seoTitle: "Pool Heating Melbourne: Heat Pumps & Solar | Lumenx",
     seoDescription:
       "Extend your swim season with efficient pool heating. Heat pumps and solar pool heating from Hayward, Supreme Heating and SensaHeat. Free quote.",
     eyebrow: "Pool heating",
@@ -470,7 +470,121 @@ export const SERVICE_PAGES = {
     ],
     related: ["residential-solar", "solar-batteries", "solar-inverters"],
   },
+
+  /* ------------------------------------------------------------------ */
+  "solar-inverter-replacement": {
+    slug: "solar-inverter-replacement",
+    label: "Inverter Replacement",
+    seoTitle: "Solar Inverter Replacement Melbourne | Lumenx",
+    seoDescription:
+      "Inverter faulty or failed? Lumenx replaces and upgrades all major brands across Melbourne and Sydney. Fast, warranted service on any existing system.",
+    eyebrow: "Inverter replacement",
+    h1: "Your panels are probably fine. It is the inverter that failed.",
+    lead: "Inverters carry the whole system's workload and they wear out first. Replacing one is a half-day job that usually leaves the array exactly as it is.",
+    hero: {
+      image: "/images/svc-inverter-replacement.webp",
+      alt: "A technician checking inverters with a tablet",
+    },
+    chips: ["All major brands", "Array usually untouched", "Often a half-day job"],
+
+    intro: {
+      heading: "How to tell it is the inverter",
+      body: [
+        "Panels routinely outlast their inverter by a decade or more. So when a system that used to perform suddenly does not, the inverter is the first thing to check, not the roof.",
+        "The signs are fairly consistent: an error code or red light on the display, production dropping well below what the weather should give you, the system cutting out through the middle of the day, or an inverter running hot and noisy. Any of those is worth a call before it stops entirely and you lose weeks of generation.",
+      ],
+      points: [
+        "Diagnosis first, because we will not replace a unit that can be repaired",
+        "Existing panel strings checked for compatibility before we quote",
+        "Warranty claim handled for you if the unit is still covered",
+        "Upgrade path to a hybrid explained if storage is on your horizon",
+      ],
+      image: "/images/svc-inverters.webp",
+      imageAlt: "Two solar inverters mounted on a wall with cabling below",
+    },
+
+    features: [
+      { title: "Any brand, any installer", line: "We replace and upgrade whoever fitted the original. You do not need to track down the company that installed it." },
+      { title: "Warranty checked first", line: "If the unit is still under manufacturer warranty we will tell you and manage the claim rather than selling you a new one." },
+      { title: "Like-for-like or upgrade", line: "Same output replacement, or a hybrid so the system can take a battery later. We price both so you can choose." },
+      { title: "Array stays put", line: "In most cases the panels, rails and wiring are untouched. Only the inverter and its isolators change." },
+      { title: "Fast turnaround", line: "Every day a dead inverter sits there is generation you paid for and are not getting. We prioritise faults." },
+      { title: "Recommissioned properly", line: "Monitoring reconnected, output verified against expected, and the new warranty registered before we leave." },
+    ],
+
+    brands: ["Sungrow", "GoodWe", "SolarEdge", "Delta", "Alpha ESS"],
+    showRebates: false,
+
+    faqs: [
+      { q: "How do I know if my inverter has failed?", a: "Error codes or a red light on the display, production well below what the conditions should produce, the system dropping out mid-day, or an inverter that is unusually hot or noisy. Your monitoring app is often the first place it shows." },
+      { q: "Do I need to replace the panels too?", a: "Almost never. Panels typically carry 25-year performance warranties and routinely outlive two inverters. We check the strings are compatible with the replacement and leave the array alone." },
+      { q: "Can you replace an inverter another company installed?", a: "Yes. It makes no difference to us who fitted the original, and you do not need to find them first." },
+      { q: "Should I replace like-for-like or upgrade to a hybrid?", a: "If a battery is anywhere in your plans, a hybrid now saves replacing the inverter again later. If it is genuinely not, a quality like-for-like replacement costs less. We quote both." },
+      { q: "How long does a replacement take?", a: "Usually half a day once the unit is on hand. The main variable is availability of the specific model, and we will tell you that up front." },
+    ],
+    related: ["solar-inverters", "solar-batteries", "residential-solar"],
+  },
+
+  /* ------------------------------------------------------------------ */
+  "tesla-powerwall": {
+    slug: "tesla-powerwall",
+    label: "Tesla Powerwall",
+    seoTitle: "Tesla Powerwall Installation Melbourne | Lumenx",
+    seoDescription:
+      "Tesla Powerwall supplied and installed across Victoria and New South Wales, with the federal battery rebate applied and backup configured.",
+    eyebrow: "Tesla Powerwall",
+    h1: "The battery most people have heard of, fitted by people who fit a lot of them.",
+    lead: "Powerwall is a strong product with a loyal following. It is also not automatically the right one for your house, and we will say so if it is not.",
+    hero: {
+      image: "/images/product-powerwall.webp",
+      alt: "A home with an electric vehicle charging in the driveway",
+    },
+    chips: ["Federal rebate applied", "Whole-home backup capable", "Retrofits existing solar"],
+
+    intro: {
+      heading: "What Powerwall is genuinely good at",
+      body: [
+        "Powerwall's reputation rests on two things: the backup is excellent, and the software is the most polished in the category. If keeping the house running through an outage matters to you, it is a serious contender.",
+        "It is not the cheapest kilowatt hour of storage you can buy, and for a household that just wants to shift daytime solar into the evening, something less expensive often does the same job. We will model both against your usage and show you the difference rather than steering you to whichever we would prefer to sell.",
+      ],
+      points: [
+        "Sized against your real evening and overnight consumption",
+        "Backup circuits planned before installation, not after",
+        "Federal battery rebate applied to the quote and claimed for you",
+        "Retrofits to most existing solar systems",
+      ],
+      image: "/images/svc-batteries.webp",
+      imageAlt: "A wall-mounted inverter beneath a solar array",
+    },
+
+    features: [
+      { title: "Honest comparison", line: "We will show you Powerwall against the alternatives on your own numbers. Sometimes it wins, sometimes it does not." },
+      { title: "Backup done properly", line: "Which circuits stay live in an outage is a decision made at design time. We plan it with you rather than defaulting." },
+      { title: "Rebate handled", line: "The federal battery rebate is deducted from your quote and the paperwork is ours." },
+      { title: "Works with existing solar", line: "Most systems can be retrofitted. Where yours cannot, we will price the alternatives honestly." },
+      { title: "Accredited installation", line: "Battery installation is regulated work with specific standards for placement and protection. Every install meets them." },
+      { title: "Monitoring from day one", line: "Configured and demonstrated before we leave, so you can see charge, discharge and grid draw in real time." },
+    ],
+
+    brands: ["Sungrow", "Alpha ESS", "LG Energy Solution"],
+    showRebates: true,
+
+    faqs: [
+      { q: "Is a Powerwall worth it?", a: "For households that want reliable blackout backup and polished software, often yes. For households that only want to shift daytime solar into the evening, a less expensive battery frequently does the same job. We model both on your usage before you decide." },
+      { q: "Will it run my whole house in a blackout?", a: "It is capable of whole-home backup, but whether yours will depends on your loads and how the switchboard is configured. Large loads like ducted air conditioning may need to be excluded. We work this out at design stage." },
+      { q: "Can I add one to solar I already have?", a: "Usually yes. It depends on your existing inverter and switchboard. We check both before quoting and tell you if anything else needs to change." },
+      { q: "What rebate applies?", a: "The federal battery rebate applies to eligible installations, and Victorian programs may apply on top depending on your circumstances. We confirm your position in writing before you commit." },
+      { q: "How long does installation take?", a: "Typically a day for the battery itself. If the switchboard needs work or backup circuits are being reconfigured, allow longer. We give you the exact scope in the proposal." },
+    ],
+    related: ["solar-batteries", "solar-packages", "residential-solar"],
+  },
 };
 
 export const SERVICE_SLUGS = Object.keys(SERVICE_PAGES);
 export const getService = (slug) => SERVICE_PAGES[slug] || null;
+
+// Slugs that live at a nested URL rather than the site root.
+export const NESTED_SERVICE_URLS = {
+  "tesla-powerwall": "/solar-batteries/tesla-powerwall",
+};
+export const serviceUrl = (slug) => NESTED_SERVICE_URLS[slug] || `/${slug}`;

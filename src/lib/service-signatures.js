@@ -19,7 +19,7 @@ export const SIGNATURES = {
     type: "loadCurve",
     eyebrow: "Why commercial works",
     heading: "Your business runs when the sun is up.",
-    lead: "That single fact is what makes commercial solar pay. A home exports most of its midday generation for a few cents. A business consumes it — offsetting power it would otherwise buy at full commercial rates.",
+    lead: "That single fact is what makes commercial solar pay. A home exports most of its midday generation for a few cents. A business consumes it, offsetting power it would otherwise buy at full commercial rates.",
     caption: "Illustrative daily shape. Your real curve comes from your interval data, which is the first thing we ask for.",
     legend: [
       { key: "gen", label: "Solar generation", tone: "yellow" },
@@ -175,7 +175,7 @@ export const SIGNATURES = {
     steps: [
       { n: "01", title: "Draw in ambient air", line: "A fan pulls outside air across an evaporator coil. Even cold air holds usable heat." },
       { n: "02", title: "Refrigerant absorbs it", line: "A refrigerant with a very low boiling point takes on that warmth and turns to gas." },
-      { n: "03", title: "Compressor concentrates it", line: "Compressing the gas raises its temperature sharply — this is the only stage using meaningful power." },
+      { n: "03", title: "Compressor concentrates it", line: "Compressing the gas raises its temperature sharply. This is the only stage using meaningful power." },
       { n: "04", title: "Heat transfers to the tank", line: "The hot gas passes through a heat exchanger, warming your water, then cycles back to start again." },
     ],
     payoff: {
@@ -195,7 +195,7 @@ export const SIGNATURES = {
         name: "Solar pool heating",
         line: "Pool water is pumped through collectors on your roof and returned warmed by the sun.",
         marks: [
-          { k: "Running cost", v: "Very low — the pump only", good: true },
+          { k: "Running cost", v: "Very low, the pump only", good: true },
           { k: "Temperature control", v: "Follows the weather", good: false },
           { k: "Works on cloudy days", v: "Limited", good: false },
           { k: "Needs roof area", v: "Yes, a decent amount", good: false },
@@ -206,7 +206,7 @@ export const SIGNATURES = {
         name: "Pool heat pump",
         line: "Draws warmth from the air and transfers it into the water, like a reverse-cycle unit for your pool.",
         marks: [
-          { k: "Running cost", v: "Low — far below gas", good: true },
+          { k: "Running cost", v: "Low, far below gas", good: true },
           { k: "Temperature control", v: "Holds a set temperature", good: true },
           { k: "Works on cloudy days", v: "Yes", good: true },
           { k: "Needs roof area", v: "No", good: true },
@@ -248,7 +248,94 @@ export const SIGNATURES = {
       { label: "Monitoring configured", a: true, b: true },
       { label: "16-year workmanship warranty", a: true, b: true },
     ],
-    note: "Adding a battery later is always possible — we specify a battery-ready inverter either way. It simply costs less to do it once.",
+    note: "Adding a battery later is always possible, and we specify a battery-ready inverter either way. It simply costs less to do it once.",
+  },
+
+  /* ---------------------------------------------------------------- */
+  "solar-inverter-replacement": {
+    type: "symptoms",
+    eyebrow: "Is it the inverter?",
+    heading: "Five signs, and what each one usually means.",
+    lead: "Most inverter faults announce themselves before they stop the system entirely. Here is how to read them, so you can tell us something useful when you call.",
+    items: [
+      {
+        n: "01",
+        sign: "An error code or red light on the display",
+        means: "The inverter has detected a fault and shut itself down, or is running in a limited mode. The code itself tells us a lot, so photograph it before you call.",
+        urgency: "Call now",
+        tone: "ember",
+      },
+      {
+        n: "02",
+        sign: "Production well below what the weather should give",
+        means: "Often a failing DC input or a dying capacitor. The system still runs, so it is easy to miss for months unless you check your monitoring.",
+        urgency: "Check monitoring",
+        tone: "yellow",
+      },
+      {
+        n: "03",
+        sign: "The system drops out in the middle of the day",
+        means: "Usually overheating or a grid voltage issue. Peak generation is when the inverter works hardest, so that is when a marginal unit gives up.",
+        urgency: "Call now",
+        tone: "ember",
+      },
+      {
+        n: "04",
+        sign: "Unusually hot, or a fan that never stops",
+        means: "Cooling is struggling. Sometimes it is just placement or dust, sometimes it is the beginning of the end. Worth inspecting either way.",
+        urgency: "Book a check",
+        tone: "yellow",
+      },
+      {
+        n: "05",
+        sign: "Nothing at all: no lights, no display",
+        means: "Either the unit has failed completely or its isolator has tripped. Check the isolator first; if it trips again, stop and call rather than resetting repeatedly.",
+        urgency: "Call now",
+        tone: "ember",
+      },
+    ],
+    note: "If your system is under ten years old, check the warranty before replacing anything. We will do that for you, and we would rather claim it than sell you a unit you are still covered for.",
+  },
+
+  /* ---------------------------------------------------------------- */
+  "tesla-powerwall": {
+    type: "methods",
+    eyebrow: "Honest comparison",
+    heading: "Powerwall, or something else?",
+    lead: "We install both. The right answer depends on whether you are buying backup or buying cheaper evenings, and those are different purchases.",
+    methods: [
+      {
+        name: "Tesla Powerwall",
+        line: "Premium storage with the strongest backup capability and the most refined app in the category.",
+        marks: [
+          { k: "Blackout backup", v: "Best in class", good: true },
+          { k: "Software and app", v: "Most refined", good: true },
+          { k: "Cost per kWh stored", v: "Higher", good: false },
+          { k: "Modular capacity", v: "Add whole units", good: false },
+          { k: "Retrofits to existing solar", v: "Usually", good: true },
+        ],
+        featured: true,
+      },
+      {
+        name: "Sungrow, BYD or Alpha ESS",
+        line: "Strong value storage that does the core job of shifting daytime solar into the evening, for less per kilowatt hour.",
+        marks: [
+          { k: "Blackout backup", v: "Available, varies", good: true },
+          { k: "Software and app", v: "Good, less polished", good: false },
+          { k: "Cost per kWh stored", v: "Lower", good: true },
+          { k: "Modular capacity", v: "Often stackable", good: true },
+          { k: "Retrofits to existing solar", v: "Usually", good: true },
+        ],
+      },
+    ],
+    both: {
+      title: "Which one we would actually recommend",
+      line: "If riding out a blackout matters to you, Powerwall earns its premium. If your goal is simply to stop buying power at 6pm, a value battery usually reaches payback sooner. We model both on your consumption and show you the difference in writing.",
+    },
+    cover: {
+      title: "Before either, check your inverter",
+      line: "Whether a battery can be retrofitted at all depends on your existing inverter. If it is not battery-ready, the choice becomes a hybrid upgrade or an AC-coupled battery, and that changes the maths. We check first.",
+    },
   },
 };
 

@@ -19,9 +19,9 @@ export const CONTACT = {
     image: "/images/real-install-2.webp",
     alt: "A Lumenx van outside a home with a completed rooftop solar system",
   },
-  chips: ["Mon to Sat, 7am – 5pm", "Victoria & New South Wales", "No obligation"],
+  chips: ["Mon to Sat, 7am to 5pm", "Victoria & New South Wales", "No obligation"],
 
-  hours: { days: "Monday to Saturday", time: "7:00am – 5:00pm", note: "Closed Sundays and public holidays" },
+  hours: { days: "Monday to Saturday", time: "7:00am to 5:00pm", note: "Closed Sundays and public holidays" },
 
   // What each channel is actually best for — so people pick the right one and
   // get a faster answer, rather than defaulting to whichever is listed first.

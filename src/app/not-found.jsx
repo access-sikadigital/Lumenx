@@ -34,7 +34,7 @@ export default function NotFound() {
 
           <h1 className="t-h2 mt-6 max-w-[20ch]">This page has gone off the grid.</h1>
           <p className="t-lead mt-6 max-w-[52ch] text-white/72">
-            The link is either out of date or slightly mistyped. Nothing is broken on your end —
+            The link is either out of date or slightly mistyped. Nothing is broken on your end, and
             here is everything that does exist.
           </p>
 

@@ -14,7 +14,7 @@ import Reviews from "@/components/Reviews";
 import Faq from "@/components/Faq";
 import CTA from "@/components/CTA";
 import { BRANDS, SERVICES } from "@/lib/site";
-import { SERVICE_PAGES } from "@/lib/services";
+import { SERVICE_PAGES, serviceUrl } from "@/lib/services";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -309,7 +309,12 @@ function Brands({ names }) {
                 loading="lazy"
                 decoding="async"
                 className="block h-auto max-w-full opacity-60 grayscale transition duration-500 hover:opacity-100 hover:grayscale-0"
-                style={{ width: `${Math.round(b.w * 1.6)}px` }}
+                // min() against a viewport unit, not 100%: the <li> is a flex
+                // item sized by this image, so a percentage would resolve
+                // against a width this image is itself setting. At 1.6x the
+                // widest logo (LG Energy Solution) renders 336px, which is
+                // wider than the 288px content box at a 320px viewport.
+                style={{ width: `min(${Math.round(b.w * 1.6)}px, 62vw)` }}
               />
             </li>
           ))}
@@ -321,9 +326,22 @@ function Brands({ names }) {
 
 /* ---------------- related services ---------------- */
 function Related({ slugs, current }) {
+  // Fall back to the service page's own hero when a slug has no home-page
+  // card — the sub-service pages (Powerwall, inverter replacement) are not in
+  // SERVICES, and without this they would silently vanish from related lists.
   const items = slugs
-    .map((s) => ({ page: SERVICE_PAGES[s], card: SERVICES.find((x) => x.id === s) }))
-    .filter((x) => x.page && x.card && x.page.slug !== current);
+    .map((s) => {
+      const page = SERVICE_PAGES[s];
+      if (!page || s === current) return null;
+      const card = SERVICES.find((x) => x.id === s);
+      return {
+        page,
+        image: card?.image || page.hero.image,
+        title: card?.title || page.label,
+        line: card?.line || page.lead,
+      };
+    })
+    .filter(Boolean);
   if (items.length === 0) return null;
 
   return (
@@ -339,15 +357,15 @@ function Related({ slugs, current }) {
         </div>
 
         <div className="grid gap-[clamp(1rem,1.5vw,1.5rem)] md:grid-cols-3">
-          {items.map(({ page, card }) => (
+          {items.map(({ page, image, title, line }) => (
             <Link
               key={page.slug}
-              href={`/${page.slug}`}
+              href={serviceUrl(page.slug)}
               className="group relative flex flex-col overflow-hidden rounded-[20px] border border-blue/10 bg-white transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:border-blue/20 hover:shadow-[0_28px_60px_-32px_rgba(11,20,59,0.45)]"
             >
               <div className="relative aspect-[16/10] overflow-hidden">
                 <Image
-                  src={card.image}
+                  src={image}
                   alt=""
                   fill
                   sizes="(max-width:768px) 100vw, 33vw"
@@ -356,8 +374,8 @@ function Related({ slugs, current }) {
                 <div className="absolute inset-0 bg-gradient-to-t from-blue/55 to-transparent" />
               </div>
               <div className="flex flex-1 flex-col p-[clamp(1.4rem,1.7vw,2rem)]">
-                <h3 className="t-h3 text-blue">{card.title}</h3>
-                <p className="mt-3 flex-1 text-[0.93rem] leading-relaxed text-ink">{card.line}</p>
+                <h3 className="t-h3 text-blue">{title}</h3>
+                <p className="mt-3 flex-1 text-[0.93rem] leading-relaxed text-ink">{line}</p>
                 <span className="mt-6 flex items-center gap-2 text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-ember">
                   Explore
                   <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
@@ -394,6 +412,10 @@ const ORDERS = {
   "heat-pump-hot-water": ["signature", "intro", "features", "brands", "rebates", "process", "reviews", "faq", "related", "cta"],
   "pool-heating": ["intro", "signature", "features", "brands", "process", "reviews", "faq", "related", "cta"],
   "solar-packages": ["intro", "signature", "features", "brands", "rebates", "process", "reviews", "faq", "related", "cta"],
+  // Someone here has a broken system; the symptom checker goes first.
+  "solar-inverter-replacement": ["signature", "intro", "features", "brands", "process", "faq", "related", "cta"],
+  // The comparison is the whole question on a single-product page.
+  "tesla-powerwall": ["intro", "signature", "features", "rebates", "brands", "process", "reviews", "faq", "related", "cta"],
 };
 
 /* ================= page ================= */

@@ -2,7 +2,10 @@
 
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Select from "@/components/Select";
 import { SITE } from "@/lib/site";
+
+const PROPERTY_TYPES = ["Home", "Business"];
 
 const INTERESTS = [
   "Solar panels",
@@ -15,8 +18,8 @@ const INTERESTS = [
 
 const BILLS = [
   "Under $400 a quarter",
-  "$400 – $700 a quarter",
-  "$700 – $1,200 a quarter",
+  "$400 to $700 a quarter",
+  "$700 to $1,200 a quarter",
   "Over $1,200 a quarter",
   "Not sure",
 ];
@@ -29,6 +32,10 @@ export default function QuoteForm() {
   const [state, setState] = useState("idle"); // idle | sending | sent | error
   const [errorKind, setErrorKind] = useState(null);
   const [fieldErrors, setFieldErrors] = useState([]);
+  // The dropdowns are controlled, so their values live here and ride into
+  // FormData through the hidden inputs Select renders.
+  const [propertyType, setPropertyType] = useState(PROPERTY_TYPES[0]);
+  const [bill, setBill] = useState("");
   const liveRef = useRef(null);
   const router = useRouter();
 
@@ -138,18 +145,36 @@ export default function QuoteForm() {
         </p>
       </div>
 
-      <fieldset className="mt-8">
-        <legend className={labelCls}>Property type</legend>
-        <div className="flex flex-wrap gap-2.5">
-          {["Home", "Business"].map((t, i) => (
-            <label key={t} className="qf-chip">
-              <input type="radio" name="propertyType" value={t} defaultChecked={i === 0} className="peer sr-only" />
-              <span className="qf-chip-face">{t}</span>
-            </label>
-          ))}
+      <div className="mt-8 grid gap-5 sm:grid-cols-2">
+        <div>
+          <label htmlFor="propertyType" className={labelCls}>Property type</label>
+          <Select
+            id="propertyType"
+            name="propertyType"
+            value={propertyType}
+            options={PROPERTY_TYPES}
+            onChange={setPropertyType}
+          />
         </div>
-      </fieldset>
 
+        <div>
+          <label htmlFor="bill" className={labelCls}>Roughly what is your power bill?</label>
+          <Select
+            id="bill"
+            name="bill"
+            value={bill}
+            options={BILLS}
+            onChange={setBill}
+            placeholder="Select a range"
+          />
+        </div>
+      </div>
+
+      {/* Deliberately still chips rather than a dropdown: this is the only
+          multi-select on the form, and a dropdown that has to show several
+          ticked values at once either truncates them or turns into a second,
+          worse chip list inside a panel. Chips show every selection at a
+          glance and take one tap each. */}
       <fieldset className="mt-8">
         <legend className={labelCls}>What are you interested in?</legend>
         <div className="flex flex-wrap gap-2.5">
@@ -162,18 +187,10 @@ export default function QuoteForm() {
         </div>
       </fieldset>
 
-      <div className="mt-8">
-        <label htmlFor="bill" className={labelCls}>Roughly what is your power bill?</label>
-        <select id="bill" name="bill" className={field} defaultValue="">
-          <option value="" disabled>Select a range</option>
-          {BILLS.map((b) => <option key={b} value={b}>{b}</option>)}
-        </select>
-      </div>
-
       <div className="mt-5">
         <label htmlFor="notes" className={labelCls}>Anything else we should know?</label>
         <textarea id="notes" name="notes" rows={4} className={`${field} resize-y`}
-          placeholder="Shading, roof type, an existing system, a deadline — anything that helps us quote accurately." />
+          placeholder="Shading, roof type, an existing system, a deadline: anything that helps us quote accurately." />
       </div>
 
       {failed && (
@@ -186,7 +203,7 @@ export default function QuoteForm() {
             <>
               <p className="text-[0.92rem] font-semibold text-blue">We could not send that just now.</p>
               <p className="mt-2 text-[0.92rem] leading-relaxed text-ink">
-                Sorry — please call us on{" "}
+                Sorry about that. Please call us on{" "}
                 <a href={SITE.quotePhoneHref} className="font-semibold text-ember underline underline-offset-4">{SITE.quotePhone}</a>{" "}
                 or email{" "}
                 <a href={`mailto:${SITE.email}`} className="font-semibold text-ember underline underline-offset-4">{SITE.email}</a>{" "}

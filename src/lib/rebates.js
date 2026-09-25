@@ -98,7 +98,7 @@ export const REBATES_PAGE = {
   faqs: [
     {
       q: "How much are the rebates worth?",
-      a: "It depends on the program, your system, your location and when you install, and the figures change — sometimes mid-year. Rather than publish a number that might be out of date by the time you read it, we calculate your actual entitlement and show it as a line on your quote.",
+      a: "It depends on the program, your system, your location and when you install, and the figures change, sometimes mid-year. Rather than publish a number that might be out of date by the time you read it, we calculate your actual entitlement and show it as a line on your quote.",
     },
     {
       q: "Do the rebates stack?",

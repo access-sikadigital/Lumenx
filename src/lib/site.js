@@ -390,11 +390,13 @@ export const FAQS = [
 export const OFFICES = [
   {
     state: "Victoria, Head Office",
+    city: "Melbourne",
     address: "Office 102/103C, 181 Rosamond Rd, Maribyrnong, VIC 3032",
     maps: "https://maps.google.com/?q=181+Rosamond+Rd+Maribyrnong+VIC+3032",
   },
   {
     state: "New South Wales",
+    city: "Sydney",
     address: "Level 26, 44 Market Street, Sydney NSW 2000, Australia",
     maps: "https://maps.google.com/?q=44+Market+Street+Sydney+NSW+2000",
   },
@@ -420,9 +422,133 @@ export const FOOTER_LINKS = {
   ],
   Company: [
     { label: "About Lumenx", href: "/about" },
+    { label: "Solar Products", href: "/solar-products" },
+    { label: "Solar System Sizes", href: "/solar-systems" },
     { label: "Solar Rebates Victoria", href: "/solar-rebates-victoria" },
+    { label: "Service Areas", href: "/locations" },
+    { label: "Guides & Resources", href: "/blog" },
+    { label: "Calculators & Tools", href: "/tools" },
+    { label: "FAQ", href: "/faq" },
     { label: "Reviews", href: "/reviews" },
     { label: "Contact", href: "/contact" },
     { label: "Get a Quote", href: "/get-a-quote" },
   ],
 };
+
+// Small print, rendered in the footer's bottom bar rather than as a link column.
+export const LEGAL_LINKS = [{ label: "Privacy Policy", href: "/privacy-policy" }];
+
+/**
+ * Header navigation.
+ *
+ * The site outgrew a flat bar. Seven top-level links already overran the shell
+ * below 1280px, and there are now forty-odd pages, so the bar is grouped into
+ * four items, each opening a panel.
+ *
+ * The mobile menu renders the same structure as always-open sections rather
+ * than an accordion: four taps to find anything is worse than one scroll, and
+ * an accordion hides the very thing a menu exists to reveal.
+ *
+ * Every href here must resolve to a real route. The link checker in the verify
+ * sweep fails the build-equivalent if one does not.
+ */
+export const NAV_GROUPS = [
+  {
+    label: "Services",
+    href: "/residential-solar",
+    columns: [
+      {
+        heading: "Solar",
+        links: [
+          { label: "Residential Solar", href: "/residential-solar", line: "Panels for homes" },
+          { label: "Commercial Solar", href: "/commercial-solar", line: "20kW and up" },
+          { label: "Solar Packages", href: "/solar-packages", line: "Panels, inverter, storage" },
+          { label: "System Sizes", href: "/solar-systems", line: "5kW to 15kW compared" },
+        ],
+      },
+      {
+        heading: "Storage & power",
+        links: [
+          { label: "Solar Batteries", href: "/solar-batteries", line: "Shift solar to the evening" },
+          { label: "Tesla Powerwall", href: "/solar-batteries/tesla-powerwall", line: "Compared honestly" },
+          { label: "Solar Inverters", href: "/solar-inverters", line: "String, hybrid, micro" },
+          { label: "Inverter Replacement", href: "/solar-inverter-replacement", line: "Repair or replace" },
+        ],
+      },
+      {
+        heading: "Electrify",
+        links: [
+          { label: "EV Chargers", href: "/ev-chargers", line: "Charge off your own solar" },
+          { label: "Heat Pump Hot Water", href: "/heat-pump-hot-water", line: "Your second biggest bill" },
+          { label: "Pool Heating", href: "/pool-heating", line: "Extend the season" },
+          { label: "All Products", href: "/solar-products", line: "Every brand we install" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Rebates",
+    href: "/solar-rebates-victoria",
+    columns: [
+      {
+        heading: "Programs",
+        links: [
+          { label: "Solar Rebates Victoria", href: "/solar-rebates-victoria", line: "Every program in one place" },
+          { label: "Battery Rebate", href: "/victorian-battery-rebate", line: "What changed in 2025" },
+          { label: "Heat Pump Rebate", href: "/heat-pump-rebate-victoria", line: "Replacing gas or electric" },
+        ],
+      },
+      {
+        heading: "Check yours",
+        links: [
+          { label: "Eligibility Check", href: "/solar-rebate-eligibility", line: "Which programs apply to you" },
+          { label: "Get a Quote", href: "/get-a-quote", line: "Confirmed in writing" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Tools",
+    href: "/tools",
+    columns: [
+      {
+        heading: "Calculators",
+        links: [
+          { label: "Savings Calculator", href: "/solar-savings-calculator", line: "Uses your own tariff" },
+          { label: "System Size Calculator", href: "/solar-system-size-calculator", line: "What kW you need" },
+          { label: "Battery Calculator", href: "/solar-battery-calculator", line: "Sized to your evenings" },
+        ],
+      },
+      {
+        heading: "Compare",
+        links: [
+          { label: "Payback Calculator", href: "/solar-payback-calculator", line: "Check any quote" },
+          { label: "Feed-in Tariff Calculator", href: "/feed-in-tariff-calculator", line: "What exporting earns" },
+          { label: "All Tools", href: "/tools", line: "Six, no email gate" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Company",
+    href: "/about",
+    columns: [
+      {
+        heading: "Lumenx",
+        links: [
+          { label: "About Us", href: "/about", line: "Who actually turns up" },
+          { label: "Reviews", href: "/reviews", line: "What customers say" },
+          { label: "Contact", href: "/contact", line: "Melbourne and Sydney" },
+        ],
+      },
+      {
+        heading: "Find out more",
+        links: [
+          { label: "Service Areas", href: "/locations", line: "Where we install" },
+          { label: "Guides & Resources", href: "/blog", line: "Worth reading first" },
+          { label: "FAQ", href: "/faq", line: "Every question, grouped" },
+        ],
+      },
+    ],
+  },
+];

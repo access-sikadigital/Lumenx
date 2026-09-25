@@ -60,7 +60,7 @@ export async function POST(request) {
   const endpoint = process.env.QUOTE_WEBHOOK_URL;
   if (!endpoint) {
     // Deliberately no lead data in the log line.
-    console.error("[quote] QUOTE_WEBHOOK_URL is not set — refusing to accept a submission.");
+    console.error("[quote] QUOTE_WEBHOOK_URL is not set. Refusing to accept a submission.");
     return NextResponse.json({ ok: false, error: "not_configured" }, { status: 503 });
   }
 

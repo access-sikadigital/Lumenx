@@ -15,7 +15,7 @@ const NEXT = [
   {
     n: "01",
     t: "We read it today",
-    d: "Someone on the team goes through it during opening hours — Monday to Saturday, 7am to 5pm.",
+    d: "Someone on the team goes through it during opening hours: Monday to Saturday, 7am to 5pm.",
   },
   {
     n: "02",
@@ -56,7 +56,7 @@ export default function Page() {
           <p className="eyebrow mb-5 mt-8 text-yellow">Request received</p>
           <h1 className="t-h1 max-w-[22ch]">Thanks. That is all we need for now.</h1>
           <p className="t-lead mt-7 max-w-[54ch] text-white/72">
-            Your request is with the team. You will hear back within one business day — and if it is
+            Your request is with the team. You will hear back within one business day, and if it is
             urgent, call us rather than waiting.
           </p>
 

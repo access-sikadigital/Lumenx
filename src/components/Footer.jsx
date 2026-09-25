@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { SITE, FOOTER_LINKS, OFFICES, TRUST, CREDIT } from "@/lib/site";
+import { SITE, FOOTER_LINKS, OFFICES, TRUST, CREDIT, LEGAL_LINKS } from "@/lib/site";
+import { LOCATIONS } from "@/lib/locations";
+import { CALCULATORS, REBATE_CHECK } from "@/lib/calculators";
 
 /**
  * Site footer.
@@ -97,9 +99,37 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Areas and tools as dense internal-link rows rather than two more
+            columns, so the four-column grid above keeps its proportions. */}
+        <div className="mt-16 border-t border-white/10 pt-8">
+          <p className="eyebrow mb-5 text-white/45">Areas we cover</p>
+          <ul className="flex flex-wrap gap-x-6 gap-y-3">
+            {LOCATIONS.map((l) => (
+              <li key={l.slug}>
+                <Link href={`/${l.slug}`} className="ft-link text-sm text-white/60 hover:text-white">
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mt-10 border-t border-white/10 pt-8">
+          <p className="eyebrow mb-5 text-white/45">Free calculators</p>
+          <ul className="flex flex-wrap gap-x-6 gap-y-3">
+            {[...CALCULATORS, REBATE_CHECK].map((t) => (
+              <li key={t.slug}>
+                <Link href={`/${t.slug}`} className="ft-link text-sm text-white/60 hover:text-white">
+                  {t.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         {/* credential strip */}
         <ul
-          className="mt-16 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/10 pt-8 text-[0.66rem] uppercase tracking-[0.14em] text-white/40"
+          className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/10 pt-8 text-[0.66rem] uppercase tracking-[0.14em] text-white/40"
         >
           {TRUST.map((t) => (
             <li key={t} className="flex items-center gap-2">
@@ -113,6 +143,16 @@ export default function Footer() {
         <div className="mt-8 flex flex-col justify-between gap-4 border-t border-white/[0.07] pt-8 text-xs text-white/40 md:flex-row md:items-center">
           <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-5">
             <p>© {new Date().getFullYear()} Lumenx. Sustainable Energy. All rights reserved.</p>
+            <span aria-hidden="true" className="hidden h-3 w-px bg-white/15 md:block" />
+            {LEGAL_LINKS.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="underline decoration-white/20 underline-offset-4 transition-colors duration-500 hover:text-white hover:decoration-white/50"
+              >
+                {l.label}
+              </Link>
+            ))}
             <span aria-hidden="true" className="hidden h-3 w-px bg-white/15 md:block" />
             <p>
               {CREDIT.prefix}{" "}

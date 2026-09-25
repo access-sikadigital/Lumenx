@@ -54,7 +54,7 @@ export const metadata = {
         url: "/og-default.jpg",
         width: 1200,
         height: 630,
-        alt: "Solar panels on a rooftop at sunset — Lumenx",
+        alt: "Solar panels on a rooftop at sunset, Lumenx",
       },
     ],
   },

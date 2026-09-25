@@ -46,7 +46,7 @@ export default function Page() {
           <p className="eyebrow mb-5 text-yellow">Free quote</p>
           <h1 className="t-h1 max-w-[24ch]">Tell us about your place. We will do the maths.</h1>
           <p className="t-lead mt-7 max-w-[56ch] text-white/72">
-            A fixed, itemised price with every rebate already applied — not a range, and not a
+            A fixed, itemised price with every rebate already applied. Not a range, and not a
             number that moves after the deposit.
           </p>
 
