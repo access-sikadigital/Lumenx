@@ -42,7 +42,7 @@ export default function NotFound() {
             <Link href="/" className="btn btn-primary">
               <span>Back to home</span>
             </Link>
-            <a href={SITE.quotePhoneHref} className="btn btn-ghost text-white">
+            <a href={SITE.quotePhoneHref} className="btn btn-ghost">
               <span>{SITE.quotePhone}</span>
             </a>
           </div>

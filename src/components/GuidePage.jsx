@@ -9,6 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import PageHero from "@/components/PageHero";
 import Faq from "@/components/Faq";
 import CTA from "@/components/CTA";
+import Marquee from "@/components/Marquee";
 import { getGuide } from "@/lib/guides";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -63,7 +64,9 @@ function Intro({ intro }) {
         </div>
 
         <div className="gd-media relative aspect-[4/5] overflow-hidden rounded-[24px] lg:mt-[clamp(2rem,5vw,5rem)]">
-          <Image src={intro.image} alt={intro.imageAlt} fill sizes="(max-width:1024px) 100vw, 40vw" className="object-cover" />
+          <Image src={intro.image} alt={intro.imageAlt} fill sizes="(max-width:1024px) 100vw, 40vw" className="object-cover" 
+            quality={90}
+          />
         </div>
       </div>
     </section>
@@ -217,6 +220,7 @@ export default function GuidePage({ slug }) {
       <Intro intro={g.intro} />
       <Steps steps={g.steps} />
       <Checklist checklist={g.checklist} related={g.related} />
+      <Marquee />
       <Faq
         items={g.faqs}
         heading={`${g.label}, answered.`}

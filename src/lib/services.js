@@ -4,7 +4,7 @@
 // proof points all come from the LumenX SEO Blueprint (sheets 7 and 11).
 //
 // Factual discipline: the only dollar figures here are the average-yearly-
-// savings numbers Lumenx already publishes on lumenex.com.au. No prices,
+// No savings figures, no prices,
 // payback periods or rebate amounts are invented — where a number belongs but
 // is not confirmed, the copy asks for a quote instead.
 
@@ -15,7 +15,7 @@ export const SERVICE_PAGES = {
     label: "Residential Solar",
     seoTitle: "Residential Solar Panels Melbourne | Lumenx",
     seoDescription:
-      "Quality residential solar for Victorian homes. Premium panels, a 16-year workmanship warranty and every rebate handled. See system sizes and savings.",
+      "Quality residential solar for Victorian homes. Premium panels, a 16-year workmanship warranty and every rebate handled. See system sizes and what suits your roof.",
     eyebrow: "Residential solar",
     h1: "Solar panels sized to your home, not a catalogue.",
     lead: "Most quotes start with a system and work backwards. We start with your roof, your bill and how your household actually uses power, then design around that.",
@@ -39,36 +39,6 @@ export const SERVICE_PAGES = {
       ],
       image: "/images/real-install-3.webp",
       imageAlt: "Solar panels installed by Lumenx on a rooftop at dusk",
-    },
-
-    // Savings figures are Lumenx's own published averages from lumenex.com.au.
-    options: {
-      heading: "Choose your system size",
-      note: "Average yearly savings as published by Lumenx. Your figure depends on your usage, tariff and roof.",
-      items: [
-        {
-          size: "6.6 kW",
-          best: "Perfect for small homes",
-          value: "$1,900",
-          valueLabel: "average yearly savings",
-          specs: ["15 × 440W panels", "1 × 5kW inverter"],
-        },
-        {
-          size: "10.4 kW",
-          best: "Perfect for large homes",
-          value: "$2,700",
-          valueLabel: "average yearly savings",
-          specs: ["23 × 440W panels", "1 × 10kW inverter"],
-          featured: true,
-        },
-        {
-          size: "15 kW",
-          best: "Perfect for businesses",
-          value: "$3,700",
-          valueLabel: "average yearly savings",
-          specs: ["34 × 440W panels", "1 × 15kW inverter"],
-        },
-      ],
     },
 
     features: [

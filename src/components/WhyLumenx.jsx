@@ -84,10 +84,14 @@ export default function WhyLumenx() {
             <div className="relative min-h-[260px] lg:row-span-2">
               <Image
                 src="/images/installation.webp"
-                alt="Lumenx crew installing rooftop solar panels"
+                // Stock, not a Lumenx job, so the alt text describes what is
+                // in the frame rather than claiming it is our work. Only the
+                // real-install-*.webp files carry attributive alt text.
+                alt="A family outside their home looking up at its rooftop solar array"
                 fill
                 sizes="(max-width:1024px) 100vw, 32vw"
                 className="object-cover"
+                quality={90}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-blue/60 via-blue/10 to-transparent" />
               <p className="absolute bottom-6 left-6 max-w-[22ch] text-[0.82rem] leading-snug text-white/85">

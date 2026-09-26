@@ -7,11 +7,10 @@
 //   Roof area ≈ 2.0 m² per panel, which is the footprint of a standard
 //   1.76 × 1.13 m module. Both are labelled approximate on the page.
 //
-// • `savings` is present ONLY on the three sizes Lumenx already publishes on
-//   lumenex.com.au (6.6kW $1,900, 10.4kW $2,700, 15kW $3,700). The 5kW and
-//   13.2kW pages deliberately carry no savings figure, because there is no
-//   published number for them and inventing one would be a pricing claim.
-//   Add `savings` to those two once you have real figures.
+// • NO savings or price figures appear anywhere on this site. Panel counts
+//   and roof areas are arithmetic from 440W modules; everything financial
+//   belongs in the written quote, where it is calculated against the
+//   customer's own bill rather than quoted as an average.
 //
 // • No prices anywhere. Every page routes to a quote instead.
 
@@ -87,8 +86,6 @@ export const SYSTEM_SIZES = [
     suits: "Units, townhouses and smaller households",
     profile:
       "Typically a one to two person household with modest daytime consumption, no pool and no electric vehicle. If that describes you, a bigger system mostly exports power at a low feed-in rate rather than saving you more.",
-    // No published savings figure for this size — see the note at the top.
-    savings: null,
     consider: [
       "Good fit if your quarterly bill is at the lower end and nobody is home midday",
       "Marginal if you run ducted heating or cooling, look at 6.6kW instead",
@@ -101,7 +98,7 @@ export const SYSTEM_SIZES = [
     kwNum: 6.6,
     seoTitle: "6.6kW Solar System | Panels, Savings & Price | Lumenx",
     seoDescription:
-      "The 6.6kW system is Australia's most common size. See panel count, roof space, average yearly savings and who it suits. Free quote from Lumenx.",
+      "The 6.6kW system is Australia's most common size. See panel count, roof space and who it suits. Free quote from Lumenx.",
     h1: "6.6kW is the most common system in Australia. Usually for good reason.",
     lead: "It pairs with a 5kW inverter, which is the largest most distributors approve without additional application, and it covers a typical family's daytime usage.",
     image: "/images/sys-small.webp",
@@ -112,7 +109,6 @@ export const SYSTEM_SIZES = [
     suits: "The typical three to four person household",
     profile:
       "The default recommendation for a standard family home with ordinary daytime consumption. It is popular because the economics are reliably good, not because it is a compromise.",
-    savings: { value: "$1,900", label: "average yearly savings, as published by Lumenx" },
     consider: [
       "Pairs with a 5kW inverter, which most distributors approve without extra steps",
       "Comfortable on a standard suburban roof with one good orientation",
@@ -125,7 +121,7 @@ export const SYSTEM_SIZES = [
     kwNum: 10.4,
     seoTitle: "10kW Solar System | Panels, Savings & Price | Lumenx",
     seoDescription:
-      "A 10kW solar system suits larger homes with air conditioning, a pool or an EV. See panel count, roof space and average savings. Free quote from Lumenx.",
+      "A 10kW solar system suits larger homes with air conditioning, a pool or an EV. See panel count, roof space and who it suits. Free quote from Lumenx.",
     h1: "10kW is where larger households stop leaving money on the roof.",
     lead: "Once you are running ducted air conditioning, a pool pump or charging a car at home, 6.6kW stops covering your daytime load and the extra capacity starts paying for itself.",
     image: "/images/sys-large.webp",
@@ -136,7 +132,6 @@ export const SYSTEM_SIZES = [
     suits: "Larger homes, pools, ducted systems and EVs",
     profile:
       "The most common upgrade from 6.6kW, and the size where adding a battery starts to make obvious sense because there is genuine surplus to store.",
-    savings: { value: "$2,700", label: "average yearly savings, as published by Lumenx" },
     consider: [
       "Needs a three-phase supply, or single-phase approval from your distributor",
       "Pairs well with a battery, because there is real midday surplus to store",
@@ -160,7 +155,6 @@ export const SYSTEM_SIZES = [
     suits: "High-consumption homes and small premises",
     profile:
       "Usually a large household running air conditioning, a pool, hot water and vehicle charging, or a home that doubles as a workplace. Three-phase supply is common at this size.",
-    savings: null,
     consider: [
       "Three-phase supply is typical, and distributor approval is a real step",
       "Often spread across more than one roof plane or orientation",
@@ -173,7 +167,7 @@ export const SYSTEM_SIZES = [
     kwNum: 15,
     seoTitle: "15kW Solar System | Size, Panels & Savings | Lumenx",
     seoDescription:
-      "A 15kW solar system suits small businesses and very large homes. See panel count, roof space and average savings. Free quote from Lumenx.",
+      "A 15kW solar system suits small businesses and very large homes. See panel count, roof space and who it suits. Free quote from Lumenx.",
     h1: "15kW is where residential ends and commercial thinking begins.",
     lead: "The largest system we fit under a residential design. Past this point the right approach is a commercial assessment based on your load profile rather than your roof.",
     image: "/images/sys-large.webp",
@@ -184,7 +178,6 @@ export const SYSTEM_SIZES = [
     suits: "Small business premises and very large homes",
     profile:
       "Small commercial sites, large rural properties and homes with exceptional consumption. At this scale self-consumption during working hours is what makes the return, which is why it is often a business rather than a household.",
-    savings: { value: "$3,700", label: "average yearly savings, as published by Lumenx" },
     consider: [
       "Three-phase supply required, with a full distributor application",
       "If this is for a business, our commercial assessment models it properly",

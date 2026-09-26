@@ -11,6 +11,7 @@ import Process from "@/components/Process";
 import Reviews from "@/components/Reviews";
 import Faq from "@/components/Faq";
 import CTA from "@/components/CTA";
+import Marquee from "@/components/Marquee";
 import { SYSTEM_SIZES, SYSTEMS_HUB } from "@/lib/systems";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -73,18 +74,6 @@ function Specs({ s }) {
             ))}
           </div>
 
-          {/* Savings only appear where Lumenx publishes a real figure. */}
-          {s.savings && (
-            <div className="mt-[clamp(2rem,3vw,2.75rem)] rounded-[20px] border border-green/25 bg-green/[0.05] p-[clamp(1.4rem,2vw,2rem)]">
-              <p className="numeral text-[clamp(1.9rem,3vw,2.8rem)] leading-none text-blue">{s.savings.value}</p>
-              <p className="mt-2.5 text-[0.86rem] text-ink">{s.savings.label}</p>
-              <p className="mt-3 text-[0.8rem] leading-relaxed text-ink-soft">
-                Your figure depends on your usage, tariff and roof. We calculate it properly in
-                your quote rather than quoting an average back at you.
-              </p>
-            </div>
-          )}
-
           <ul className="mt-[clamp(2rem,3vw,2.75rem)] space-y-3.5 border-t border-blue/12 pt-8">
             {s.consider.map((c) => (
               <li key={c} className="flex items-start gap-3.5">
@@ -98,7 +87,9 @@ function Specs({ s }) {
         </div>
 
         <div className="sp-media relative aspect-[4/5] overflow-hidden rounded-[24px] lg:mt-[clamp(2rem,5vw,5rem)]">
-          <Image src={s.image} alt={s.imageAlt} fill sizes="(max-width:1024px) 100vw, 40vw" className="object-cover" />
+          <Image src={s.image} alt={s.imageAlt} fill sizes="(max-width:1024px) 100vw, 40vw" className="object-cover" 
+            quality={90}
+          />
         </div>
       </div>
     </section>
@@ -155,10 +146,8 @@ export function SizeLadder({ current }) {
                 <Link
                   href={`/solar-systems/${s.slug}`}
                   aria-current={active ? "page" : undefined}
-                  className={`sl-row group block rounded-[18px] border p-[clamp(1.1rem,1.8vw,1.75rem)] transition-colors duration-500 ${
-                    active
-                      ? "border-yellow/50 bg-blue-2"
-                      : "border-white/12 bg-blue-2/35 hover:border-white/28 hover:bg-blue-2/60"
+                  className={`sl-row card-navy group block rounded-[18px] p-[clamp(1.1rem,1.8vw,1.75rem)] ${
+                    active ? "card-navy--accent !border-yellow/50" : ""
                   }`}
                 >
                   <div className="flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1.5">
@@ -218,6 +207,7 @@ export default function SystemSizePage({ slug }) {
       />
       <Specs s={s} />
       <SizeLadder current={s.slug} />
+      <Marquee />
       <Process />
       <Reviews />
       <Faq

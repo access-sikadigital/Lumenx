@@ -304,22 +304,22 @@ export const STATS = [
 // to 120px tall so they can be optically balanced by width rather than height.
 // `w` is the display width in px at the marquee's 30px logo height.
 export const BRANDS = [
-  { name: "Jinko Solar", file: "jinko-solar.webp", w: 90 },
-  { name: "Longi", file: "longi.webp", w: 80 },
-  { name: "Risen", file: "risen.webp", w: 99 },
-  { name: "Sunman", file: "sunman.webp", w: 126 },
-  { name: "Boss Solar", file: "boss-solar.webp", w: 117 },
-  { name: "LG Energy Solution", file: "lg-energy-solution.webp", w: 210 },
-  { name: "Alpha ESS", file: "alpha-ess.webp", w: 105 },
-  { name: "Sungrow", file: "sungrow.webp", w: 128 },
-  { name: "GoodWe", file: "goodwe.webp", w: 176 },
-  { name: "SolarEdge", file: "solaredge.webp", w: 148 },
-  { name: "Delta", file: "delta.webp", w: 97 },
-  { name: "GE", file: "ge.webp", w: 34 },
-  { name: "Wallbox", file: "wallbox.webp", w: 131 },
-  { name: "Hayward", file: "hayward.webp", w: 168 },
-  { name: "SensaHeat", file: "sensaheat.webp", w: 184 },
-  { name: "Supreme Heating", file: "supreme-heating.webp", w: 82 },
+  { name: "Jinko Solar", file: "jinko-solar.webp", w: 90, iw: 360, ih: 120 },
+  { name: "Longi", file: "longi.webp", w: 80, iw: 320, ih: 120 },
+  { name: "Risen", file: "risen.webp", w: 99, iw: 397, ih: 120 },
+  { name: "Sunman", file: "sunman.webp", w: 126, iw: 503, ih: 120 },
+  { name: "Boss Solar", file: "boss-solar.webp", w: 117, iw: 469, ih: 120 },
+  { name: "LG Energy Solution", file: "lg-energy-solution.webp", w: 210, iw: 966, ih: 120 },
+  { name: "Alpha ESS", file: "alpha-ess.webp", w: 105, iw: 419, ih: 120 },
+  { name: "Sungrow", file: "sungrow.webp", w: 128, iw: 511, ih: 120 },
+  { name: "GoodWe", file: "goodwe.webp", w: 176, iw: 807, ih: 120 },
+  { name: "SolarEdge", file: "solaredge.webp", w: 148, iw: 593, ih: 120 },
+  { name: "Delta", file: "delta.webp", w: 97, iw: 389, ih: 120 },
+  { name: "GE", file: "ge.webp", w: 34, iw: 120, ih: 120 },
+  { name: "Wallbox", file: "wallbox.webp", w: 131, iw: 522, ih: 120 },
+  { name: "Hayward", file: "hayward.webp", w: 168, iw: 768, ih: 120 },
+  { name: "SensaHeat", file: "sensaheat.webp", w: 184, iw: 843, ih: 120 },
+  { name: "Supreme Heating", file: "supreme-heating.webp", w: 82, iw: 328, ih: 120 },
 ];
 
 // Testimonials (placeholders, swap for real Google reviews before launch).

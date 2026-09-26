@@ -11,6 +11,7 @@ import Process from "@/components/Process";
 import Reviews from "@/components/Reviews";
 import Faq from "@/components/Faq";
 import CTA from "@/components/CTA";
+import Marquee from "@/components/Marquee";
 import { SYSTEMS_HUB } from "@/lib/systems";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -65,7 +66,9 @@ function Intro() {
         </div>
 
         <div className="sh-media relative aspect-[4/5] overflow-hidden rounded-[24px] lg:mt-[clamp(2rem,5vw,5rem)]">
-          <Image src={intro.image} alt={intro.imageAlt} fill sizes="(max-width:1024px) 100vw, 40vw" className="object-cover" />
+          <Image src={intro.image} alt={intro.imageAlt} fill sizes="(max-width:1024px) 100vw, 40vw" className="object-cover" 
+            quality={90}
+          />
         </div>
       </div>
     </section>
@@ -89,6 +92,7 @@ export default function SystemsHubPage() {
       />
       <Intro />
       <SizeLadder current={null} />
+      <Marquee />
       <Process />
       <Reviews />
       <Faq

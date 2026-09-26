@@ -25,12 +25,20 @@ export default function RebatesBand() {
         scrollTrigger: { trigger: root.current, start: "top 78%" },
       });
 
+      // y, not x. These cards are a left-aligned vertical stack, so a sideways
+      // entrance means every mid-flight frame shows them at different left
+      // edges — it reads as a broken layout rather than as an animation, and
+      // the last card in the stagger is the one people catch. Moving along the
+      // stack's own axis keeps the left edge true at every frame.
       gsap.from(".rb-card", {
-        x: 44,
+        y: 28,
         opacity: 0,
         duration: 0.85,
         stagger: 0.14,
         ease: "power3.out",
+        // clearProps so nothing is left holding a transform if the tween is
+        // interrupted by a fast scroll or a resize mid-animation.
+        clearProps: "transform",
         scrollTrigger: { trigger: ".rb-stack", start: "top 84%" },
       });
     },
@@ -71,7 +79,7 @@ export default function RebatesBand() {
           {REBATES.map((r) => (
             <article
               key={r.n}
-              className="rb-card relative rounded-[20px] border border-white/14 bg-blue-2/70 p-[clamp(1.4rem,1.7vw,2.1rem)] transition-colors duration-500 hover:border-yellow/45 hover:bg-blue-2"
+              className="rb-card relative rounded-[20px] card-navy p-[clamp(1.4rem,1.7vw,2.1rem)] transition-colors duration-500"
             >
               <div className="flex items-start gap-4">
                 <span
@@ -99,7 +107,7 @@ export default function RebatesBand() {
           ))}
 
           {/* the payoff line under the stack */}
-          <p className="mt-7 flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.16em] text-white/40">
+          <p className="mt-7 flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.16em] text-white/55">
             <span className="h-px w-8 bg-yellow" />
             All three checked on every quote
           </p>

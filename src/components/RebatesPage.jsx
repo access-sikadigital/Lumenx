@@ -66,7 +66,9 @@ function Intro() {
         </div>
 
         <div className="rp-media relative aspect-[4/5] overflow-hidden rounded-[24px] lg:mt-[clamp(2rem,5vw,5rem)]">
-          <Image src={intro.image} alt={intro.imageAlt} fill sizes="(max-width:1024px) 100vw, 40vw" className="object-cover" />
+          <Image src={intro.image} alt={intro.imageAlt} fill sizes="(max-width:1024px) 100vw, 40vw" className="object-cover" 
+            quality={90}
+          />
         </div>
       </div>
     </section>
@@ -125,27 +127,38 @@ function Programs() {
           {programs.map((p) => (
             <article
               key={p.n}
-              className="pg-card relative flex flex-col overflow-hidden rounded-[22px] border border-white/12 bg-blue-2/45 p-[clamp(1.5rem,2.2vw,2.5rem)] transition-colors duration-500 hover:border-yellow/40"
+              className="pg-card card-navy card-navy--accent relative flex flex-col overflow-hidden rounded-[22px] p-[clamp(1.5rem,2.2vw,2.5rem)]"
             >
               <div className="flex items-start justify-between gap-5">
                 <div>
-                  <span className="numeral text-[0.7rem] tracking-[0.16em] text-yellow">{p.n}</span>
+                  {/* Ember, not yellow. The numerals are the one element
+                      repeated down the whole grid, so they carry the warm
+                      colour furthest for the least noise. */}
+                  <span className="numeral text-[0.7rem] tracking-[0.16em] text-ember">{p.n}</span>
                   <h3 className="t-h3 mt-4">{p.name}</h3>
-                  <p className="mt-1.5 text-[0.82rem] text-white/40">{p.full}</p>
+                  <p className="mt-1.5 text-[0.82rem] text-white/55">{p.full}</p>
                 </div>
-                <span className="shrink-0 whitespace-nowrap rounded-full border border-white/15 px-3 py-1 text-[0.58rem] font-semibold uppercase tracking-[0.12em] text-white/55">
+                {/* Federal and Victorian read as different things, so they get
+                    different colours rather than one grey pill for both. */}
+                <span
+                  className={`shrink-0 whitespace-nowrap rounded-full border px-3 py-1 text-[0.58rem] font-semibold uppercase tracking-[0.12em] ${
+                    p.level?.toLowerCase().startsWith("federal")
+                      ? "border-ember/40 bg-ember/15 text-[#ffb9a0]"
+                      : "border-yellow/40 bg-yellow/15 text-yellow"
+                  }`}
+                >
                   {p.level}
                 </span>
               </div>
 
-              <p className="t-body mt-6 flex-1 text-white/65">{p.line}</p>
+              <p className="t-body mt-6 flex-1 text-white/70">{p.line}</p>
 
-              <dl className="mt-7 space-y-3 border-t border-white/10 pt-6">
+              <dl className="mt-7 space-y-3 border-t border-white/12 pt-6">
                 <div className="flex items-start justify-between gap-5">
-                  <dt className="text-[0.66rem] uppercase tracking-[0.14em] text-white/40">Applies to</dt>
-                  <dd className="text-right text-[0.88rem] font-medium">{p.applies}</dd>
+                  <dt className="text-[0.66rem] uppercase tracking-[0.14em] text-white/55">Applies to</dt>
+                  <dd className="text-right text-[0.88rem] font-semibold text-yellow">{p.applies}</dd>
                 </div>
-                <p className="text-[0.82rem] leading-relaxed text-white/45">{p.note}</p>
+                <p className="text-[0.82rem] leading-relaxed text-white/50">{p.note}</p>
               </dl>
             </article>
           ))}

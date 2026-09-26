@@ -11,6 +11,7 @@ import Process from "@/components/Process";
 import Reviews from "@/components/Reviews";
 import Faq from "@/components/Faq";
 import CTA from "@/components/CTA";
+import Marquee from "@/components/Marquee";
 import { BRANDS } from "@/lib/site";
 import { PRODUCTS_HUB } from "@/lib/products";
 
@@ -67,7 +68,9 @@ function Intro() {
         </div>
 
         <div className="ph-media relative aspect-[4/5] overflow-hidden rounded-[24px] lg:mt-[clamp(2rem,5vw,5rem)]">
-          <Image src={intro.image} alt={intro.imageAlt} fill sizes="(max-width:1024px) 100vw, 40vw" className="object-cover" />
+          <Image src={intro.image} alt={intro.imageAlt} fill sizes="(max-width:1024px) 100vw, 40vw" className="object-cover" 
+            quality={90}
+          />
         </div>
       </div>
     </section>
@@ -180,6 +183,7 @@ function CategoryLedger() {
                     fill
                     sizes="(max-width:1024px) 100vw, 50vw"
                     className="object-cover"
+                    quality={90}
                   />
                 </div>
               </article>
@@ -195,29 +199,19 @@ function CategoryLedger() {
    Every brand, once, as a closing statement.
    ---------------------------------------------------------------- */
 function AllBrands() {
-  const root = useRef(null);
-
-  useGSAP(
-    () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      gsap.from(".ab-logo", {
-        y: 18, opacity: 0, duration: 0.55, stagger: 0.04, ease: "power3.out",
-        scrollTrigger: { trigger: root.current, start: "top 86%" },
-      });
-    },
-    { scope: root }
-  );
-
   return (
-    <section
-      ref={root}
-      className="grain relative overflow-hidden bg-blue text-white"
-      style={{ paddingTop: "clamp(4rem, 9vh, 7rem)", paddingBottom: "clamp(4rem, 9vh, 7rem)" }}
-    >
-      <div aria-hidden="true" className="glow glow--solar right-[-10%] top-[-18%]" style={{ width: "min(600px, 50%)" }} />
+    <section className="grain relative overflow-hidden bg-blue text-white">
+      <div
+        aria-hidden="true"
+        className="glow glow--solar right-[-10%] top-[-18%]"
+        style={{ width: "min(600px, 50%)" }}
+      />
 
-      <div className="shell relative">
-        <div className="mb-[clamp(2.5rem,4vw,3.5rem)] max-w-[38rem]">
+      <div
+        className="shell relative"
+        style={{ paddingTop: "clamp(4rem, 9vh, 7rem)", paddingBottom: "clamp(2.5rem, 4vw, 3.5rem)" }}
+      >
+        <div className="max-w-[38rem]">
           <p className="eyebrow mb-5 text-yellow">Every brand we install</p>
           <h2 className="t-h2">Sixteen names, one warranty.</h2>
           <p className="t-body mt-6 text-white/65">
@@ -225,22 +219,17 @@ function AllBrands() {
             workmanship warranty. That part does not change with the brand.
           </p>
         </div>
-
-        <ul className="flex flex-wrap items-center gap-x-[clamp(2rem,3.5vw,4rem)] gap-y-9">
-          {BRANDS.map((b) => (
-            <li key={b.file} className="ab-logo">
-              <img
-                src={`/brands/${b.file}`}
-                alt={b.name}
-                loading="lazy"
-                decoding="async"
-                className="block h-auto max-w-full opacity-45 brightness-0 invert transition duration-500 hover:opacity-90"
-                style={{ width: `min(${Math.round(b.w * 1.15)}px, 62vw)` }}
-              />
-            </li>
-          ))}
-        </ul>
       </div>
+
+      {/* The same moving row as the home page, inverted for the navy ground.
+          A static wall of sixteen logos read as a spec sheet; moving, it reads
+          as a supply chain. */}
+      <Marquee
+        eyebrow="The full list"
+        tone="dark"
+        bare
+        className="relative pb-[clamp(4rem,9vh,7rem)] pt-0"
+      />
     </section>
   );
 }

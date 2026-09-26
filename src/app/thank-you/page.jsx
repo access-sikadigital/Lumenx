@@ -64,7 +64,7 @@ export default function Page() {
             <a href={SITE.quotePhoneHref} className="btn btn-primary">
               <span>Call {SITE.quotePhone}</span>
             </a>
-            <Link href="/" className="btn btn-ghost text-white">
+            <Link href="/" className="btn btn-ghost">
               <span>Back to home</span>
             </Link>
           </div>
@@ -112,7 +112,7 @@ export default function Page() {
             <h2 className="t-h2 max-w-[20ch] text-blue">
               While you wait, have a read.
             </h2>
-            <Link href="/solar-rebates-victoria" className="btn btn-sm btn-ghost text-blue">
+            <Link href="/solar-rebates-victoria" className="btn btn-sm btn-ghost btn-ghost-ink">
               <span>Rebates explained</span>
             </Link>
           </div>

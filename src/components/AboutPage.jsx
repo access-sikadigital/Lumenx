@@ -81,6 +81,7 @@ function Intro() {
             fill
             sizes="(max-width:1024px) 100vw, 40vw"
             className="object-cover"
+            quality={90}
           />
         </div>
       </div>

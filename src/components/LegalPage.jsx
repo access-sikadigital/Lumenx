@@ -43,7 +43,7 @@ export default function LegalPage({ doc }) {
 
         <div className="shell page-hero-copy relative z-10">
           <nav aria-label="Breadcrumb" className="mb-8">
-            <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.72rem] text-white/45">
+            <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.72rem] text-white/55">
               <li><Link href="/" className="transition-colors hover:text-yellow">Home</Link></li>
               <li aria-hidden="true">/</li>
               <li aria-current="page" className="text-white/70">{doc.label}</li>
@@ -54,7 +54,7 @@ export default function LegalPage({ doc }) {
             <p className="eyebrow mb-6 text-yellow">{doc.eyebrow}</p>
             <h1 className="t-h1">{doc.h1}</h1>
             <p className="t-lead mt-7 max-w-[52ch] text-white/70">{doc.lead}</p>
-            <p className="mt-8 text-[0.78rem] uppercase tracking-[0.14em] text-white/45">
+            <p className="mt-8 text-[0.78rem] uppercase tracking-[0.14em] text-white/55">
               Last updated {doc.updated}
             </p>
           </div>

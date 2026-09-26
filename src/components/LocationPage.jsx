@@ -10,18 +10,25 @@ import Process from "@/components/Process";
 import Reviews from "@/components/Reviews";
 import Faq from "@/components/Faq";
 import CTA from "@/components/CTA";
+import Marquee from "@/components/Marquee";
 import { SITE, OFFICES, TRUST } from "@/lib/site";
 import { SERVICE_PAGES, serviceUrl } from "@/lib/services";
-import { LOCATIONS, getLocation } from "@/lib/locations";
+import { LOCATIONS, getLocation, artFor } from "@/lib/locations";
 
 gsap.registerPlugin(ScrollTrigger);
 
 /* ================================================================
-   Typographic hero.
-   No stock photo — the city name IS the artwork. A watermark of the
-   city set in the display face sits behind the copy, clipped by the
-   section, so every city page reads differently without a single
-   interchangeable skyline shot.
+   Location hero.
+
+   The art is keyed to the page's SERVICE, never its city: there is
+   still no city-specific photography, so it is rendered decoratively
+   (empty alt, aria-hidden) and nothing on the page claims the photo
+   was taken there. The city watermark stays as the local signature.
+
+   The scrim is two layers rather than one flat tint: a base that
+   holds text legible at every width, plus a left-weighted horizontal
+   gradient that lets the photo come through on the right, which is
+   the half the copy was leaving empty.
    ================================================================ */
 function TypoHero({ l }) {
   const root = useRef(null);
@@ -42,10 +49,40 @@ function TypoHero({ l }) {
 
   return (
     <section ref={root} className="grain relative isolate overflow-hidden bg-blue text-white">
+      {/* service-matched art, decorative only */}
+      <Image
+        src={artFor(l.service)}
+        alt=""
+        aria-hidden="true"
+        fill
+        priority
+        sizes="100vw"
+        quality={90}
+        className="lh-art -z-10 object-cover"
+      />
+      {/* base scrim: keeps the copy legible at every width, including mobile
+          where the text runs the full width of the image */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10"
+        style={{ background: "rgba(11,20,59,0.72)" }}
+      />
+      {/* left-weighted wash: solid behind the copy, thinning to the right so
+          the photograph is actually visible in the space the copy leaves */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(11,20,59,0.94) 0%, rgba(11,20,59,0.88) 42%, rgba(11,20,59,0.42) 72%, rgba(11,20,59,0.22) 100%)",
+        }}
+      />
+
       <div aria-hidden="true" className="glow glow--solar right-[-18%] top-[-30%]" style={{ width: "min(780px, 72%)" }} />
       <div aria-hidden="true" className="glow glow--ember left-[-22%] bottom-[-38%]" style={{ width: "min(620px, 60%)" }} />
 
-      {/* city watermark */}
+      {/* city watermark, dialled back so it sits under the photo rather than
+          competing with it */}
       <span
         aria-hidden="true"
         className="lh-mark pointer-events-none absolute left-[-0.06em] bottom-[-0.18em] select-none whitespace-nowrap font-[family-name:var(--font-display)] font-extrabold leading-none"
@@ -53,7 +90,7 @@ function TypoHero({ l }) {
           fontSize: "clamp(7rem, 26vw, 24rem)",
           letterSpacing: "-0.045em",
           color: "transparent",
-          WebkitTextStroke: "1px rgba(255,255,255,0.075)",
+          WebkitTextStroke: "1px rgba(255,255,255,0.055)",
         }}
       >
         {l.city}
@@ -62,7 +99,7 @@ function TypoHero({ l }) {
       <div className="shell page-hero-copy relative z-10">
         {/* breadcrumbs */}
         <nav aria-label="Breadcrumb" className="mb-8">
-          <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.72rem] text-white/45">
+          <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.72rem] text-white/55">
             <li><Link href="/" className="transition-colors hover:text-yellow">Home</Link></li>
             <li aria-hidden="true">/</li>
             <li><Link href="/locations" className="transition-colors hover:text-yellow">Service Areas</Link></li>
@@ -71,18 +108,31 @@ function TypoHero({ l }) {
           </ol>
         </nav>
 
-        <div className="lh-copy max-w-[46rem]">
+        <div className="lh-copy max-w-[62rem]">
           <p className="eyebrow mb-6 text-yellow">
             {l.service} · {l.city}
           </p>
-          <h1 className="t-h1">{l.h1}</h1>
-          <p className="t-lead mt-8 max-w-[52ch] text-white/70">{l.lead}</p>
+          {/* Sized for two lines, not three or four. The longest headline in
+              the set is 57 characters, so a 30ch measure splits every one of
+              them across exactly two lines, and the type is capped at 4.6rem
+              so 30ch still fits the shell on a wide screen. */}
+          <h1
+            className="max-w-[30ch] font-[family-name:var(--font-display)] font-extrabold"
+            style={{
+              fontSize: "clamp(1.95rem, 4.4vw, 4.6rem)",
+              lineHeight: 1.06,
+              letterSpacing: "-0.03em",
+            }}
+          >
+            {l.h1}
+          </h1>
+          <p className="t-lead mt-8 max-w-[56ch] text-white/72">{l.lead}</p>
 
           <div className="mt-10 flex flex-wrap items-center gap-3.5">
             <Link href="/get-a-quote" className="btn btn-primary">
               <span>Get a quote</span>
             </Link>
-            <a href={SITE.phoneHref} className="btn btn-ghost text-white">
+            <a href={SITE.phoneHref} className="btn btn-ghost">
               <span>{SITE.phone}</span>
             </a>
           </div>
@@ -258,15 +308,15 @@ function Coverage({ l }) {
 
         {/* sun dial */}
         <div className="cv-dial lg:pt-[clamp(3rem,7vw,7rem)]">
-          <div className="rounded-[24px] border border-white/14 bg-blue-2/45 p-[clamp(1.5rem,2.6vw,2.5rem)]">
-            <span className="block text-[0.66rem] uppercase tracking-[0.16em] text-white/45">
+          <div className="rounded-[24px] card-navy p-[clamp(1.5rem,2.6vw,2.5rem)]">
+            <span className="block text-[0.66rem] uppercase tracking-[0.16em] text-white/55">
               {l.city}, daily average
             </span>
             <p className="numeral mt-4 text-[clamp(2.8rem,6vw,4.5rem)] leading-none text-yellow">
               {l.sun}
             </p>
             <p className="mt-2 text-[0.92rem] text-white/70">peak sun hours</p>
-            <p className="mt-5 border-t border-white/12 pt-5 text-[0.8rem] leading-relaxed text-white/45">
+            <p className="mt-5 border-t border-white/12 pt-5 text-[0.8rem] leading-relaxed text-white/55">
               An approximate long-run average, useful for comparing one city against another. Your
               roof&rsquo;s actual yield depends on pitch, orientation and shading, which we model
               from your address rather than from a regional figure.
@@ -333,6 +383,7 @@ function LocalServices({ l }) {
                   fill
                   sizes="(max-width:640px) 100vw, (max-width:1280px) 50vw, 25vw"
                   className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
+                  quality={90}
                 />
               </div>
               <div className="p-[clamp(1.1rem,1.6vw,1.5rem)]">
@@ -447,6 +498,7 @@ export default function LocationPage({ slug }) {
       <LocalBrief l={l} />
       <Coverage l={l} />
       <LocalServices l={l} />
+      <Marquee />
       <Process />
       <Reviews />
       <Faq

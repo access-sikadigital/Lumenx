@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -9,8 +10,9 @@ import Process from "@/components/Process";
 import Reviews from "@/components/Reviews";
 import Faq from "@/components/Faq";
 import CTA from "@/components/CTA";
+import Marquee from "@/components/Marquee";
 import { SITE, OFFICES, TRUST } from "@/lib/site";
-import { LOCATIONS, LOCATIONS_HUB } from "@/lib/locations";
+import { LOCATIONS, LOCATIONS_HUB, artFor } from "@/lib/locations";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -33,28 +35,58 @@ function Hero() {
 
   return (
     <section ref={root} className="grain relative isolate overflow-hidden bg-blue text-white">
+      {/* Same treatment as the city pages: service-matched art, decorative. */}
+      <Image
+        src={artFor("Solar panels")}
+        alt=""
+        aria-hidden="true"
+        fill
+        priority
+        sizes="100vw"
+        quality={90}
+        className="-z-10 object-cover"
+      />
+      <div aria-hidden="true" className="absolute inset-0 -z-10" style={{ background: "rgba(11,20,59,0.72)" }} />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(11,20,59,0.94) 0%, rgba(11,20,59,0.88) 42%, rgba(11,20,59,0.42) 72%, rgba(11,20,59,0.22) 100%)",
+        }}
+      />
+
       <div aria-hidden="true" className="glow glow--solar right-[-18%] top-[-28%]" style={{ width: "min(760px, 70%)" }} />
       <div aria-hidden="true" className="glow glow--ember left-[-20%] bottom-[-36%]" style={{ width: "min(600px, 58%)" }} />
 
       <div className="shell page-hero-copy relative z-10">
         <nav aria-label="Breadcrumb" className="mb-8">
-          <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.72rem] text-white/45">
+          <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.72rem] text-white/55">
             <li><Link href="/" className="transition-colors hover:text-yellow">Home</Link></li>
             <li aria-hidden="true">/</li>
             <li aria-current="page" className="text-white/70">Service Areas</li>
           </ol>
         </nav>
 
-        <div className="lhh-copy max-w-[46rem]">
+        <div className="lhh-copy max-w-[62rem]">
           <p className="eyebrow mb-6 text-yellow">{LOCATIONS_HUB.eyebrow}</p>
-          <h1 className="t-h1">{LOCATIONS_HUB.h1}</h1>
-          <p className="t-lead mt-8 max-w-[52ch] text-white/70">{LOCATIONS_HUB.lead}</p>
+          <h1
+            className="max-w-[30ch] font-[family-name:var(--font-display)] font-extrabold"
+            style={{
+              fontSize: "clamp(1.95rem, 4.4vw, 4.6rem)",
+              lineHeight: 1.06,
+              letterSpacing: "-0.03em",
+            }}
+          >
+            {LOCATIONS_HUB.h1}
+          </h1>
+          <p className="t-lead mt-8 max-w-[56ch] text-white/72">{LOCATIONS_HUB.lead}</p>
 
           <div className="mt-10 flex flex-wrap items-center gap-3.5">
             <Link href="/get-a-quote" className="btn btn-primary">
               <span>Check my address</span>
             </Link>
-            <a href={SITE.phoneHref} className="btn btn-ghost text-white">
+            <a href={SITE.phoneHref} className="btn btn-ghost">
               <span>{SITE.phone}</span>
             </a>
           </div>
@@ -266,7 +298,7 @@ function SunCompare() {
           ))}
         </ul>
 
-        <p className="mt-[clamp(2rem,3vw,2.5rem)] max-w-[56ch] border-t border-white/12 pt-6 text-[0.8rem] leading-relaxed text-white/45">
+        <p className="mt-[clamp(2rem,3vw,2.5rem)] max-w-[56ch] border-t border-white/12 pt-6 text-[0.8rem] leading-relaxed text-white/55">
           Long-run regional averages, shown for comparison only. Your own yield depends on roof
           pitch, orientation and shading, which we model properly before quoting.
         </p>
@@ -304,6 +336,7 @@ export default function LocationsHubPage() {
       <Hero />
       <Offices />
       <SunCompare />
+      <Marquee />
       <Process />
       <Reviews />
       <Faq

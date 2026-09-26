@@ -73,6 +73,7 @@ function Library() {
                 fill
                 sizes="(max-width:1024px) 100vw, 52vw"
                 className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+                quality={90}
               />
             </div>
             <div className="flex flex-col justify-center p-[clamp(1.5rem,3vw,3rem)]">
@@ -109,6 +110,7 @@ function Library() {
                   fill
                   sizes="(max-width:640px) 100vw, (max-width:1280px) 50vw, 33vw"
                   className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
+                  quality={90}
                 />
               </div>
               <div className="flex flex-1 flex-col p-[clamp(1.2rem,1.8vw,1.6rem)]">
@@ -222,6 +224,7 @@ function Articles() {
                   fill
                   sizes="(max-width:640px) 100vw, (max-width:1280px) 50vw, 33vw"
                   className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
+                  quality={90}
                 />
               </div>
               <div className="flex flex-1 flex-col p-[clamp(1.2rem,1.8vw,1.6rem)]">

@@ -119,18 +119,12 @@ export default function CTA() {
                   ))}
                 </ul>
 
-                <div className="cta-in mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+                <div className="cta-in mt-10 flex flex-wrap items-center gap-3.5">
                   <Link href="/get-a-quote" className="btn btn-primary">
                     <span>Get a Free Quote</span>
                   </Link>
-                  <a
-                    href={SITE.phoneHref}
-                    className="group text-sm text-white/55 transition-colors duration-500 hover:text-white"
-                  >
-                    Prefer to talk?{" "}
-                    <span className="font-semibold text-yellow underline decoration-yellow/30 underline-offset-4 transition-colors duration-500 group-hover:decoration-yellow">
-                      {SITE.phone}
-                    </span>
+                  <a href={SITE.phoneHref} className="btn btn-ghost">
+                    <span>{SITE.phone}</span>
                   </a>
                 </div>
               </div>
@@ -147,6 +141,7 @@ export default function CTA() {
                 fill
                 sizes="(max-width: 1024px) 100vw, 46vw"
                 className="cta-photo object-cover"
+                quality={90}
               />
               {/* blend the photo into the navy panel: sideways on desktop,
                   upward on mobile where the columns stack */}
@@ -169,7 +164,7 @@ export default function CTA() {
 
           {/* ---------------- credential bar ---------------- */}
           <div
-            className="cta-bar relative z-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/10 text-[0.66rem] uppercase tracking-[0.14em] text-white/45"
+            className="cta-bar relative z-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/10 text-[0.66rem] uppercase tracking-[0.14em] text-white/55"
             style={{
               paddingTop: "clamp(1.25rem, 1.6vw, 1.75rem)",
               paddingBottom: "clamp(1.25rem, 1.6vw, 1.75rem)",

@@ -17,6 +17,9 @@
   --color-white: #faf7f1;
   --color-green: #81d553;
   --color-green-deep: #63b93b;
+  /* Green dark enough to be read as TEXT on the pale surfaces. The brand
+     green is 1.8:1 on white, which is decorative only; this is 5.1:1. */
+  --color-green-ink: #3d7d20;
 
   /* Neutrals */
   --color-ink: #3b425a;
@@ -94,6 +97,74 @@ body {
      viewport. break-word only splits when a word genuinely cannot fit, so
      normal copy is untouched. */
   overflow-wrap: break-word;
+}
+
+/* ---------------------------------------------------------------------------
+   Card surfaces on the navy ground.
+
+   Cards on the dark sections were painted with a translucent blue-2 at 35-45%,
+   which lands within a few percent of the section behind them. The result read
+   as navy on navy: you could see the border, but the card had no presence. The
+   one place it worked was the home page rebates band, which used 70%.
+
+   .card-navy is that surface, made explicit and given a top-lit gradient so
+   the card has a light source rather than being a flat tint. Everything on a
+   navy section now uses it, so the treatment is consistent instead of being
+   re-guessed per component.
+
+   .card-navy--accent adds a warm hairline along the top edge. The palette is
+   ember and yellow, and the dark sections were using almost none of it.
+--------------------------------------------------------------------------- */
+.card-navy {
+  position: relative;
+  /* The lift percentages are measured, not guessed. Against the #0b143b
+     section the old translucent tint sat at 1.04:1 — a card you could only
+     find by its border. 30% at the top and 12% at the foot put it at 1.64:1
+     and 1.28:1, which reads as a raised panel while staying unmistakably
+     navy. Above about 2:1 it stops looking like the same surface family. */
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--color-blue-2) 70%, #6d7ac0 30%) 0%,
+      color-mix(in oklab, var(--color-blue-2) 88%, #6d7ac0 12%) 100%
+    );
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  /* A one-pixel inner highlight along the top edge reads as a lit surface. */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    0 18px 40px -28px rgba(0, 0, 0, 0.75);
+  transition:
+    border-color 0.5s var(--ease-brand),
+    box-shadow 0.5s var(--ease-brand),
+    transform 0.5s var(--ease-brand);
+}
+
+.card-navy:hover {
+  border-color: color-mix(in oklab, var(--color-yellow) 45%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 26px 54px -26px rgba(0, 0, 0, 0.8);
+}
+
+/* Warm top edge. Sits inside the radius via inherited border-radius. */
+.card-navy--accent::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    var(--color-ember) 0%,
+    var(--color-yellow) 42%,
+    transparent 88%
+  );
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.card-navy--accent:hover::before {
+  opacity: 1;
 }
 
 /* Nothing may exceed its container. Cheap insurance against a stray asset
@@ -348,13 +419,52 @@ h1, h2, h3, h4 {
 }
 .btn-ember::before { background: var(--color-blue); }
 
-.btn-ghost { border: 1.5px solid color-mix(in oklab, currentColor 38%, transparent); }
-.btn-ghost::before { background: currentColor; }
+/* The secondary action, used for the phone number beside every primary CTA.
+   It was an outline, which on the navy sections read as a disabled or
+   half-finished control next to the solid yellow button beside it. It is now
+   filled, and it fills from currentColor so the one rule serves both the
+   `text-white` instances on navy and the `text-blue` ones on the pale
+   sections without a second variant.
+
+   Hover resolves to brand yellow rather than cream: cream on navy was nearly
+   the same value as the white label it replaced, so the hover barely
+   registered. Yellow also matches the primary button's fill, which makes the
+   pair read as one family.
+
+   Explicit rgba values rather than color-mix(currentColor ...): the compiler
+   emits `background: currentColor` as the pre-color-mix fallback, which on
+   the dark variant paints a solid white pill under a white label. Custom
+   properties give the same one-rule-two-contexts behaviour with no fallback
+   that can render the button unreadable. */
+.btn-ghost {
+  --ghost-fill: var(--color-paper);
+  --ghost-edge: transparent;
+  --ghost-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.45);
+  background: var(--ghost-fill);
+  border: 1.5px solid var(--ghost-edge);
+  box-shadow: var(--ghost-shadow);
+  /* Set here, not via a `text-white` utility on the element: the fill is
+     solid white, so the label has to be navy or it disappears. Owning the
+     colour in the component rule means no usage can opt into an unreadable
+     combination by accident. */
+  color: var(--color-blue);
+}
+
+/* The same white pill on the pale sections. It keeps the white fill so the
+   button reads as one component everywhere; it only gains an edge and a
+   softer shadow, because white on cream needs a border to separate. */
+.btn-ghost-ink {
+  --ghost-edge: rgba(11, 20, 59, 0.14);
+  --ghost-shadow: 0 6px 16px -10px rgba(11, 20, 59, 0.5);
+}
+.btn-ghost::before { background: var(--color-yellow); }
 .btn-ghost:hover {
+  /* Stays navy: white on #ffb120 is about 1.9:1. */
   color: var(--color-blue);
   border-color: transparent;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 14px 28px -14px rgba(255, 177, 32, 0.55);
 }
-.btn-ghost:hover::before { background: var(--color-white); }
 
 /* ---------- Reveal primitives ---------- */
 .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease-soft), transform 1s var(--ease-soft); }

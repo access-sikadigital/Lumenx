@@ -93,7 +93,7 @@ export default function Hero() {
       {/* vertical rail */}
       <div className="hero-rail absolute left-[calc(var(--shell-pad)/2)] top-1/2 hidden -translate-y-1/2 xl:block">
         <span
-          className="eyebrow whitespace-nowrap text-white/45"
+          className="eyebrow whitespace-nowrap text-white/55"
           style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
         >
           Solar · Battery · EV · VIC &amp; NSW
@@ -130,7 +130,7 @@ export default function Hero() {
             <Link href="/get-a-quote" className="hero-act btn btn-primary">
               <span>Get a Free Quote</span>
             </Link>
-            <a href={SITE.phoneHref} className="hero-act btn btn-ghost text-white">
+            <a href={SITE.phoneHref} className="hero-act btn btn-ghost">
               <span>{SITE.phone}</span>
             </a>
           </div>
@@ -151,7 +151,7 @@ export default function Hero() {
               </li>
             ))}
           </ul>
-          <span className="hidden shrink-0 items-center gap-2 text-[0.66rem] uppercase tracking-[0.18em] text-white/40 md:flex">
+          <span className="hidden shrink-0 items-center gap-2 text-[0.66rem] uppercase tracking-[0.18em] text-white/55 md:flex">
             Scroll
             <span className="block h-6 w-px bg-white/30" style={{ animation: "float 1.8s ease-in-out infinite" }} />
           </span>

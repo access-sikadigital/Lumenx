@@ -11,6 +11,19 @@
 // approximate long-run averages and are labelled as such on the page — verify
 // against Bureau of Meteorology data before treating them as precise.
 //
+// HERO ART: keyed to the page's SERVICE, never to its city. There is still no
+// city-specific photography, so a "Geelong" hero showing a stock rooftop would
+// be a claim we cannot back. Service-matched art is relevant without asserting
+// anything about where it was taken, and it is rendered decoratively (empty
+// alt) so no screen reader is told it depicts that city.
+export const SERVICE_ART = {
+  "Solar panels": "/images/rooftop-home.webp",
+  "Solar batteries": "/images/svc-batteries.webp",
+  "Commercial solar": "/images/svc-commercial.webp",
+  "EV charging": "/images/svc-ev-chargers.webp",
+};
+export const artFor = (service) => SERVICE_ART[service] || SERVICE_ART["Solar panels"];
+
 // No pricing, no savings figures, no rebate amounts.
 
 export const LOCATIONS_HUB = {

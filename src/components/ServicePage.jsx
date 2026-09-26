@@ -13,7 +13,8 @@ import RebatesBand from "@/components/RebatesBand";
 import Reviews from "@/components/Reviews";
 import Faq from "@/components/Faq";
 import CTA from "@/components/CTA";
-import { BRANDS, SERVICES } from "@/lib/site";
+import Marquee from "@/components/Marquee";
+import { SERVICES } from "@/lib/site";
 import { SERVICE_PAGES, serviceUrl } from "@/lib/services";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -127,6 +128,7 @@ function Intro({ intro, badge, flip, tone }) {
               fill
               sizes="(max-width:1024px) 100vw, 40vw"
               className="object-cover"
+              quality={90}
             />
             <div
               aria-hidden="true"
@@ -203,125 +205,13 @@ function Features({ items }) {
   );
 }
 
-/* ---------------- system size / package options ---------------- */
-function Options({ options }) {
-  const root = useRef(null);
-  useGSAP(
-    () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      reveal(".so-card", ".so-grid", { y: 40 });
-    },
-    { scope: root }
-  );
-
-  return (
-    <section
-      ref={root}
-      className="grain relative overflow-hidden bg-blue text-white"
-      style={{ paddingTop: "clamp(4.5rem, 11vh, 9rem)", paddingBottom: "clamp(4.5rem, 11vh, 9rem)" }}
-    >
-      <div
-        aria-hidden="true"
-        className="glow glow--ember left-[-8%] top-1/2 -translate-y-1/2"
-        style={{
-          width: "min(600px, 45%)",
-        }}
-      />
-
-      <div className="shell relative">
-        <p className="eyebrow mb-5 text-yellow">System sizes</p>
-        <h2 className="t-h2 max-w-[16ch]">{options.heading}</h2>
-
-        <div className="so-grid mt-[clamp(2.5rem,5vw,4rem)] grid gap-[clamp(1rem,1.5vw,1.5rem)] md:grid-cols-3">
-          {options.items.map((o) => (
-            <article
-              key={o.size}
-              className={`so-card relative flex flex-col rounded-[22px] border transition-colors duration-500 ${
-                o.featured
-                  ? "border-yellow/45 bg-blue-2"
-                  : "border-white/14 bg-blue-2/55 hover:border-white/25"
-              }`}
-              style={{ padding: "clamp(1.6rem, 2vw, 2.4rem)" }}
-            >
-              {o.featured && (
-                <span className="absolute -top-3 left-[clamp(1.6rem,2vw,2.4rem)] rounded-full bg-yellow px-3 py-1 text-[0.58rem] font-semibold uppercase tracking-[0.14em] text-blue">
-                  Most popular
-                </span>
-              )}
-
-              <p className="numeral leading-none" style={{ fontSize: "clamp(2.2rem,3vw,3.2rem)" }}>
-                {o.size}
-              </p>
-              <p className="mt-2 text-[0.8rem] uppercase tracking-[0.14em] text-white/45">{o.best}</p>
-
-              <div className="mt-7 border-t border-white/12 pt-7">
-                <p className="numeral text-solar leading-none" style={{ fontSize: "clamp(1.8rem,2.4vw,2.6rem)" }}>
-                  {o.value}
-                </p>
-                <p className="mt-2 text-[0.78rem] text-white/50">{o.valueLabel}</p>
-              </div>
-
-              <ul className="mt-7 space-y-2.5 border-t border-white/12 pt-7 text-[0.9rem] text-white/70">
-                {o.specs.map((s) => (
-                  <li key={s} className="flex items-center gap-2.5">
-                    <span aria-hidden="true" className="h-1 w-1 rounded-full bg-yellow" />
-                    {s}
-                  </li>
-                ))}
-              </ul>
-
-              <Link href="/get-a-quote" className="btn btn-sm btn-primary mt-8 w-full justify-center">
-                <span>Get a Free Quote</span>
-              </Link>
-            </article>
-          ))}
-        </div>
-
-        {options.note && (
-          <p className="mt-8 max-w-[70ch] text-[0.78rem] leading-relaxed text-white/40">{options.note}</p>
-        )}
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- brands for this service ---------------- */
-function Brands({ names }) {
-  const list = BRANDS.filter((b) => names.includes(b.name));
-  if (list.length === 0) return null;
-
-  return (
-    <section className="border-y border-blue/10 bg-white py-[clamp(2.5rem,4vw,4rem)]">
-      <div className="shell">
-        <div className="mb-8 flex items-center gap-5">
-          <span className="eyebrow shrink-0 text-ink-soft">Brands we install</span>
-          <span className="h-px flex-1 bg-blue/10" />
-        </div>
-        {/* 1.6× the marquee's widths. The home page marquee scrolls, so small
-            logos still read as they pass; here they sit still in a static row
-            with plenty of space, and at marquee size they looked lost. */}
-        <ul className="flex flex-wrap items-center gap-x-[clamp(2.5rem,4.5vw,5rem)] gap-y-9">
-          {list.map((b) => (
-            <li key={b.file}>
-              <img
-                src={`/brands/${b.file}`}
-                alt={b.name}
-                loading="lazy"
-                decoding="async"
-                className="block h-auto max-w-full opacity-60 grayscale transition duration-500 hover:opacity-100 hover:grayscale-0"
-                // min() against a viewport unit, not 100%: the <li> is a flex
-                // item sized by this image, so a percentage would resolve
-                // against a width this image is itself setting. At 1.6x the
-                // widest logo (LG Energy Solution) renders 336px, which is
-                // wider than the 288px content box at a 320px viewport.
-                style={{ width: `min(${Math.round(b.w * 1.6)}px, 62vw)` }}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
+/* ---------------- brands ----------------
+   Was a static row of just the four or five brands tagged to this service.
+   Next to the home page's moving row it looked thin, and it made the range
+   look smaller than it is. It is now the same marquee the home page uses,
+   with the full set, so the proof reads the same wherever you land. */
+function Brands() {
+  return <Marquee eyebrow="Tier-1 hardware we install" />;
 }
 
 /* ---------------- related services ---------------- */
@@ -351,7 +241,7 @@ function Related({ slugs, current }) {
           <h2 className="t-h2 max-w-[16ch] text-blue">
             Works well with this.
           </h2>
-          <Link href="/#services" className="btn btn-sm btn-ghost text-blue">
+          <Link href="/#services" className="btn btn-sm btn-ghost btn-ghost-ink">
             <span>All services</span>
           </Link>
         </div>
@@ -370,6 +260,7 @@ function Related({ slugs, current }) {
                   fill
                   sizes="(max-width:768px) 100vw, 33vw"
                   className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                  quality={90}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-blue/55 to-transparent" />
               </div>
@@ -439,16 +330,14 @@ export default function ServicePage({ slug }) {
       }
       case "features":
         return <Features key={key} items={s.features} />;
-      // Residential's signature is its own size/price cards; every other
-      // page gets a section built specifically for that service.
+      // Every page's signature is a section built specifically for that
+      // service. Residential used to show size-and-price cards here; the site
+      // no longer publishes savings or price figures anywhere, so it gets the
+      // same treatment as the rest.
       case "signature":
-        return s.options ? (
-          <Options key={key} options={s.options} />
-        ) : (
-          <ServiceSignature key={key} slug={slug} />
-        );
+        return <ServiceSignature key={key} slug={slug} />;
       case "brands":
-        return <Brands key={key} names={s.brands} />;
+        return <Brands key={key} />;
       case "process":
         return <Process key={key} />;
       case "rebates":

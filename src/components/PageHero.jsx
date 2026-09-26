@@ -39,7 +39,9 @@ export default function PageHero({ eyebrow, h1, lead, image, imageAlt, chips = [
     <section ref={root} className="grain relative overflow-hidden bg-blue">
       {/* media */}
       <div className="ph-media absolute inset-0">
-        <Image src={image} alt="" fill priority sizes="100vw" className="object-cover" />
+        <Image src={image} alt="" fill priority sizes="100vw" className="object-cover" 
+            quality={90}
+          />
         <div className="absolute inset-0 bg-blue/72" />
         <div
           aria-hidden="true"
@@ -64,10 +66,10 @@ export default function PageHero({ eyebrow, h1, lead, image, imageAlt, chips = [
       <div className="shell page-hero-copy relative z-10">
         {breadcrumbs.length > 0 && (
           <nav aria-label="Breadcrumb" className="ph-crumb mb-7">
-            <ol className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[0.7rem] uppercase tracking-[0.14em] text-white/45">
+            <ol className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[0.7rem] uppercase tracking-[0.14em] text-white/55">
               {breadcrumbs.map((b, i) => (
                 <li key={b.href} className="flex items-center gap-2.5">
-                  {i > 0 && <span aria-hidden="true" className="text-white/25">/</span>}
+                  {i > 0 && <span aria-hidden="true" className="text-white/55">/</span>}
                   {i === breadcrumbs.length - 1 ? (
                     <span className="text-white/75" aria-current="page">{b.label}</span>
                   ) : (
@@ -99,7 +101,7 @@ export default function PageHero({ eyebrow, h1, lead, image, imageAlt, chips = [
           <Link href="/get-a-quote" className="ph-act btn btn-primary">
             <span>Get a Free Quote</span>
           </Link>
-          <a href={SITE.quotePhoneHref} className="ph-act btn btn-ghost text-white">
+          <a href={SITE.quotePhoneHref} className="ph-act btn btn-ghost">
             <span>{SITE.quotePhone}</span>
           </a>
         </div>

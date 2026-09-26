@@ -42,7 +42,7 @@ export function ToolCard({ title, children, live, footnote }) {
  * moment it is computable, right where they are typing, and points down to the
  * working rather than replacing it.
  */
-function LiveAnswer({ result, missing }) {
+function LiveAnswer({ result, missing, label }) {
   if (!result) {
     return (
       <div className="mt-8 rounded-[18px] border border-dashed border-blue/22 bg-cloud px-5 py-4">
@@ -57,18 +57,20 @@ function LiveAnswer({ result, missing }) {
   return (
     <div
       aria-live="polite"
-      className="mt-8 rounded-[18px] border border-ember/25 bg-ember/[0.06] px-5 py-[1.1rem]"
+      className="mt-8 rounded-[18px] border border-green-ink/25 bg-green/[0.10] px-5 py-[1.1rem]"
     >
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-        <span className="text-[0.62rem] uppercase tracking-[0.16em] text-ember">Your answer</span>
+        <span className="text-[0.62rem] uppercase tracking-[0.16em] text-green-ink">{label}</span>
         <a
           href="#answer"
-          className="text-[0.76rem] font-semibold text-ember transition-opacity hover:opacity-70"
+          className="text-[0.76rem] font-semibold text-green-ink transition-opacity hover:opacity-70"
         >
           See the working ↓
         </a>
       </div>
-      <p className="numeral mt-2 break-words text-[clamp(1.9rem,3.4vw,2.6rem)] leading-none text-blue">
+      {/* green-ink, not the brand green: the brand green is 1.8:1 on white and
+          decorative only. This one is 5.1:1. */}
+      <p className="numeral mt-2 break-words text-[clamp(1.9rem,3.4vw,2.6rem)] leading-none text-green-ink">
         {result.headline}
       </p>
       <p className="mt-2 text-[0.84rem] leading-relaxed text-ink">{result.headlineLabel}</p>
@@ -184,7 +186,7 @@ function Tool({ c }) {
 
         <div className="shell page-hero-copy relative z-10">
           <nav aria-label="Breadcrumb" className="mb-8">
-            <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.72rem] text-white/45">
+            <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.72rem] text-white/55">
               <li><Link href="/" className="transition-colors hover:text-yellow">Home</Link></li>
               <li aria-hidden="true">/</li>
               <li><Link href="/tools" className="transition-colors hover:text-yellow">Tools</Link></li>
@@ -214,7 +216,7 @@ function Tool({ c }) {
             {/* the tool */}
             <ToolCard
               title="Your numbers"
-              live={<LiveAnswer result={result} missing={missing} />}
+              live={<LiveAnswer result={result} missing={missing} label={c.answerLabel} />}
               footnote="Nothing here is sent to us. The maths runs in your browser, and there is no email gate."
             >
               <form onSubmit={(e) => e.preventDefault()} className="space-y-7">
@@ -261,11 +263,14 @@ function Tool({ c }) {
               <div className="relative grid gap-[clamp(2rem,4vw,4rem)] p-[clamp(1.75rem,4vw,3.5rem)] lg:grid-cols-[0.85fr_1.15fr]">
                 {/* headline */}
                 <div>
-                  <p className="eyebrow mb-6 text-yellow">Your answer</p>
+                  <p className="eyebrow mb-6 text-green">{c.answerLabel}</p>
                   {/* The floor is 2.2rem rather than 2.8: at 320px the panel
                       leaves ~232px of inner width, and a headline like
                       "100+ years" overflows it at the larger size. */}
-                  <p className="numeral break-words text-[clamp(2.2rem,7vw,5.2rem)] leading-none text-yellow">
+                  {/* Green, not yellow: this is the outcome, and green reads as
+                      a result rather than as another highlight. 9.83:1 on the
+                      navy panel, so it is as legible as the yellow it replaces. */}
+                  <p className="numeral break-words text-[clamp(2.2rem,7vw,5.2rem)] leading-none text-green">
                     {result.headline}
                   </p>
                   <p className="mt-4 max-w-[26ch] text-[0.98rem] leading-relaxed text-white/65">
@@ -276,8 +281,8 @@ function Tool({ c }) {
                     <Link href="/get-a-quote" className="btn btn-primary btn-sm">
                       <span>{c.cta}</span>
                     </Link>
-                    <a href={SITE.phoneHref} className="text-[0.9rem] font-semibold text-yellow transition-opacity hover:opacity-75">
-                      {SITE.phone}
+                    <a href={SITE.phoneHref} className="btn btn-sm btn-ghost">
+                      <span>{SITE.phone}</span>
                     </a>
                   </div>
                 </div>
@@ -291,7 +296,7 @@ function Tool({ c }) {
                         className="flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1 border-b border-white/10 py-3.5"
                       >
                         <dt className={`text-[0.9rem] ${r.strong ? "text-white" : "text-white/60"}`}>{r.k}</dt>
-                        <dd className={`numeral text-[0.98rem] ${r.strong ? "text-yellow" : "text-white/85"}`}>{r.v}</dd>
+                        <dd className={`numeral text-[0.98rem] ${r.strong ? "text-green" : "text-white/85"}`}>{r.v}</dd>
                       </div>
                     ))}
                   </dl>

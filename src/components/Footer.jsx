@@ -62,7 +62,7 @@ export default function Footer() {
           {/* link columns */}
           {Object.entries(FOOTER_LINKS).map(([heading, links]) => (
             <div key={heading}>
-              <p className="eyebrow mb-6 text-white/45">{heading}</p>
+              <p className="eyebrow mb-6 text-white/55">{heading}</p>
               <ul className="space-y-3.5">
                 {links.map((l) => (
                   <li key={l.href}>
@@ -77,7 +77,7 @@ export default function Footer() {
 
           {/* offices */}
           <div>
-            <p className="eyebrow mb-6 text-white/45">Our offices</p>
+            <p className="eyebrow mb-6 text-white/55">Our offices</p>
             <ul className="space-y-6">
               {OFFICES.map((o) => (
                 <li key={o.state}>
@@ -102,7 +102,7 @@ export default function Footer() {
         {/* Areas and tools as dense internal-link rows rather than two more
             columns, so the four-column grid above keeps its proportions. */}
         <div className="mt-16 border-t border-white/10 pt-8">
-          <p className="eyebrow mb-5 text-white/45">Areas we cover</p>
+          <p className="eyebrow mb-5 text-white/55">Areas we cover</p>
           <ul className="flex flex-wrap gap-x-6 gap-y-3">
             {LOCATIONS.map((l) => (
               <li key={l.slug}>
@@ -115,7 +115,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 border-t border-white/10 pt-8">
-          <p className="eyebrow mb-5 text-white/45">Free calculators</p>
+          <p className="eyebrow mb-5 text-white/55">Free calculators</p>
           <ul className="flex flex-wrap gap-x-6 gap-y-3">
             {[...CALCULATORS, REBATE_CHECK].map((t) => (
               <li key={t.slug}>
@@ -129,7 +129,7 @@ export default function Footer() {
 
         {/* credential strip */}
         <ul
-          className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/10 pt-8 text-[0.66rem] uppercase tracking-[0.14em] text-white/40"
+          className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/10 pt-8 text-[0.66rem] uppercase tracking-[0.14em] text-white/55"
         >
           {TRUST.map((t) => (
             <li key={t} className="flex items-center gap-2">
@@ -140,7 +140,7 @@ export default function Footer() {
         </ul>
 
         {/* bottom bar */}
-        <div className="mt-8 flex flex-col justify-between gap-4 border-t border-white/[0.07] pt-8 text-xs text-white/40 md:flex-row md:items-center">
+        <div className="mt-8 flex flex-col justify-between gap-4 border-t border-white/[0.07] pt-8 text-xs text-white/55 md:flex-row md:items-center">
           <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-5">
             <p>© {new Date().getFullYear()} Lumenx. Sustainable Energy. All rights reserved.</p>
             <span aria-hidden="true" className="hidden h-3 w-px bg-white/15 md:block" />

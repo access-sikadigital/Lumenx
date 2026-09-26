@@ -152,9 +152,9 @@ function Offices() {
               href={o.maps}
               target="_blank"
               rel="noopener noreferrer"
-              className="of-card group relative flex flex-col overflow-hidden rounded-[22px] border border-white/12 bg-blue-2/45 p-[clamp(1.6rem,2.2vw,2.5rem)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:border-yellow/40 hover:bg-blue-2"
+              className="of-card group relative flex flex-col overflow-hidden rounded-[22px] card-navy p-[clamp(1.6rem,2.2vw,2.5rem)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5"
             >
-              <span className="flex items-center gap-2.5 text-[0.68rem] uppercase tracking-[0.16em] text-white/45">
+              <span className="flex items-center gap-2.5 text-[0.68rem] uppercase tracking-[0.16em] text-white/55">
                 <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-yellow" />
                 {o.state}
               </span>
@@ -167,8 +167,8 @@ function Offices() {
           ))}
 
           {/* hours */}
-          <div className="of-card flex flex-col rounded-[22px] border border-white/12 bg-blue-2/45 p-[clamp(1.6rem,2.2vw,2.5rem)]">
-            <span className="flex items-center gap-2.5 text-[0.68rem] uppercase tracking-[0.16em] text-white/45">
+          <div className="of-card flex flex-col rounded-[22px] card-navy p-[clamp(1.6rem,2.2vw,2.5rem)]">
+            <span className="flex items-center gap-2.5 text-[0.68rem] uppercase tracking-[0.16em] text-white/55">
               <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-green" />
               Opening hours
             </span>
@@ -180,7 +180,7 @@ function Offices() {
           </div>
         </div>
 
-        <ul className="mt-[clamp(2.5rem,4vw,3.5rem)] flex flex-wrap gap-x-8 gap-y-3 border-t border-white/12 pt-8 text-[0.66rem] uppercase tracking-[0.14em] text-white/45">
+        <ul className="mt-[clamp(2.5rem,4vw,3.5rem)] flex flex-wrap gap-x-8 gap-y-3 border-t border-white/12 pt-8 text-[0.66rem] uppercase tracking-[0.14em] text-white/55">
           {TRUST.map((t) => (
             <li key={t} className="flex items-center gap-2">
               <span aria-hidden="true" className="h-1 w-1 rounded-full bg-green" />

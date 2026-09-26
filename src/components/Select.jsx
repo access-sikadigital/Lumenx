@@ -67,7 +67,12 @@ export default function Select({
 
   useEffect(() => {
     if (!open || !listRef.current) return;
-    listRef.current.querySelector(`[data-i="${active}"]`)?.scrollIntoView({ block: "nearest" });
+    // With no scroll container on the list this only nudges the page when an
+    // option sits below the fold during arrow-key navigation. inline:"nearest"
+    // stops it ever scrolling sideways.
+    listRef.current
+      .querySelector(`[data-i="${active}"]`)
+      ?.scrollIntoView({ block: "nearest", inline: "nearest" });
   }, [open, active]);
 
   const commit = (i) => {
@@ -150,7 +155,11 @@ export default function Select({
           empty ? "text-ink-soft" : "text-blue"
         }`}
       >
-        <span className="min-w-0 truncate">{empty ? placeholder || "Select an option" : value}</span>
+        {/* Wraps rather than truncates. The longest option, "Australian Capital
+            Territory (ACT)", needs about 263px and the control has roughly 150px
+            at a 320px viewport; truncating would cut the state code off the end,
+            which is the part that identifies it fastest. */}
+        <span className="min-w-0">{empty ? placeholder || "Select an option" : value}</span>
         <svg
           width="11"
           height="7"
@@ -176,7 +185,11 @@ export default function Select({
           role="listbox"
           aria-label="Options"
           tabIndex={-1}
-          className="max-h-[15rem] overflow-y-auto overflow-x-hidden rounded-[16px] border border-blue/12 bg-paper p-1.5 shadow-[0_26px_50px_-24px_rgba(11,20,59,0.42)]"
+          // No height cap: every option is visible at once and the list never
+          // scrolls. Safe because the longest list here is the eight states and
+          // territories, which is a fixed, small set. If a much longer list is
+          // ever passed in, this is the line that needs revisiting.
+          className="overflow-x-hidden rounded-[16px] border border-blue/12 bg-paper p-1.5 shadow-[0_26px_50px_-24px_rgba(11,20,59,0.42)]"
         >
           {options.map((o, i) => {
             const selected = o === value;
@@ -190,19 +203,19 @@ export default function Select({
                   aria-selected={selected}
                   onMouseEnter={() => setActive(i)}
                   onClick={() => commit(i)}
-                  className={`flex cursor-pointer items-center justify-between gap-3 rounded-[11px] px-3 py-2.5 transition-colors duration-150 ${
+                  className={`flex cursor-pointer items-start justify-between gap-3 rounded-[11px] px-3 py-2.5 transition-colors duration-150 ${
                     isActive ? "bg-ember/[0.09]" : ""
                   }`}
                 >
-                  <span className="flex min-w-0 items-center gap-2.5">
+                  <span className="flex min-w-0 items-start gap-2.5">
                     <span
                       aria-hidden="true"
-                      className={`h-1.5 w-1.5 shrink-0 rounded-full transition-colors duration-200 ${
+                      className={`mt-[0.45rem] h-1.5 w-1.5 shrink-0 rounded-full transition-colors duration-200 ${
                         selected ? "bg-ember" : isActive ? "bg-blue/25" : "bg-transparent"
                       }`}
                     />
                     <span
-                      className={`truncate text-[0.93rem] ${
+                      className={`min-w-0 text-[0.93rem] leading-snug ${
                         selected ? "font-semibold text-ember" : "text-blue"
                       }`}
                     >
@@ -210,7 +223,7 @@ export default function Select({
                     </span>
                   </span>
                   {meta && (
-                    <span className="numeral shrink-0 text-[0.76rem] text-ink-soft">{meta(o)}</span>
+                    <span className="numeral mt-[0.15rem] shrink-0 text-[0.76rem] text-ink-soft">{meta(o)}</span>
                   )}
                 </div>
               </li>

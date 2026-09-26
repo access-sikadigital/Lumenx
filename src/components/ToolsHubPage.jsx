@@ -64,7 +64,9 @@ function Intro() {
         </div>
 
         <div className="th-media relative aspect-[4/5] overflow-hidden rounded-[24px] lg:mt-[clamp(2rem,5vw,5rem)]">
-          <Image src={intro.image} alt={intro.imageAlt} fill sizes="(max-width:1024px) 100vw, 40vw" className="object-cover" />
+          <Image src={intro.image} alt={intro.imageAlt} fill sizes="(max-width:1024px) 100vw, 40vw" className="object-cover" 
+            quality={90}
+          />
         </div>
       </div>
     </section>
@@ -201,12 +203,12 @@ function SharedAssumptions() {
           <h2 className="t-h2 max-w-[22ch]">Everything else comes from your paperwork.</h2>
           <p className="t-body mt-6 max-w-[52ch] text-white/65">
             Every dollar figure in these tools is a number you typed in off your own bill or your own
-            quote. The only things we supply are the peak sun hours for your city and the standard
+            quote. The only things we supply are the peak sun hours for your state and the standard
             derating applied to any solar estimate.
           </p>
 
-          <div className="mt-9 rounded-[20px] border border-white/14 bg-blue-2/40 p-[clamp(1.3rem,2vw,1.85rem)]">
-            <span className="block text-[0.66rem] uppercase tracking-[0.16em] text-white/45">
+          <div className="mt-9 rounded-[20px] card-navy p-[clamp(1.3rem,2vw,1.85rem)]">
+            <span className="block text-[0.66rem] uppercase tracking-[0.16em] text-white/55">
               Performance ratio
             </span>
             <p className="numeral mt-3 text-[clamp(2.2rem,4vw,3.2rem)] leading-none text-yellow">
@@ -220,14 +222,14 @@ function SharedAssumptions() {
         </div>
 
         <div className="lg:pt-[clamp(1rem,3vw,3rem)]">
-          <span className="mb-7 block text-[0.66rem] uppercase tracking-[0.16em] text-white/45">
-            Approximate daily peak sun hours
+          <span className="mb-7 block text-[0.66rem] uppercase tracking-[0.16em] text-white/55">
+            Approximate daily peak sun hours, by state capital
           </span>
           <ul className="space-y-[clamp(0.9rem,1.4vw,1.25rem)]">
             {SUN_HOURS.map((s) => (
-              <li key={s.city} className="sa-row">
+              <li key={s.code} className="sa-row">
                 <div className="flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1">
-                  <span className="text-[0.95rem] text-white/85">{s.city}</span>
+                  <span className="min-w-0 text-[0.95rem] text-white/85">{s.state}</span>
                   <span className="numeral text-[0.92rem] text-yellow">{s.hours} hrs</span>
                 </div>
                 <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-white/8">
@@ -242,10 +244,11 @@ function SharedAssumptions() {
               </li>
             ))}
           </ul>
-          <p className="mt-7 border-t border-white/12 pt-6 text-[0.8rem] leading-relaxed text-white/45">
-            Long-run regional averages, shown for comparison. Your own roof depends on pitch,
-            orientation and shading, which we model from your address rather than from a regional
-            figure.
+          <p className="mt-7 border-t border-white/12 pt-6 text-[0.8rem] leading-relaxed text-white/55">
+            Long-run averages for each state capital, shown for comparison. A state is not one
+            climate, so a household a long way from the capital can sit well above or below its
+            figure. Your own roof also depends on pitch, orientation and shading, which we model
+            from your address rather than from a regional number.
           </p>
         </div>
       </div>

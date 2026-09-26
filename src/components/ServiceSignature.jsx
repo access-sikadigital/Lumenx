@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { getSignature } from "@/lib/service-signatures";
+import { SizeLadder } from "@/components/SystemSizePage";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -109,7 +110,7 @@ function LoadCurve({ d }) {
       <Shell>
         <Head eyebrow={d.eyebrow} heading={d.heading} lead={d.lead} />
 
-        <div className="lc-chart mt-[clamp(2.5rem,5vw,4rem)] rounded-[24px] border border-white/12 bg-blue-2/50 p-[clamp(1.25rem,2.5vw,2.75rem)]">
+        <div className="lc-chart mt-[clamp(2.5rem,5vw,4rem)] rounded-[24px] card-navy p-[clamp(1.25rem,2.5vw,2.75rem)]">
           <svg viewBox="0 0 500 220" className="block w-full" role="img" aria-label="Illustrative chart comparing solar generation with business demand across a day">
             <defs>
               <linearGradient id="lcOverlap" x1="0" y1="0" x2="0" y2="1">
@@ -167,11 +168,11 @@ function LoadCurve({ d }) {
           </ul>
         </div>
 
-        <p className="mt-6 max-w-[74ch] text-[0.78rem] leading-relaxed text-white/40">{d.caption}</p>
+        <p className="mt-6 max-w-[74ch] text-[0.78rem] leading-relaxed text-white/55">{d.caption}</p>
 
         <div className="lc-notes mt-[clamp(2.5rem,4vw,3.5rem)] grid gap-[clamp(1rem,1.5vw,1.5rem)] md:grid-cols-3">
           {d.notes.map((n) => (
-            <div key={n.title} className="lc-note rounded-[18px] border border-white/12 bg-blue-2/40 p-[clamp(1.35rem,1.7vw,2rem)]">
+            <div key={n.title} className="lc-note rounded-[18px] card-navy p-[clamp(1.35rem,1.7vw,2rem)]">
               <h3 className="font-[family-name:var(--font-display)] text-[1.05rem] font-bold">{n.title}</h3>
               <p className="mt-2.5 text-[0.92rem] leading-relaxed text-white/60">{n.line}</p>
             </div>
@@ -241,12 +242,12 @@ function DayCycle({ d }) {
           {d.phases.map((p) => (
             <article
               key={p.time}
-              className="dc-card flex flex-col rounded-[18px] border border-white/12 bg-blue-2/45 p-[clamp(1.35rem,1.7vw,1.9rem)]"
+              className="dc-card flex flex-col rounded-[18px] card-navy p-[clamp(1.35rem,1.7vw,1.9rem)]"
             >
-              <p className="text-[0.66rem] uppercase tracking-[0.16em] text-white/40">{p.time}</p>
+              <p className="text-[0.66rem] uppercase tracking-[0.16em] text-white/55">{p.time}</p>
               <h3 className="t-h3 mt-3">{p.title}</h3>
               <p className="mt-3 flex-1 text-[0.92rem] leading-relaxed text-white/60">{p.line}</p>
-              <p className="mt-6 flex items-center gap-2.5 border-t border-white/10 pt-4 text-[0.7rem] uppercase tracking-[0.12em] text-white/45">
+              <p className="mt-6 flex items-center gap-2.5 border-t border-white/10 pt-4 text-[0.7rem] uppercase tracking-[0.12em] text-white/55">
                 <span
                   aria-hidden="true"
                   className="h-2 w-2 rounded-full"
@@ -258,18 +259,18 @@ function DayCycle({ d }) {
           ))}
         </div>
 
-        <p className="mt-6 max-w-[74ch] text-[0.78rem] leading-relaxed text-white/40">{d.caption}</p>
+        <p className="mt-6 max-w-[74ch] text-[0.78rem] leading-relaxed text-white/55">{d.caption}</p>
 
         {/* with / without */}
         <div className="dc-compare mt-[clamp(2.5rem,4vw,3.5rem)] overflow-hidden rounded-[22px] border border-white/12">
           <div className="grid grid-cols-[1fr_1fr] gap-px bg-white/10 sm:grid-cols-[1.1fr_1fr_1fr]">
-            <div className="hidden bg-blue px-6 py-4 text-[0.66rem] uppercase tracking-[0.14em] text-white/35 sm:block" />
-            <div className="bg-blue px-5 py-4 text-[0.66rem] uppercase tracking-[0.14em] text-white/40">Without a battery</div>
+            <div className="hidden bg-blue px-6 py-4 text-[0.66rem] uppercase tracking-[0.14em] text-white/55 sm:block" />
+            <div className="bg-blue px-5 py-4 text-[0.66rem] uppercase tracking-[0.14em] text-white/55">Without a battery</div>
             <div className="bg-blue px-5 py-4 text-[0.66rem] uppercase tracking-[0.14em] text-yellow">With a battery</div>
 
             {d.compare.rows.map((r) => (
               <div key={r.label} className="dc-row contents">
-                <div className="col-span-2 bg-blue-2/40 px-5 py-4 font-[family-name:var(--font-display)] text-[0.95rem] font-semibold sm:col-span-1">
+                <div className="col-span-2 card-navy px-5 py-4 font-[family-name:var(--font-display)] text-[0.95rem] font-semibold sm:col-span-1">
                   {r.label}
                 </div>
                 <div className="bg-blue px-5 py-4 text-[0.88rem] leading-relaxed text-white/50">{r.without}</div>
@@ -398,12 +399,12 @@ function Speeds({ d }) {
             <article
               key={it.name}
               className={`sp-row rounded-[20px] border p-[clamp(1.35rem,2vw,2.25rem)] ${
-                it.featured ? "border-yellow/40 bg-blue-2/70" : "border-white/12 bg-blue-2/35"
+                it.featured ? "border-yellow/40 card-navy" : "border-white/12 card-navy"
               }`}
             >
               <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
                 <h3 className="t-h3">{it.name}</h3>
-                <p className="numeral text-[0.95rem] tracking-[0.06em] text-white/45">{it.power}</p>
+                <p className="numeral text-[0.95rem] tracking-[0.06em] text-white/55">{it.power}</p>
               </div>
 
               <div className="mt-6 flex items-center gap-4">
@@ -418,7 +419,7 @@ function Speeds({ d }) {
                 </div>
                 <p className="shrink-0 font-[family-name:var(--font-display)] text-[1.05rem] font-bold">
                   ~{it.rangePerHour}
-                  <span className="ml-1 text-[0.7rem] font-medium uppercase tracking-[0.12em] text-white/45">km / hr</span>
+                  <span className="ml-1 text-[0.7rem] font-medium uppercase tracking-[0.12em] text-white/55">km / hr</span>
                 </p>
               </div>
 
@@ -430,8 +431,8 @@ function Speeds({ d }) {
           ))}
         </div>
 
-        <p className="mt-7 max-w-[76ch] text-[0.78rem] leading-relaxed text-white/40">{d.caption}</p>
-        <p className="mt-3 max-w-[76ch] text-[0.78rem] leading-relaxed text-white/40">{d.footnote}</p>
+        <p className="mt-7 max-w-[76ch] text-[0.78rem] leading-relaxed text-white/55">{d.caption}</p>
+        <p className="mt-3 max-w-[76ch] text-[0.78rem] leading-relaxed text-white/55">{d.footnote}</p>
       </Shell>
     </div>
   );
@@ -528,7 +529,7 @@ function Methods({ d }) {
             <article
               key={m.name}
               className={`pm-card flex flex-col rounded-[22px] border p-[clamp(1.5rem,2.2vw,2.5rem)] ${
-                m.featured ? "border-yellow/40 bg-blue-2/70" : "border-white/12 bg-blue-2/35"
+                m.featured ? "border-yellow/40 card-navy" : "border-white/12 card-navy"
               }`}
             >
               <h3 className="t-h3">{m.name}</h3>
@@ -537,7 +538,7 @@ function Methods({ d }) {
               <dl className="mt-7 border-t border-white/10">
                 {m.marks.map((r) => (
                   <div key={r.k} className="flex items-start justify-between gap-5 border-b border-white/10 py-3.5">
-                    <dt className="shrink-0 text-[0.68rem] uppercase tracking-[0.12em] text-white/40">{r.k}</dt>
+                    <dt className="shrink-0 text-[0.68rem] uppercase tracking-[0.12em] text-white/55">{r.k}</dt>
                     <dd className="flex items-center gap-2.5 text-right text-[0.9rem] font-medium">
                       {r.v}
                       <span
@@ -566,7 +567,7 @@ function Methods({ d }) {
             <h3 className="font-[family-name:var(--font-display)] text-[1.1rem] font-bold text-green">{d.both.title}</h3>
             <p className="mt-2.5 text-[0.92rem] leading-relaxed text-white/70">{d.both.line}</p>
           </div>
-          <div className="rounded-[20px] border border-white/12 bg-blue-2/35 p-[clamp(1.4rem,2vw,2rem)]">
+          <div className="rounded-[20px] card-navy p-[clamp(1.4rem,2vw,2rem)]">
             <h3 className="font-[family-name:var(--font-display)] text-[1.1rem] font-bold">{d.cover.title}</h3>
             <p className="mt-2.5 text-[0.92rem] leading-relaxed text-white/60">{d.cover.line}</p>
           </div>
@@ -667,12 +668,16 @@ function Symptoms({ d }) {
     () => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       headIn(root.current);
+      // Same reason as the rebates stack: a sideways entrance on a left-aligned
+      // list makes each staggered row sit at a different left edge while it is
+      // in flight, which reads as a misaligned layout rather than as motion.
       gsap.from(".sy-row", {
-        x: -24,
+        y: 20,
         opacity: 0,
         duration: 0.7,
         stagger: 0.1,
         ease: "power3.out",
+        clearProps: "transform",
         scrollTrigger: { trigger: ".sy-list", start: "top 85%" },
       });
       gsap.from(".sy-rule", {
@@ -702,7 +707,7 @@ function Symptoms({ d }) {
             {d.items.map((it) => (
               <li
                 key={it.n}
-                className="sy-row relative grid gap-x-6 gap-y-3 rounded-[18px] border border-white/12 bg-blue-2/40 p-[clamp(1.35rem,2vw,2.1rem)] transition-colors duration-500 hover:border-white/25 sm:ml-10 sm:grid-cols-[1fr_auto]"
+                className="sy-row relative grid gap-x-6 gap-y-3 rounded-[18px] card-navy p-[clamp(1.35rem,2vw,2.1rem)] transition-colors duration-500 sm:ml-10 sm:grid-cols-[1fr_auto]"
               >
                 <span
                   aria-hidden="true"
@@ -733,7 +738,7 @@ function Symptoms({ d }) {
           </ol>
         </div>
 
-        <p className="mt-7 max-w-[76ch] text-[0.82rem] leading-relaxed text-white/45">{d.note}</p>
+        <p className="mt-7 max-w-[76ch] text-[0.82rem] leading-relaxed text-white/55">{d.note}</p>
       </Shell>
     </div>
   );
@@ -761,7 +766,12 @@ export default function ServiceSignature({ slug }) {
       return <Matrix d={d} />;
     case "symptoms":
       return <Symptoms d={d} />;
-    // "sizes" is rendered by ServicePage's own Options block
+    // Residential used to show size-and-price cards here. The site no longer
+    // publishes savings or price figures, so it shows the size ladder instead:
+    // the same comparison of panel count and roof space, cross-linked to each
+    // size's own page, with nothing financial on it.
+    case "sizes":
+      return <SizeLadder current={null} />;
     default:
       return null;
   }

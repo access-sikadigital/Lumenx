@@ -20,8 +20,9 @@
 // The one thing that is ours rather than theirs is the generation estimate, and
 // it uses exactly two documented assumptions, both surfaced on every page:
 //
-//   1. Peak sun hours per city  -> the same approximate long-run averages used
-//      on the location pages. Labelled approximate everywhere they appear.
+//   1. Peak sun hours per state -> the long-run average for that state's
+//      capital. Labelled approximate everywhere it appears, because a state
+//      is not one climate and the spread inside WA, QLD and NT is wide.
 //   2. Performance ratio 0.80   -> the conventional derating for inverter
 //      losses, cabling, temperature, soiling and orientation. Industry standard,
 //      and stated plainly rather than buried.
@@ -35,21 +36,37 @@ export const PERFORMANCE_RATIO = 0.8;
 export const PANEL_WATTS = 440;
 export const M2_PER_PANEL = 2.0;
 
-/** Approximate daily peak sun hours. Matches src/lib/locations.js. */
+/**
+ * Approximate daily peak sun hours by state.
+ *
+ * Each figure is the long-run annual average for that state's CAPITAL, which
+ * is how every published source quotes it. That matters: a state is not a
+ * single climate. Western Australia runs from Broome to Albany and Queensland
+ * from Cairns to the border, so a household far from the capital can sit well
+ * above or below the number shown here.
+ *
+ * VERIFY: these are widely published approximations, not measured values, and
+ * they have not been checked against Bureau of Meteorology data in this repo.
+ * The Victorian and New South Wales figures match the ones already used on the
+ * location pages. Confirm the rest before treating any of them as precise.
+ */
 export const SUN_HOURS = [
-  { city: "Melbourne", hours: 3.6 },
-  { city: "Geelong", hours: 3.7 },
-  { city: "Ballarat", hours: 3.6 },
-  { city: "Bendigo", hours: 3.9 },
-  { city: "Sydney", hours: 4.2 },
+  { code: "VIC", state: "Victoria (VIC)", hours: 3.6 },
+  { code: "NSW", state: "New South Wales (NSW)", hours: 4.2 },
+  { code: "QLD", state: "Queensland (QLD)", hours: 4.8 },
+  { code: "SA", state: "South Australia (SA)", hours: 4.6 },
+  { code: "WA", state: "Western Australia (WA)", hours: 5.2 },
+  { code: "TAS", state: "Tasmania (TAS)", hours: 3.3 },
+  { code: "ACT", state: "Australian Capital Territory (ACT)", hours: 4.4 },
+  { code: "NT", state: "Northern Territory (NT)", hours: 5.8 },
 ];
 
-export const sunFor = (city) =>
-  (SUN_HOURS.find((s) => s.city === city) || SUN_HOURS[0]).hours;
+export const sunFor = (state) =>
+  (SUN_HOURS.find((s) => s.state === state) || SUN_HOURS[0]).hours;
 
-/** Annual generation in kWh for a system size in a given city. */
-export const annualKwh = (kw, city) =>
-  kw * sunFor(city) * 365 * PERFORMANCE_RATIO;
+/** Annual generation in kWh for a system size in a given state. */
+export const annualKwh = (kw, state) =>
+  kw * sunFor(state) * 365 * PERFORMANCE_RATIO;
 
 export const panelsFor = (kw) => Math.max(1, Math.round(kw / (PANEL_WATTS / 1000)));
 export const roofAreaFor = (kw) => Math.round(panelsFor(kw) * M2_PER_PANEL);
@@ -62,20 +79,20 @@ const kwh = (n) => Math.round(n).toLocaleString("en-AU") + " kWh";
 const yrs = (n) =>
   !isFinite(n) || n <= 0 ? "n/a" : n >= 100 ? "100+ years" : n.toFixed(1) + " years";
 
-const CITY_OPTIONS = SUN_HOURS.map((s) => s.city);
+const STATE_OPTIONS = SUN_HOURS.map((s) => s.state);
 
 /* Shared input definitions, so the same field means the same thing everywhere. */
 const F = {
-  city: {
-    key: "city",
-    label: "Closest city",
+  state: {
+    key: "state",
+    label: "Your state",
     type: "select",
-    options: CITY_OPTIONS,
-    default: "Melbourne",
+    options: STATE_OPTIONS,
+    default: "Victoria (VIC)",
     // Shown beside each option in the list, so the number that drives the
     // whole calculation is visible at the moment the choice is made.
-    meta: (city) => `${sunFor(city)} hrs`,
-    help: "Sets the peak sun hours used in the generation estimate.",
+    meta: (state) => `${sunFor(state)} hrs`,
+    help: "Sets the peak sun hours used in the generation estimate, based on the state capital.",
   },
   kw: {
     key: "kw",
@@ -142,6 +159,7 @@ const F = {
    ========================================================================= */
 const savings = {
   slug: "solar-savings-calculator",
+  answerLabel: "You could save",
   label: "Solar Savings Calculator",
   nav: "Savings",
   seoTitle: "Solar Savings Calculator | Use Your Own Bill | Lumenx",
@@ -152,10 +170,10 @@ const savings = {
   lead: "Most savings calculators pick their own electricity price and hand you a big number. This one uses the rates printed on your bill, so the answer is about your household rather than an average one.",
   chips: ["Uses your own tariff", "No price assumptions", "Shows the working"],
   cta: "Get this quoted properly",
-  inputs: [F.city, F.kw, F.usageRate, F.fitRate, F.dayShare],
+  inputs: [F.state, F.kw, F.usageRate, F.fitRate, F.dayShare],
 
   compute(v) {
-    const gen = annualKwh(v.kw, v.city);
+    const gen = annualKwh(v.kw, v.state);
     const self = gen * (v.dayShare / 100);
     const exported = gen - self;
     const offset = (self * v.usageRate) / 100;
@@ -181,7 +199,7 @@ const savings = {
   },
 
   assumptions: [
-    "Generation uses your city's approximate long-run peak sun hours and a performance ratio of 0.80, the conventional allowance for inverter losses, cabling, temperature, soiling and orientation.",
+    "Generation uses your state capital's approximate long-run peak sun hours and a performance ratio of 0.80, the conventional allowance for inverter losses, cabling, temperature, soiling and orientation.",
     "It assumes an unshaded, reasonably north-facing roof. Shading or a poor orientation reduces the figure, sometimes substantially.",
     "It is a year-one estimate. Panels degrade slowly and tariffs change, so later years will differ.",
     "It does not include the daily supply charge, which you pay whether or not you have solar.",
@@ -208,6 +226,7 @@ const savings = {
    ========================================================================= */
 const sizing = {
   slug: "solar-system-size-calculator",
+  answerLabel: "You need about",
   label: "Solar System Size Calculator",
   nav: "System size",
   seoTitle: "Solar System Size Calculator | What kW Do I Need? | Lumenx",
@@ -219,7 +238,7 @@ const sizing = {
   chips: ["Sized from your usage", "Panel count and roof area", "Two honest answers"],
   cta: "Have this sized properly",
   inputs: [
-    F.city,
+    F.state,
     F.quarterKwh,
     F.dayShare,
     {
@@ -238,7 +257,7 @@ const sizing = {
   compute(v) {
     const annual = v.quarterKwh * 4;
     const daily = annual / 365;
-    const perKw = sunFor(v.city) * 365 * PERFORMANCE_RATIO;
+    const perKw = sunFor(v.state) * 365 * PERFORMANCE_RATIO;
 
     const coverDay = (annual * (v.dayShare / 100)) / perKw;
     const coverAll = annual / perKw;
@@ -271,7 +290,7 @@ const sizing = {
 
   assumptions: [
     `Panel count assumes ${PANEL_WATTS}W modules and roughly ${M2_PER_PANEL} m² of roof per panel, including spacing.`,
-    "Generation uses your city's approximate peak sun hours and a performance ratio of 0.80.",
+    "Generation uses your state capital's approximate peak sun hours and a performance ratio of 0.80.",
     "It assumes unshaded, reasonably north-facing roof space. Complex or shaded roofs fit less and produce less.",
     "Quarterly usage is multiplied by four. If your summer and winter quarters differ a lot, use an average quarter rather than your worst one.",
   ],
@@ -297,6 +316,7 @@ const sizing = {
    ========================================================================= */
 const battery = {
   slug: "solar-battery-calculator",
+  answerLabel: "You would need",
   label: "Solar Battery Calculator",
   nav: "Battery size",
   seoTitle: "Solar Battery Size Calculator | How Many kWh? | Lumenx",
@@ -308,7 +328,7 @@ const battery = {
   chips: ["Sized from evening usage", "Checks your solar can fill it", "No price guesswork"],
   cta: "Get storage quoted",
   inputs: [
-    F.city,
+    F.state,
     F.quarterKwh,
     {
       key: "eveningShare",
@@ -341,7 +361,7 @@ const battery = {
     const evening = dailyUse * (v.eveningShare / 100);
     const nameplate = evening / (v.dod / 100);
 
-    const dailyGen = annualKwh(v.kw, v.city) / 365;
+    const dailyGen = annualKwh(v.kw, v.state) / 365;
     const surplus = dailyGen - (dailyUse - evening);
     const canFill = surplus >= evening;
 
@@ -364,7 +384,7 @@ const battery = {
 
   assumptions: [
     "Daily usage is your quarterly kWh divided evenly across the year. Real usage swings with the season, and winter is when storage is tightest.",
-    "Generation uses your city's approximate peak sun hours and a performance ratio of 0.80.",
+    "Generation uses your state capital's approximate peak sun hours and a performance ratio of 0.80.",
     "It assumes the battery cycles once a day. Round-trip efficiency losses of a few percent are not modelled.",
     "It does not size for blackout backup. Backup changes the wiring and the equipment, not just the capacity, so tell us if it matters to you.",
   ],
@@ -390,6 +410,7 @@ const battery = {
    ========================================================================= */
 const payback = {
   slug: "solar-payback-calculator",
+  answerLabel: "Pays for itself in",
   label: "Solar Payback Calculator",
   nav: "Payback",
   seoTitle: "Solar Payback Calculator | Check Any Quote | Lumenx",
@@ -413,7 +434,7 @@ const payback = {
       required: true,
       help: "The figure you would actually pay, after any rebate has been deducted.",
     },
-    F.city,
+    F.state,
     F.kw,
     F.usageRate,
     F.fitRate,
@@ -421,7 +442,7 @@ const payback = {
   ],
 
   compute(v) {
-    const gen = annualKwh(v.kw, v.city);
+    const gen = annualKwh(v.kw, v.state);
     const self = gen * (v.dayShare / 100);
     const exported = gen - self;
     const annual = (self * v.usageRate) / 100 + (exported * v.fitRate) / 100;
@@ -447,7 +468,7 @@ const payback = {
 
   assumptions: [
     "Simple payback, with no discounting of future cash flows and no allowance for tariff changes.",
-    "Generation uses your city's approximate peak sun hours and a performance ratio of 0.80.",
+    "Generation uses your state capital's approximate peak sun hours and a performance ratio of 0.80.",
     "Panel degradation is not modelled. Most manufacturers warrant around 0.5 percent loss a year, so later years produce slightly less.",
     "It assumes the price you entered is the price after any rebate. If your quote shows the rebate separately, subtract it first.",
     "Inverter replacement toward the end of the period is not included.",
@@ -474,6 +495,7 @@ const payback = {
    ========================================================================= */
 const feedIn = {
   slug: "feed-in-tariff-calculator",
+  answerLabel: "You would earn",
   label: "Feed-in Tariff Calculator",
   nav: "Feed-in tariff",
   seoTitle: "Feed-in Tariff Calculator | What Exporting Earns | Lumenx",
@@ -484,10 +506,10 @@ const feedIn = {
   lead: "Feed-in tariffs have fallen a long way. This shows what yours earns, and what you give up every time a kilowatt hour leaves your roof instead of running something in your house.",
   chips: ["The export gap, quantified", "Your own rates", "Shows what to shift"],
   cta: "Talk about self-consumption",
-  inputs: [F.city, F.kw, F.dayShare, F.usageRate, F.fitRate],
+  inputs: [F.state, F.kw, F.dayShare, F.usageRate, F.fitRate],
 
   compute(v) {
-    const gen = annualKwh(v.kw, v.city);
+    const gen = annualKwh(v.kw, v.state);
     const self = gen * (v.dayShare / 100);
     const exported = gen - self;
     const credit = (exported * v.fitRate) / 100;
@@ -514,7 +536,7 @@ const feedIn = {
   },
 
   assumptions: [
-    "Generation uses your city's approximate peak sun hours and a performance ratio of 0.80.",
+    "Generation uses your state capital's approximate peak sun hours and a performance ratio of 0.80.",
     "It uses a single flat usage rate. If you are on time-of-use pricing, the gap between using and exporting varies through the day and is usually wider at peak.",
     "Some retailers pay a tiered feed-in tariff that drops after a daily threshold. If yours does, this will be optimistic.",
     "It does not model a battery. Storage is the other way to close the same gap.",
@@ -579,7 +601,7 @@ export const TOOLS_HUB = {
     },
     {
       q: "How accurate are these?",
-      a: "The arithmetic is exact. The inputs are yours, which is what makes them worth more than an average. The one estimate is generation, which uses your city's approximate peak sun hours and the standard performance ratio, and assumes an unshaded roof with reasonable orientation.",
+      a: "The arithmetic is exact. The inputs are yours, which is what makes them worth more than an average. The one estimate is generation, which uses your state capital's approximate peak sun hours and the standard performance ratio, and assumes an unshaded roof with reasonable orientation.",
     },
     {
       q: "Why is there no price calculator?",

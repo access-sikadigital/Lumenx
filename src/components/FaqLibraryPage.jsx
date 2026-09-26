@@ -98,11 +98,8 @@ function Library() {
             <Link href="/get-a-quote" className="btn btn-ember btn-sm mt-5">
               <span>Ask a question</span>
             </Link>
-            <a
-              href={SITE.phoneHref}
-              className="mt-4 block font-[family-name:var(--font-display)] text-[1.05rem] font-bold text-blue transition-colors hover:text-ember"
-            >
-              {SITE.phone}
+            <a href={SITE.phoneHref} className="btn btn-sm btn-ghost btn-ghost-ink mt-3">
+              <span>{SITE.phone}</span>
             </a>
           </div>
         </div>

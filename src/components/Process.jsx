@@ -65,6 +65,7 @@ export default function Process() {
                     fill
                     sizes="(max-width:1024px) 100vw, 50vw"
                     className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                    quality={90}
                   />
                   {/* stronger scrim so the copy never fights the photo */}
                   <div className="absolute inset-0 bg-gradient-to-t from-blue via-blue/80 to-blue/20" />

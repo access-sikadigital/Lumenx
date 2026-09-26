@@ -60,7 +60,7 @@ function Checker() {
 
         <div className="shell page-hero-copy relative z-10">
           <nav aria-label="Breadcrumb" className="mb-8">
-            <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.72rem] text-white/45">
+            <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.72rem] text-white/55">
               <li><Link href="/" className="transition-colors hover:text-yellow">Home</Link></li>
               <li aria-hidden="true">/</li>
               <li><Link href="/tools" className="transition-colors hover:text-yellow">Tools</Link></li>
@@ -198,8 +198,8 @@ function Checker() {
               <Link href="/get-a-quote" className="btn btn-ember btn-sm">
                 <span>Check what I qualify for</span>
               </Link>
-              <a href={SITE.phoneHref} className="text-[0.9rem] font-semibold text-ember transition-opacity hover:opacity-70">
-                {SITE.phone}
+              <a href={SITE.phoneHref} className="btn btn-sm btn-ghost btn-ghost-ink">
+                <span>{SITE.phone}</span>
               </a>
             </div>
           </div>
@@ -231,7 +231,7 @@ function ReadMore() {
             <Link
               key={l.href}
               href={l.href}
-              className="group rounded-[20px] border border-white/14 bg-blue-2/40 p-[clamp(1.2rem,1.8vw,1.6rem)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-white/30"
+              className="group rounded-[20px] card-navy p-[clamp(1.2rem,1.8vw,1.6rem)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1"
             >
               <span className="block font-[family-name:var(--font-display)] text-[1.02rem] font-bold text-white">
                 {l.label}

@@ -15,6 +15,14 @@ function Stars({ className = "" }) {
 /**
  * Google review trust badge.
  * `variant="dark"` sits on the navy hero, `"light"` on pale sections.
+ *
+ * The mark is the real four-colour Google "G", from the asset supplied for
+ * this project — not a redrawn one. Google's logo is a trademark with
+ * published brand guidelines, so it is used as issued rather than
+ * reconstructed, recoloured or restyled.
+ *
+ * It carries transparency and reads correctly on both the cream and the navy
+ * ground, so it needs no white chip behind it.
  */
 export default function GoogleRating({ variant = "dark", className = "" }) {
   const { rating, count, url } = GOOGLE_REVIEWS;
@@ -22,14 +30,16 @@ export default function GoogleRating({ variant = "dark", className = "" }) {
 
   const inner = (
     <>
-      <span
-        className={`grid h-10 w-10 shrink-0 place-items-center rounded-full font-[family-name:var(--font-display)] text-lg font-bold ${
-          dark ? "bg-white/12 text-white" : "bg-blue/8 text-blue"
-        }`}
-        aria-hidden="true"
-      >
-        G
-      </span>
+      <img
+        src="/logos/google-g.png"
+        alt="Google"
+        width={144}
+        height={144}
+        loading="lazy"
+        decoding="async"
+        className="block h-[26px] w-[26px] shrink-0"
+      />
+
       <span className="leading-tight">
         <span className="flex items-center gap-2">
           <Stars />
@@ -42,7 +52,7 @@ export default function GoogleRating({ variant = "dark", className = "" }) {
     </>
   );
 
-  const base = `inline-flex items-center gap-3 rounded-full border px-4 py-2.5 transition-colors ${
+  const base = `inline-flex items-center gap-3 rounded-full border px-3 py-2.5 transition-colors ${
     dark
       ? "border-white/15 bg-white/[0.06] backdrop-blur-sm hover:bg-white/10"
       : "border-blue/12 bg-white hover:bg-cloud"

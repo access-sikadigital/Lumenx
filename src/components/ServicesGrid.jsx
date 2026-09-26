@@ -56,9 +56,10 @@ export default function ServicesGrid() {
                     fill
                     sizes="(max-width:640px) 100vw, (max-width:1280px) 50vw, 33vw"
                     className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                    quality={90}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-blue/55 to-transparent" />
-                  <span className="numeral absolute right-5 top-4 text-[clamp(2rem,2.4vw,2.8rem)] leading-none text-white/35">
+                  <span className="numeral absolute right-5 top-4 text-[clamp(2rem,2.4vw,2.8rem)] leading-none text-white/55">
                     {s.n}
                   </span>
                   <span className="absolute bottom-4 left-5 grid h-12 w-12 place-items-center rounded-2xl bg-blue/75 backdrop-blur-sm transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-1">

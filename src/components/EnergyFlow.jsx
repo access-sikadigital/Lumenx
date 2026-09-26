@@ -124,7 +124,7 @@ export default function EnergyFlow() {
                   <p className="numeral text-[clamp(1.5rem,2vw,2.2rem)] leading-none text-solar">
                     {s.stat}
                   </p>
-                  <p className="mt-1.5 text-[0.64rem] uppercase tracking-[0.16em] text-white/40">
+                  <p className="mt-1.5 text-[0.64rem] uppercase tracking-[0.16em] text-white/55">
                     {s.statLabel}
                   </p>
                 </div>
