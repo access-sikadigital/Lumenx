@@ -44,6 +44,9 @@ export const REVIEWS_PAGE = {
     imageAlt: "Solar panels installed by Lumenx on a rooftop at dusk",
   },
 
+  // NOT RENDERED. The reviews page no longer carries an FAQ section. Kept
+  // here because the answers are accurate and worth reusing if the questions
+  // are ever wanted on /faq, but nothing reads this today.
   faqs: [
     {
       q: "Are these reviews verified?",

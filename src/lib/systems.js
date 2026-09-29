@@ -62,7 +62,7 @@ export const SYSTEMS_HUB = {
     },
     {
       q: "What panels do you use?",
-      a: "Tier-1 440W modules across the range, from JA Solar, Jinko, Trina, Longi, Risen and Sunman depending on availability and what suits your roof. The specific model is named in your quote, not left vague.",
+      a: "Tier-1 440W modules across the range, from Jinko Solar, Longi, Risen, Sunman and Boss Solar depending on availability and what suits your roof. The specific model is named in your quote, not left vague.",
     },
   ],
 };

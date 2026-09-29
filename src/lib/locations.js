@@ -146,7 +146,7 @@ export const LOCATIONS = [
     service: "Solar batteries",
     seoTitle: "Solar Batteries Melbourne | Install & Rebate | Lumenx",
     seoDescription:
-      "Home battery installation across Melbourne. Sungrow, BYD, AlphaESS and LG, with the federal battery rebate applied. Retrofits to existing solar.",
+      "Home battery installation across Melbourne. Sungrow, Alpha ESS and LG, with the federal battery rebate applied. Retrofits to existing solar.",
     h1: "Home batteries in Melbourne, sized to your evenings.",
     lead: "Melbourne households use most of their power after dark, which is exactly the gap a battery closes. It is also why the rebate changed the maths here more than most places.",
     office: "Victoria, Head Office",
@@ -167,7 +167,7 @@ export const LOCATIONS = [
     service: "Solar batteries",
     seoTitle: "Solar Batteries Sydney | Install & Rebate | Lumenx",
     seoDescription:
-      "Home battery installation across Sydney. Sungrow, BYD, AlphaESS and LG, with the federal battery rebate applied. Retrofits to existing solar.",
+      "Home battery installation across Sydney. Sungrow, Alpha ESS and LG, with the federal battery rebate applied. Retrofits to existing solar.",
     h1: "Home batteries in Sydney, and whether yours is worth it.",
     lead: "Sydney's stronger generation means more midday surplus to store, which usually makes the storage case better here than further south.",
     office: "New South Wales",

@@ -21,6 +21,9 @@ const jsonLd = {
       legalName: "Lumenx",
       url: SITE.domain,
       email: SITE.email,
+      // The Organization node is what Google reads for the knowledge panel and
+      // local results, and it was publishing an email but no phone number.
+      telephone: SITE.phone,
       slogan: SITE.tagline,
       description:
         "Australian solar energy company. CEC-accredited solar panels, batteries, EV chargers and heat pumps for homes and business across Victoria and NSW.",

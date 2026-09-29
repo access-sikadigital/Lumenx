@@ -12,12 +12,13 @@ export const SITE = {
   email: "hello@lumenx.com.au",
 
   // Two live numbers, used the way the current site uses them: the 1800 in
-  // the header and footer on every page, the 1300 on quote and contact
   // blocks. Swap them here if that split is the wrong way round.
+  // ONE number for the whole site. There used to be a second, separate
+  // "quote" number used by the quote page, 404, thank-you, contact and the
+  // page heroes. Split contact numbers are how a site ends up publishing a
+  // line nobody answers, so there is now only this field.
   phone: "1800 577 319",
   phoneHref: "tel:1800577319",
-  quotePhone: "1300 123 456",
-  quotePhoneHref: "tel:1300123456",
 };
 
 // Primary navigation. URLs follow the SEO blueprint's recommended sitemap.
@@ -89,7 +90,7 @@ export const SERVICES = [
     title: "Solar Batteries",
     icon: "/icons/solar-battery.svg",
     image: "/images/svc-batteries.webp",
-    line: "Store your daytime power and run on it after dark. Sungrow, BYD, AlphaESS and LG, with the federal battery rebate applied for you.",
+    line: "Store your daytime power and run on it after dark. Sungrow, Alpha ESS and LG, with the federal battery rebate applied for you.",
     href: "/solar-batteries",
     tone: "ember",
   },
@@ -99,7 +100,7 @@ export const SERVICES = [
     title: "Solar Inverters",
     icon: "/icons/energy-monitor.svg",
     image: "/images/svc-inverters.webp",
-    line: "The brain of the system. Fronius, Sungrow, GoodWe and SolarEdge, supplied, installed and replaced when an old one fails.",
+    line: "The brain of the system. Sungrow, GoodWe, SolarEdge and Delta, supplied, installed and replaced when an old one fails.",
     href: "/solar-inverters",
     tone: "green",
   },
@@ -152,37 +153,46 @@ export const ENERGY_FLOW = [
     n: "01",
     label: "Sunlight",
     title: "Australian sun hits the roof",
-    line: "We get more sun than almost anywhere on earth. Tier-1 panels convert it into DC power, and it keeps working on overcast days.",
+    line: "Australia gets more solar radiation per square metre than any other continent. Tier-1 panels convert it into DC power, and they keep working on overcast days.",
     icon: "/icons/rooftop-solar.svg",
-    stat: "Up to 7",
-    statLabel: "peak sun hours a day",
+    // Was "Up to 7", which nothing on this site supports: the calculators put
+    // the sunniest state (NT) at 5.8, and Lumenx installs in VIC and NSW.
+    stat: "3.6 to 4.2",
+    statLabel: "peak sun hours a day, VIC and NSW",
   },
   {
     n: "02",
     label: "Conversion",
     title: "Your inverter makes it usable",
-    line: "A Fronius, Sungrow or GoodWe inverter turns that DC into the AC power your home actually runs on, and reports every watt.",
+    // Named Fronius, which is not in BRANDS and not something Lumenx installs.
+    line: "A Sungrow, GoodWe or SolarEdge inverter turns that DC into the AC power your home actually runs on, and reports every watt.",
     icon: "/icons/energy-monitor.svg",
     stat: "98%",
-    statLabel: "inverter efficiency",
+    // "peak", because 98% is the best-case conversion figure, not the average.
+    statLabel: "peak inverter efficiency",
   },
   {
     n: "03",
     label: "Storage",
     title: "Bank what you don't use",
-    line: "Instead of exporting surplus for cents, a Tesla, Sungrow or BYD battery stores it, now far more affordable with the federal rebate.",
+    // Named Tesla and BYD, neither of which is in BRANDS.
+    line: "Instead of exporting surplus for cents, a Sungrow, Alpha ESS or LG battery stores it, now far more affordable with the federal rebate.",
     icon: "/icons/solar-battery.svg",
-    stat: "13.5kWh",
-    statLabel: "typical home battery",
+    // 13.5kWh is one specific product's capacity, not a typical size.
+    stat: "10 to 15kWh",
+    statLabel: "common home battery size",
   },
   {
     n: "04",
-    label: "Independence",
-    title: "Run the house after dark",
-    line: "Evening load, hot water and EV charging all run off power you already made. That's when the bill really drops.",
+    // "Independence" + "24/7 on your own power" claimed something the site's
+    // own battery FAQ explicitly denies: a battery shifts solar into the
+    // evening, it does not take a grid-connected home off the grid.
+    label: "After dark",
+    title: "Run the evening on your own power",
+    line: "Evening load, hot water and EV charging run off power you made earlier in the day. A battery shifts your solar into the hours you actually use it.",
     icon: "/icons/ev-charging.svg",
-    stat: "24/7",
-    statLabel: "on your own power",
+    stat: "10kWh",
+    statLabel: "a typical household evening",
   },
 ];
 
@@ -229,7 +239,7 @@ export const WHY = [
   {
     n: "02",
     title: "Premium hardware only",
-    line: "Tier-1 panels and inverters from JA Solar, Jinko, Trina, SunPower, Fronius and Sungrow, matched with Tesla, Sungrow and BYD storage.",
+    line: "Tier-1 panels and inverters from Jinko Solar, Longi, Risen, Sungrow and GoodWe, matched with Sungrow, Alpha ESS and LG storage.",
     image: "/images/panels-closeup.webp",
   },
   {
@@ -322,43 +332,84 @@ export const BRANDS = [
   { name: "Supreme Heating", file: "supreme-heating.webp", w: 82, iw: 328, ih: 120 },
 ];
 
-// Testimonials (placeholders, swap for real Google reviews before launch).
+// Real Google reviews, supplied 29 September 2026.
+//
+// VERBATIM. The wording is exactly as each reviewer wrote it, including their
+// own typos, because editing a customer's words and still calling it their
+// review is a misrepresentation. The only changes made are: surnames reduced
+// to an initial (standard practice for displaying testimonials), a stray space
+// before a comma removed, and a row of decorative asterisks dropped from the
+// end of one review.
+//
+// `short` is an excerpt for the scrolling row, where the full text will not
+// fit. Every excerpt ends on a sentence boundary and none of them changes the
+// meaning of the review. The full text is what the /reviews page shows.
+//
+// Two of the ten reviews supplied carried a star rating but no written text,
+// so they are not listed here: there is nothing to quote.
+//
+// `when` is relative to the capture date above and will drift. Refresh it, or
+// swap to absolute months, when these are next updated.
 export const REVIEWS = [
   {
     quote:
-      "Quote to switch-on was painless. They handled the rebate, the paperwork and the grid connection, and our bill dropped the first month.",
-    name: "Rebecca M.",
-    place: "Maribyrnong, VIC",
+      "Lumenx were great to deal with and charged a reasonable price. My solar battery and panel install wasn\u2019t an easy job but the team were very friendly and consulted me on the little things as they went. The finished job looked great and is operating well. Do not go with the cheapest-priced installers out there as you will regret it, and these guys weren\u2019t on the expensive end either. Highly recommend going with Lumenx for your solar install.",
+    short:
+      "My solar battery and panel install wasn\u2019t an easy job but the team were very friendly and consulted me on the little things as they went. The finished job looked great and is operating well.",
+    name: "Dean H.",
+    when: "3 months ago",
   },
   {
     quote:
-      "Added a Powerwall to our existing panels. The team explained exactly what we'd save and hit every date they promised.",
-    name: "James & Priya",
-    place: "Parramatta, NSW",
+      "Where do I start. I had 10kw solar panel installed with a 42kwh battery fitted with these guys, and couldn\u2019t be happier. They turned up in time, very professional, friendly, but most importantly very neat and clean with their work. They had to remove old panels, and the state of the roof was so dirty, with pigeon poo as the were roosting under the panels and many broken tiles. They cleaned the roof thoroughly and replaced the broken tiles before fitting the new panels. After completing the work they spent the time with me explaining how the system works, and help me set it up on the mobile app. Also assured me to contact them with any questions anytime. I would highly recommend them to anyone with no hesitation to have these guys do there power system or any other works they do.",
+    short:
+      "They turned up in time, very professional, friendly, but most importantly very neat and clean with their work. After completing the work they spent the time with me explaining how the system works.",
+    name: "Stelios K.",
+    when: "5 months ago",
   },
   {
     quote:
-      "We put solar across two warehouses. The ROI modelling was honest and the crews were in and out with zero fuss.",
-    name: "D. Nguyen",
-    place: "Commercial client, Geelong",
+      "Had solar and a battery installed by Lumenx fantastic experience. Smooth process, great communication, and high-quality work. Highly recommend!",
+    short:
+      "Had solar and a battery installed by Lumenx fantastic experience. Smooth process, great communication, and high-quality work.",
+    name: "Mustafa M.",
+    when: "6 months ago",
   },
   {
     quote:
-      "No pressure, no inflated savings claims. They showed me the real numbers on my own bill and let me decide.",
-    name: "Alan T.",
-    place: "Werribee, VIC",
+      "Lumenx delivered exceptional service from start to finish. Their knowledgeable team provided clear explanations, and the installation was efficient and professional. The high-quality panels exceeded performance expectations, leading to noticeable savings on my electricity bill. I highly recommend lumenx for anyone considering solar energy.",
+    short:
+      "Their knowledgeable team provided clear explanations, and the installation was efficient and professional.",
+    name: "Claudette T.",
+    when: "2 years ago",
   },
   {
     quote:
-      "The EV charger and solar were installed together and set up to charge off our own power. Exactly what we wanted.",
-    name: "Sophie L.",
-    place: "Bendigo, VIC",
+      "Team was exceptional with delivering high quality service for my two builds. The service was top tier alongside their communication. Definitely recommend for any solar installations.",
+    short:
+      "Team was exceptional with delivering high quality service for my two builds. The service was top tier alongside their communication.",
+    name: "Nuredin M.",
+    when: "2 years ago",
+  },
+  {
+    quote: "Great crew, great team fantastic to work with !",
+    short: "Great crew, great team fantastic to work with !",
+    name: "Johnny B.",
+    when: "10 months ago",
   },
   {
     quote:
-      "Two years on and they still pick up the phone. The monitoring app means I can see what the system is doing daily.",
-    name: "Marcus R.",
-    place: "Liverpool, NSW",
+      "Lumenx exceeded their expectations with delivering highly great service. Definitely recommend for all your solar needs.",
+    short:
+      "Lumenx exceeded their expectations with delivering highly great service. Definitely recommend for all your solar needs.",
+    name: "Suliman S.",
+    when: "2 years ago",
+  },
+  {
+    quote: "Extremely happy with the boys install of our batteries",
+    short: "Extremely happy with the boys install of our batteries",
+    name: "Ricky H.",
+    when: "2 weeks ago",
   },
 ];
 

@@ -14,15 +14,26 @@ function Stars() {
 }
 
 function Card({ r }) {
+  // No h-full on the figure. A percentage height makes the cross-size
+  // definite, which switches OFF the row's default align-items:stretch, so
+  // each card fell back to its own content height and the row came out
+  // ragged. Dropping it lets stretch do the job it was already going to do.
   return (
-    <figure className="flex h-full w-[clamp(255px,26vw,420px)] shrink-0 flex-col justify-between rounded-[20px] border border-blue/10 bg-white p-[clamp(1.35rem,1.8vw,2.25rem)]">
+    <figure className="flex w-[clamp(255px,26vw,420px)] shrink-0 flex-col rounded-[20px] border border-blue/10 bg-white p-[clamp(1.35rem,1.8vw,2.25rem)]">
       <Stars />
+      {/* Excerpt here, full text on /reviews. The longest review runs to 794
+          characters, which would make one card six times the height of the
+          rest and break the row. */}
       <blockquote className="mt-5 text-[clamp(0.98rem,0.95vw,1.15rem)] leading-relaxed text-blue/90">
-        “{r.quote}”
+        “{r.short}”
       </blockquote>
-      <figcaption className="mt-6 border-t border-blue/10 pt-5">
+      {/* mt-auto, not justify-between: with three children justify-between
+          would also space the quote away from the stars. This pins the
+          attribution to the floor of the card and leaves the rest alone, so
+          every name and date lines up across the row. */}
+      <figcaption className="mt-auto border-t border-blue/10 pt-5">
         <p className="font-semibold text-blue">{r.name}</p>
-        <p className="text-sm text-ink-soft">{r.place}</p>
+        <p className="text-sm text-ink-soft">Google review · {r.when}</p>
       </figcaption>
     </figure>
   );

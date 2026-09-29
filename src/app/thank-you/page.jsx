@@ -61,8 +61,8 @@ export default function Page() {
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-3.5">
-            <a href={SITE.quotePhoneHref} className="btn btn-primary">
-              <span>Call {SITE.quotePhone}</span>
+            <a href={SITE.phoneHref} className="btn btn-primary">
+              <span>Call {SITE.phone}</span>
             </a>
             <Link href="/" className="btn btn-ghost">
               <span>Back to home</span>

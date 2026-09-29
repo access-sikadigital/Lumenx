@@ -96,8 +96,8 @@ export default function Page() {
 
             <div className="mt-4 rounded-[22px] border border-blue/10 bg-paper p-[clamp(1.4rem,2vw,2rem)]">
               <p className="eyebrow mb-5 text-ember">Rather talk?</p>
-              <a href={SITE.quotePhoneHref} className="block font-[family-name:var(--font-display)] text-xl font-bold text-blue transition-colors duration-300 hover:text-ember">
-                {SITE.quotePhone}
+              <a href={SITE.phoneHref} className="block font-[family-name:var(--font-display)] text-xl font-bold text-blue transition-colors duration-300 hover:text-ember">
+                {SITE.phone}
               </a>
               <a href={`mailto:${SITE.email}`} className="mt-1.5 block text-[0.92rem] text-ember underline underline-offset-4 transition-colors duration-300 hover:text-blue">
                 {SITE.email}

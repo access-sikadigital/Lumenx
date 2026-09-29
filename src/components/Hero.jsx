@@ -81,9 +81,12 @@ export default function Hero() {
         }}
       />
 
-      {/* logomark, kept low-right so it never collides with the headline */}
+      {/* Logomark, kept low-right so it never collides with the headline.
+          Yellow rather than ember: it sits over the warm sunset image and the
+          ember sun-pulse gradient behind it, so an ember mark had almost
+          nothing to separate it from its own background. */}
       <img
-        src="/logos/logomark-ember.svg"
+        src="/logos/logomark-yellow.svg"
         alt=""
         aria-hidden="true"
         className="pointer-events-none absolute right-[6%] top-[58%] hidden w-[clamp(60px,5.5vw,110px)] opacity-80 xl:block"

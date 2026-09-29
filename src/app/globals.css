@@ -167,6 +167,53 @@ body {
   opacity: 1;
 }
 
+/* ---------------------------------------------------------------------------
+   The sun crossing the energy-flow section.
+
+   It tracks the rail the four stages hang from, rising slightly through the
+   middle so the path reads as an arc rather than a slide. Pure CSS on a
+   transform and opacity only, so it composites on the GPU and never touches
+   layout; there is no scroll listener and no JS driving it.
+
+   Paused outright for reduced-motion users: a light continuously crossing the
+   viewport is exactly the kind of persistent movement that setting exists for.
+--------------------------------------------------------------------------- */
+/* A slow warm wash drifting across the energy section, so the ground's colour
+   shifts instead of sitting as one flat blue. No sun object any more, just the
+   light. Transform only, so it composites on the GPU. */
+@keyframes sun-wash {
+  0% {
+    transform: translate3d(-30%, 0, 0);
+  }
+  100% {
+    transform: translate3d(130%, 0, 0);
+  }
+}
+
+.ef-wash {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 60%;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 60% 70% at 50% 40%,
+    rgba(255, 177, 32, 0.16) 0%,
+    rgba(255, 199, 70, 0.09) 40%,
+    transparent 72%
+  );
+  animation: sun-wash 26s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ef-wash {
+    animation: none;
+    transform: translate3d(50%, 0, 0);
+  }
+}
+
 /* Nothing may exceed its container. Cheap insurance against a stray asset
    with large intrinsic dimensions blowing out the layout at 320px. */
 img,
@@ -392,6 +439,9 @@ h1, h2, h3, h4 {
   font-size: clamp(0.84rem, 0.72vw, 0.95rem);
 }
 
+/* Flat fills read as placeholders at this size. A shallow vertical gradient
+   plus a 1px inner highlight gives the pill a lit edge, and the warm drop
+   shadow ties it to the brand rather than greying it out. */
 /* Flat fills read as placeholders at this size. A shallow vertical gradient
    plus a 1px inner highlight gives the pill a lit edge, and the warm drop
    shadow ties it to the brand rather than greying it out. */

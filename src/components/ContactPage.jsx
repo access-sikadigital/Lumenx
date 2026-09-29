@@ -61,9 +61,9 @@ function Channels() {
   );
 
   const href = (k) =>
-    k === "phone" ? SITE.quotePhoneHref : k === "email" ? `mailto:${SITE.email}` : "/get-a-quote";
+    k === "phone" ? SITE.phoneHref : k === "email" ? `mailto:${SITE.email}` : "/get-a-quote";
   const value = (k) =>
-    k === "phone" ? SITE.quotePhone : k === "email" ? SITE.email : "Start a quote";
+    k === "phone" ? SITE.phone : k === "email" ? SITE.email : "Start a quote";
 
   return (
     <section

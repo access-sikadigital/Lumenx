@@ -7,7 +7,6 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import PageHero from "@/components/PageHero";
-import Faq from "@/components/Faq";
 import CTA from "@/components/CTA";
 import { REVIEWS_PAGE } from "@/lib/reviews";
 import { REVIEWS, GOOGLE_REVIEWS, TRUST } from "@/lib/site";
@@ -170,7 +169,7 @@ function Wall() {
                 <span className="block font-[family-name:var(--font-display)] text-[0.98rem] font-bold text-blue">
                   {r.name}
                 </span>
-                <span className="mt-1 block text-[0.8rem] text-ink-soft">{r.place}</span>
+                <span className="mt-1 block text-[0.8rem] text-ink-soft">Google review · {r.when}</span>
               </figcaption>
             </figure>
           ))}
@@ -230,11 +229,6 @@ export default function ReviewsPage() {
       <Intro />
       <Wall />
       <Accreditations />
-      <Faq
-        items={REVIEWS_PAGE.faqs}
-        heading="About our reviews."
-        lead="How we collect them, and what we do when a job does not go to plan."
-      />
       <CTA />
     </>
   );

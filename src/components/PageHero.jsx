@@ -101,8 +101,8 @@ export default function PageHero({ eyebrow, h1, lead, image, imageAlt, chips = [
           <Link href="/get-a-quote" className="ph-act btn btn-primary">
             <span>Get a Free Quote</span>
           </Link>
-          <a href={SITE.quotePhoneHref} className="ph-act btn btn-ghost">
-            <span>{SITE.quotePhone}</span>
+          <a href={SITE.phoneHref} className="ph-act btn btn-ghost">
+            <span>{SITE.phone}</span>
           </a>
         </div>
 

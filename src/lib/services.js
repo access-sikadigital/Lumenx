@@ -33,7 +33,7 @@ export const SERVICE_PAGES = {
       ],
       points: [
         "Panel layout modelled on your actual roof, not a generic template",
-        "Tier-1 panels from JA Solar, Jinko, Trina, Longi and SunPower",
+        "Tier-1 panels from Jinko Solar, Longi, Risen, Sunman and Boss Solar",
         "Federal STCs and Solar Victoria rebates claimed for you",
         "Monitoring set up before we leave, so you can see every kilowatt",
       ],
@@ -121,9 +121,9 @@ export const SERVICE_PAGES = {
   "solar-batteries": {
     slug: "solar-batteries",
     label: "Solar Batteries",
-    seoTitle: "Solar Batteries Melbourne: Sungrow, BYD, LG | Lumenx",
+    seoTitle: "Solar Batteries Melbourne: Sungrow, Alpha ESS, LG | Lumenx",
     seoDescription:
-      "Store your solar and cut bills with a home battery. Sungrow, BYD, AlphaESS and LG Energy Solution, with the federal battery rebate applied. Free quote.",
+      "Store your solar and cut bills with a home battery. Sungrow, Alpha ESS and LG Energy Solution, with the federal battery rebate applied. Free quote.",
     eyebrow: "Solar batteries",
     h1: "Stop exporting power for cents and buying it back for dollars.",
     lead: "Without storage, most households export the bulk of what they generate at a low feed-in rate, then buy power back at peak prices after dark. A battery closes that gap.",
@@ -175,9 +175,9 @@ export const SERVICE_PAGES = {
   "solar-inverters": {
     slug: "solar-inverters",
     label: "Solar Inverters",
-    seoTitle: "Solar Inverters Melbourne: Fronius, Sungrow | Lumenx",
+    seoTitle: "Solar Inverters Melbourne: Sungrow, GoodWe | Lumenx",
     seoDescription:
-      "Choose the right solar inverter. Fronius, Sungrow, GoodWe and SolarEdge, string and hybrid. Supply, installation and replacement. Free quote.",
+      "Choose the right solar inverter. Sungrow, GoodWe, SolarEdge and Delta, string and hybrid. Supply, installation and replacement. Free quote.",
     eyebrow: "Solar inverters",
     h1: "The component that decides how well your solar actually performs.",
     lead: "Panels get the attention, but the inverter is what converts, manages and reports everything your system does. It is also the part most likely to need replacing first.",

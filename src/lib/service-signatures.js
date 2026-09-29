@@ -317,7 +317,7 @@ export const SIGNATURES = {
         featured: true,
       },
       {
-        name: "Sungrow, BYD or Alpha ESS",
+        name: "Sungrow, Alpha ESS or LG",
         line: "Strong value storage that does the core job of shifting daytime solar into the evening, for less per kilowatt hour.",
         marks: [
           { k: "Blackout backup", v: "Available, varies", good: true },

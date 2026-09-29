@@ -204,7 +204,7 @@ export default function QuoteForm() {
               <p className="text-[0.92rem] font-semibold text-blue">We could not send that just now.</p>
               <p className="mt-2 text-[0.92rem] leading-relaxed text-ink">
                 Sorry about that. Please call us on{" "}
-                <a href={SITE.quotePhoneHref} className="font-semibold text-ember underline underline-offset-4">{SITE.quotePhone}</a>{" "}
+                <a href={SITE.phoneHref} className="font-semibold text-ember underline underline-offset-4">{SITE.phone}</a>{" "}
                 or email{" "}
                 <a href={`mailto:${SITE.email}`} className="font-semibold text-ember underline underline-offset-4">{SITE.email}</a>{" "}
                 and we will pick it up straight away.
