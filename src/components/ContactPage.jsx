@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import TrustBadges from "@/components/TrustBadges";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -180,14 +181,9 @@ function Offices() {
           </div>
         </div>
 
-        <ul className="mt-[clamp(2.5rem,4vw,3.5rem)] flex flex-wrap gap-x-8 gap-y-3 border-t border-white/12 pt-8 text-[0.66rem] uppercase tracking-[0.14em] text-white/55">
-          {TRUST.map((t) => (
-            <li key={t} className="flex items-center gap-2">
-              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-green" />
-              {t}
-            </li>
-          ))}
-        </ul>
+        <div className="mt-[clamp(2.5rem,4vw,3.5rem)] border-t border-white/12 pt-8">
+          <TrustBadges spread />
+        </div>
       </div>
     </section>
   );

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import TrustBadges from "@/components/TrustBadges";
 import QuoteForm from "@/components/QuoteForm";
 import { SITE, TRUST, OFFICES, CTA_PROMISES } from "@/lib/site";
 
@@ -50,14 +51,9 @@ export default function Page() {
             number that moves after the deposit.
           </p>
 
-          <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-2.5 border-t border-white/12 pt-6 text-[0.68rem] uppercase tracking-[0.14em] text-white/50">
-            {TRUST.map((t) => (
-              <li key={t} className="flex items-center gap-2">
-                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-green" />
-                {t}
-              </li>
-            ))}
-          </ul>
+          <div className="mt-10 border-t border-white/12 pt-6">
+            <TrustBadges spread />
+          </div>
         </div>
       </section>
 

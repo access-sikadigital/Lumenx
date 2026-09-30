@@ -1,4 +1,5 @@
 import Link from "next/link";
+import TrustBadges from "@/components/TrustBadges";
 import { SITE, FOOTER_LINKS, OFFICES, TRUST, CREDIT, LEGAL_LINKS } from "@/lib/site";
 import { LOCATIONS } from "@/lib/locations";
 import { CALCULATORS, REBATE_CHECK } from "@/lib/calculators";
@@ -128,16 +129,9 @@ export default function Footer() {
         </div>
 
         {/* credential strip */}
-        <ul
-          className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/10 pt-8 text-[0.66rem] uppercase tracking-[0.14em] text-white/55"
-        >
-          {TRUST.map((t) => (
-            <li key={t} className="flex items-center gap-2">
-              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-green" />
-              {t}
-            </li>
-          ))}
-        </ul>
+        <div className="mt-10 border-t border-white/10 pt-8">
+          <TrustBadges spread />
+        </div>
 
         {/* bottom bar */}
         <div className="mt-8 flex flex-col justify-between gap-4 border-t border-white/[0.07] pt-8 text-xs text-white/55 md:flex-row md:items-center">

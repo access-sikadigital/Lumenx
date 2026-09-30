@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import TrustBadges from "@/components/TrustBadges";
 import Image from "next/image";
 import Link from "next/link";
 import { gsap } from "gsap";
@@ -230,15 +231,8 @@ function LocalBrief({ l }) {
             </p>
             <p className="mt-1 text-[0.86rem] leading-relaxed text-ink">{office.address}</p>
           </div>
-          <div className="flex flex-wrap items-center gap-2.5 sm:justify-end">
-            {TRUST.slice(0, 3).map((t) => (
-              <span
-                key={t}
-                className="rounded-full border border-blue/15 bg-paper px-3.5 py-1.5 text-[0.74rem] text-ink"
-              >
-                {t}
-              </span>
-            ))}
+          <div className="sm:justify-self-end">
+            <TrustBadges size="sm" />
           </div>
         </div>
       </div>

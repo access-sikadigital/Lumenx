@@ -40,14 +40,6 @@ export default function WhyLumenx() {
         ease: "power3.out",
         scrollTrigger: { trigger: ".wl-panel", start: "top 72%" },
       });
-      gsap.from(".wl-chip", {
-        opacity: 0,
-        y: 14,
-        duration: 0.5,
-        stagger: 0.07,
-        ease: "power2.out",
-        scrollTrigger: { trigger: ".wl-chips", start: "top 92%" },
-      });
     },
     { scope: root }
   );
@@ -123,17 +115,6 @@ export default function WhyLumenx() {
           </div>
         </div>
 
-        {/* accreditation chips */}
-        <div className="wl-chips mt-[clamp(1.75rem,2.5vw,2.5rem)] flex flex-wrap gap-2.5">
-          {TRUST.map((t) => (
-            <span
-              key={t}
-              className="wl-chip rounded-full border border-blue/12 bg-white px-4 py-2 text-[0.72rem] uppercase tracking-[0.12em] text-ink"
-            >
-              {t}
-            </span>
-          ))}
-        </div>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import GoogleRating from "@/components/GoogleRating";
 import Image from "next/image";
 import Link from "next/link";
 import { gsap } from "gsap";
@@ -8,8 +9,9 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import PageHero from "@/components/PageHero";
 import CTA from "@/components/CTA";
+import TrustBadges from "@/components/TrustBadges";
 import { REVIEWS_PAGE } from "@/lib/reviews";
-import { REVIEWS, GOOGLE_REVIEWS, TRUST } from "@/lib/site";
+import { REVIEWS } from "@/lib/site";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -107,10 +109,6 @@ function Wall() {
     { scope: root }
   );
 
-  const rating = parseFloat(GOOGLE_REVIEWS.rating);
-  const hasRating = Number.isFinite(rating) && rating > 0;
-  const count = String(GOOGLE_REVIEWS.count || "").trim();
-  const hasLink = GOOGLE_REVIEWS.url && GOOGLE_REVIEWS.url !== "#";
 
   return (
     <section
@@ -127,32 +125,10 @@ function Wall() {
             </h2>
           </div>
 
-          {/* The rating summary only renders with real figures. An unverified
-              score on a dedicated reviews page is the worst place to guess. */}
-          {hasRating && (
-            <div className="rounded-[20px] border border-blue/12 bg-paper px-6 py-5">
-              <div className="flex items-center gap-3">
-                <span className="font-[family-name:var(--font-display)] text-[1.6rem] font-extrabold leading-none text-blue">
-                  {GOOGLE_REVIEWS.rating}
-                </span>
-                <Stars className="text-yellow" />
-              </div>
-              <p className="mt-2 text-[0.72rem] uppercase tracking-[0.14em] text-ink-soft">
-                Google Reviews{count ? ` · ${count} reviews` : ""}
-              </p>
-              {hasLink && (
-                <a
-                  href={GOOGLE_REVIEWS.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-3 inline-flex items-center gap-2 text-[0.8rem] font-semibold text-ember underline underline-offset-4"
-                >
-                  Read them on Google
-                  <span aria-hidden="true">→</span>
-                </a>
-              )}
-            </div>
-          )}
+          {/* Same badge as the home page, so the Google mark and the rating
+              read identically wherever they appear. It hides its own count and
+              drops its link when those are not set, so it degrades safely. */}
+          <GoogleRating variant="light" />
         </div>
 
         <div className="wl-grid mt-[clamp(2.5rem,5vw,4rem)] grid gap-[clamp(1rem,1.5vw,1.5rem)] md:grid-cols-2 xl:grid-cols-3">
@@ -193,18 +169,11 @@ function Accreditations() {
   return (
     <section className="grain relative overflow-hidden bg-blue text-white" style={{ paddingTop: "clamp(3rem, 6vh, 5rem)", paddingBottom: "clamp(3rem, 6vh, 5rem)" }}>
       <div aria-hidden="true" className="glow glow--ember left-[-8%] top-1/2 -translate-y-1/2" style={{ width: "min(560px, 40%)" }} />
-      <div className="shell relative flex flex-wrap items-center justify-between gap-x-10 gap-y-5">
-        <p className="t-h3 max-w-[24ch]">
+      <div className="shell relative">
+        <p className="t-h3 max-w-[30ch]">
           Reviews are one signal. Accreditation is the other.
         </p>
-        <ul className="flex flex-wrap gap-x-7 gap-y-2.5 text-[0.66rem] uppercase tracking-[0.14em] text-white/50">
-          {TRUST.map((t) => (
-            <li key={t} className="flex items-center gap-2">
-              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-green" />
-              {t}
-            </li>
-          ))}
-        </ul>
+        <TrustBadges spread className="mt-[clamp(1.75rem,2.5vw,2.5rem)]" />
       </div>
     </section>
   );

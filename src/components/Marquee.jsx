@@ -81,8 +81,15 @@ export default function Marquee({
                 decoding="async"
                 className={`block h-auto transition duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                   dark
-                    ? "opacity-45 brightness-0 invert hover:opacity-90"
-                    : "opacity-55 grayscale hover:opacity-100 hover:grayscale-0"
+                    // On navy the logos still have to be knocked to white:
+                    // Hayward, SensaHeat and Wallbox are pure black artwork
+                    // and would be invisible, and several of the colour marks
+                    // (GoodWe, Longi, Sunman, SolarEdge) sit under 30% luma.
+                    ? "opacity-70 brightness-0 invert hover:opacity-100"
+                    // Full colour on the pale ground. 13 of the 16 files are
+                    // genuinely colour artwork; the greyscale was a CSS filter
+                    // throwing that away.
+                    : "opacity-95 hover:opacity-100"
                 }`}
                 // Height auto so the width attribute above does not fight the
                 // rendered size; the attributes only supply the aspect ratio.

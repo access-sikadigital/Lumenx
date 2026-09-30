@@ -52,11 +52,33 @@ export const CTA_PROMISES = [
 ];
 
 // Trust credentials shown across the site.
+/**
+ * Accreditations, shown as the real logos rather than as a row of text.
+ *
+ * `w`/`h` are the intrinsic pixel dimensions of each file, so an <img> can
+ * declare them and reserve the right box before the file arrives. All four are
+ * normalised to a 160px source height, which is why h is constant: sizing by
+ * HEIGHT is what keeps a 3:1 wordmark and a 1:1 circular badge looking like
+ * they belong in the same row.
+ *
+ * The supplied artwork had four different backgrounds (plain white, a
+ * transparency checkerboard baked into a jpg, a solid cyan disc, and a
+ * transparent png). They are all knocked back to transparency here and then
+ * sat on a white chip in the UI, so the row is consistent on any ground.
+ *
+ * NOTE: the NETCC artwork reads "Approved Seller". The site elsewhere says
+ * "NETCC Signatory". Those are not the same status; the label below follows
+ * the logo Lumenx supplied.
+ */
 export const TRUST = [
-  "Solar Victoria Authorised Retailer",
-  "Clean Energy Council Member",
-  "NETCC Signatory",
-  "16-Year Workmanship Warranty",
+  { label: "Solar Victoria Authorised Retailer", file: "solar-victoria.webp", w: 480, h: 160, scale: 1 },
+  { label: "Clean Energy Council Member", file: "clean-energy-council.webp", w: 330, h: 160, scale: 1 },
+  // Circular marks get a 1.42x optical correction. At a shared height a 3:1
+  // wordmark lays down 2700px of ink and a 1:1 disc only 900px, and the disc
+  // has to fit its text INSIDE that circle, so matching heights leaves the
+  // badges unreadable. Optical weight is the thing to match, not raw height.
+  { label: "NETCC Approved Seller", file: "netcc.webp", w: 160, h: 160, scale: 1.42 },
+  { label: "16-Year Workmanship Warranty", file: "warranty-16yr.webp", w: 171, h: 160, scale: 1.42 },
 ];
 
 // Core service cards (icons live in /public/icons).

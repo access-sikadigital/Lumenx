@@ -162,7 +162,7 @@ function CategoryLedger() {
                               alt={b.name}
                               loading="lazy"
                               decoding="async"
-                              className="block h-auto max-w-full opacity-60 grayscale transition duration-500 hover:opacity-100 hover:grayscale-0"
+                              className="block h-auto max-w-full opacity-95 transition duration-500 hover:opacity-100"
                               style={{ width: `min(${Math.round(b.w * 1.15)}px, 62vw)` }}
                             />
                           </li>

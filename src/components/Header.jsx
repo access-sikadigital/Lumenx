@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import TrustBadges from "@/components/TrustBadges";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { gsap } from "gsap";
@@ -398,14 +399,9 @@ export default function Header() {
                 <span className="break-all text-right font-semibold text-yellow">{SITE.email}</span>
               </a>
 
-              <ul className="mm-meta mt-7 flex flex-wrap gap-x-4 gap-y-2 border-t border-white/10 pt-5 text-[0.6rem] uppercase tracking-[0.12em] text-white/55">
-                {TRUST.map((t) => (
-                  <li key={t} className="flex items-center gap-1.5">
-                    <span aria-hidden="true" className="h-1 w-1 rounded-full bg-green" />
-                    {t}
-                  </li>
-                ))}
-              </ul>
+              <div className="mm-meta mt-7 border-t border-white/10 pt-5">
+                <TrustBadges size="sm" />
+              </div>
             </div>
           </div>
         </div>

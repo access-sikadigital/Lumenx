@@ -140,20 +140,13 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Bottom credential bar. Hidden below md: on a phone the four
-          credentials stack into four full-width rows and eat most of the
-          first screen. They still appear in the mobile menu, the CTA and the
-          footer, so nothing is lost. */}
+      {/* Bottom edge of the hero: just the scroll cue now. The accreditation
+          chips used to sit on the left here, but they arrive before anyone has
+          read the headline, so they read as clutter rather than reassurance.
+          They still appear in the CTA, the footer and the quote pages, which
+          is where the reassurance is actually wanted. */}
       <div className="hero-bar relative z-10 hidden border-t border-white/12 bg-blue/35 backdrop-blur-sm md:block">
-        <div className="shell flex items-center justify-between gap-6 py-4">
-          <ul className="flex flex-wrap gap-x-[clamp(1rem,2.4vw,3rem)] gap-y-1 text-[0.66rem] uppercase tracking-[0.18em] text-white/55">
-            {TRUST.map((t) => (
-              <li key={t} className="flex items-center gap-2">
-                <span className="h-1 w-1 rounded-full bg-green" />
-                {t}
-              </li>
-            ))}
-          </ul>
+        <div className="shell flex items-center justify-end gap-6 py-4">
           <span className="hidden shrink-0 items-center gap-2 text-[0.66rem] uppercase tracking-[0.18em] text-white/55 md:flex">
             Scroll
             <span className="block h-6 w-px bg-white/30" style={{ animation: "float 1.8s ease-in-out infinite" }} />

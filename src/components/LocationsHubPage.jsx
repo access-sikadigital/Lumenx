@@ -206,17 +206,6 @@ function Offices() {
             </div>
           ))}
         </div>
-
-        <ul className="mt-[clamp(2.5rem,4vw,3.5rem)] flex flex-wrap gap-2.5">
-          {TRUST.map((t) => (
-            <li
-              key={t}
-              className="rounded-full border border-blue/15 bg-paper px-4 py-2 text-[0.76rem] text-ink"
-            >
-              {t}
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
   );

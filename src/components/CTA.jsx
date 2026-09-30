@@ -1,5 +1,6 @@
 "use client";
 
+import TrustBadges from "@/components/TrustBadges";
 import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -135,8 +136,12 @@ export default function CTA() {
               className="relative min-h-[300px] overflow-hidden lg:min-h-0"
               aria-hidden="true"
             >
+              {/* Own crop rather than reusing the WhyLumenx file: this slot is
+                  wider than tall and carries a left-to-right scrim, so the
+                  subject is framed right of centre to stay clear of it, with the
+                  panel edge on the left where the scrim absorbs it. */}
               <Image
-                src="/images/family-solar.webp"
+                src="/images/cta-family.webp"
                 alt=""
                 fill
                 sizes="(max-width: 1024px) 100vw, 46vw"
@@ -162,9 +167,15 @@ export default function CTA() {
             </div>
           </div>
 
-          {/* ---------------- credential bar ---------------- */}
+          {/* Credential bar.
+
+              Block, not flex. This was a flex row back when it held text
+              labels; with the badge grid as its only child, flex made the grid
+              a flex ITEM, which sizes to its content, so the chips stopped
+              two-thirds of the way across and left the rest of the bar empty.
+              A block container lets the four-column grid span the full width. */}
           <div
-            className="cta-bar relative z-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/10 text-[0.66rem] uppercase tracking-[0.14em] text-white/55"
+            className="cta-bar relative z-10 border-t border-white/10"
             style={{
               paddingTop: "clamp(1.25rem, 1.6vw, 1.75rem)",
               paddingBottom: "clamp(1.25rem, 1.6vw, 1.75rem)",
@@ -174,12 +185,7 @@ export default function CTA() {
               backdropFilter: "blur(8px)",
             }}
           >
-            {TRUST.map((t) => (
-              <span key={t} className="flex items-center gap-2">
-                <span className="h-1 w-1 rounded-full bg-green" />
-                {t}
-              </span>
-            ))}
+            <TrustBadges spread />
           </div>
         </div>
       </div>
