@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import TrustBadges from "@/components/TrustBadges";
 import QuoteForm from "@/components/QuoteForm";
@@ -69,7 +70,22 @@ export default function Page() {
               Fields marked * are the ones we genuinely need to quote you accurately.
             </p>
             <div className="mt-8">
-              <QuoteForm />
+              {/* Suspense is required, not optional: QuoteForm reads
+                  ?service= with useSearchParams, and in the App Router that
+                  opts the subtree into client-side rendering. Without a
+                  boundary the whole route is forced dynamic and the build
+                  fails on prerender. The fallback is sized to the form so the
+                  page does not jump when it swaps in. */}
+              <Suspense
+                fallback={
+                  <div
+                    aria-hidden="true"
+                    className="min-h-[640px] animate-pulse rounded-[22px] bg-cloud"
+                  />
+                }
+              >
+                <QuoteForm />
+              </Suspense>
             </div>
           </div>
 

@@ -40,7 +40,7 @@ export default function Faq({
           <p className="eyebrow mb-5 text-ember">FAQ</p>
           <h2 className="t-h1 text-blue">{heading}</h2>
           <p className="t-body mt-6 max-w-[34ch] text-ink">{lead}</p>
-          <Link href="/get-a-quote" className="btn btn-ember mt-8">
+          <Link href="/get-a-quote" className="btn btn-primary mt-8">
             <span>Get a Free Quote</span>
           </Link>
         </div>

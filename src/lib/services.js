@@ -13,9 +13,9 @@ export const SERVICE_PAGES = {
   "residential-solar": {
     slug: "residential-solar",
     label: "Residential Solar",
-    seoTitle: "Residential Solar Panels Melbourne | Lumenx",
+    seoTitle: "Residential Solar Panels Melbourne",
     seoDescription:
-      "Quality residential solar for Victorian homes. Premium panels, a 16-year workmanship warranty and every rebate handled. See system sizes and what suits your roof.",
+      "Quality residential solar for Victorian homes. Premium panels, SAA-accredited installation and every rebate handled. See system sizes and what suits your roof.",
     eyebrow: "Residential solar",
     h1: "Solar panels sized to your home, not a catalogue.",
     lead: "Most quotes start with a system and work backwards. We start with your roof, your bill and how your household actually uses power, then design around that.",
@@ -23,7 +23,7 @@ export const SERVICE_PAGES = {
       image: "/images/svc-residential.webp",
       alt: "A family looking up at the solar panels on their roof",
     },
-    chips: ["5kW to 15kW", "Solar Victoria authorised", "16-year workmanship warranty"],
+    chips: ["5kW to 15kW", "Solar Victoria authorised", "SAA-accredited installation"],
 
     intro: {
       heading: "A system built around your bill",
@@ -44,7 +44,7 @@ export const SERVICE_PAGES = {
     features: [
       { title: "Honest sizing", line: "We will tell you when a smaller system is the better buy. Oversizing is the most common way households lose money on solar." },
       { title: "Fixed, itemised pricing", line: "One number, broken down line by line, with rebates already deducted. No ranges and no revisions after the deposit." },
-      { title: "CEC-accredited install", line: "Every job is signed off by a Clean Energy Council accredited installer, tidy and usually done in a single day." },
+      { title: "SAA-accredited install", line: "Every job is signed off by an SAA-accredited installer, tidy and usually done in a single day." },
       { title: "Rebates handled", line: "Federal STCs and Solar Victoria paperwork are filed by us. You see the discounted price, not the admin." },
       { title: "Battery-ready by default", line: "If storage is on your horizon, we specify an inverter that will take a battery later without replacing it." },
       { title: "Support after switch-on", line: "Monitoring, performance checks and a local team that still answers the phone two years in." },
@@ -58,16 +58,16 @@ export const SERVICE_PAGES = {
       { q: "How long does installation take?", a: "Most residential installs are completed in a single day once the system is designed and approved. We confirm the exact date in your proposal and turn up when we say we will." },
       { q: "Will solar work on my roof?", a: "Most roofs are suitable. North-facing pitches produce the most, but east and west split arrays work well for households that use power in the morning and evening. Heavy shading is the main limiting factor, and we will tell you honestly if your roof is a poor candidate." },
       { q: "Do I need a battery straight away?", a: "No. Plenty of households start with panels and add storage later. We will specify a battery-ready inverter so that upgrade does not mean replacing equipment you just bought." },
-      { q: "What warranty do I get?", a: "A 16-year Lumenx workmanship warranty on the installation, plus the manufacturer's own product and performance warranties on panels, inverter and battery." },
+      { q: "What warranty do I get?", a: "The manufacturer's own warranties, listed on your quote against the exact models supplied, with product cover and performance cover shown separately. Panels run up to a 25-year performance warranty and batteries carry a 10-year product warranty." },
     ],
-    related: ["solar-batteries", "solar-packages", "solar-inverters"],
+    related: ["solar-batteries", "solar-packages", "inverter-repair"],
   },
 
   /* ------------------------------------------------------------------ */
   "commercial-solar": {
     slug: "commercial-solar",
     label: "Commercial Solar",
-    seoTitle: "Commercial Solar Melbourne | Business Solar | Lumenx",
+    seoTitle: "Commercial Solar Melbourne | Business Solar",
     seoDescription:
       "Cut business energy costs with commercial solar. Tailored 20kW to 100kW+ systems, clear ROI modelling, finance and rebates. Talk to Lumenx.",
     eyebrow: "Commercial solar",
@@ -114,14 +114,14 @@ export const SERVICE_PAGES = {
       { q: "Will installation disrupt trading?", a: "Rarely. Most of the work happens on the roof while you operate normally. The switchboard connection needs a short shutdown, and we schedule that outside your trading hours wherever the site allows." },
       { q: "Do you handle the grid application?", a: "Yes. Commercial connections need distributor approval and the requirements differ by network. We prepare and lodge the application and manage it through to approval." },
     ],
-    related: ["solar-batteries", "solar-inverters", "ev-chargers"],
+    related: ["solar-batteries", "inverter-repair", "ev-chargers"],
   },
 
   /* ------------------------------------------------------------------ */
   "solar-batteries": {
     slug: "solar-batteries",
     label: "Solar Batteries",
-    seoTitle: "Solar Batteries Melbourne: Sungrow, Alpha ESS, LG | Lumenx",
+    seoTitle: "Solar Batteries Melbourne: Sungrow, Alpha ESS, LG",
     seoDescription:
       "Store your solar and cut bills with a home battery. Sungrow, Alpha ESS and LG Energy Solution, with the federal battery rebate applied. Free quote.",
     eyebrow: "Solar batteries",
@@ -168,68 +168,15 @@ export const SERVICE_PAGES = {
       { q: "Can I add a battery to solar I already have?", a: "Usually. It depends on your existing inverter. If it is battery-ready, the retrofit is straightforward; if not, we will quote both a hybrid inverter upgrade and an AC-coupled battery so you can compare." },
       { q: "How long does a battery last?", a: "Manufacturer warranties typically run around ten years, usually expressed as a throughput or retained-capacity guarantee rather than a flat term. We will show you the specific warranty on whichever model we recommend." },
     ],
-    related: ["tesla-powerwall", "residential-solar", "solar-inverters"],
+    related: ["tesla-powerwall", "residential-solar", "battery-for-existing-solar"],
   },
 
-  /* ------------------------------------------------------------------ */
-  "solar-inverters": {
-    slug: "solar-inverters",
-    label: "Solar Inverters",
-    seoTitle: "Solar Inverters Melbourne: Sungrow, GoodWe | Lumenx",
-    seoDescription:
-      "Choose the right solar inverter. Sungrow, GoodWe, SolarEdge and Delta, string and hybrid. Supply, installation and replacement. Free quote.",
-    eyebrow: "Solar inverters",
-    h1: "The component that decides how well your solar actually performs.",
-    lead: "Panels get the attention, but the inverter is what converts, manages and reports everything your system does. It is also the part most likely to need replacing first.",
-    hero: {
-      image: "/images/svc-inverters.webp",
-      alt: "Two solar inverters mounted on a wall with cabling below",
-    },
-    chips: ["String and hybrid", "All major brands serviced", "Replacement and upgrade"],
-
-    intro: {
-      heading: "String, hybrid or micro",
-      body: [
-        "A string inverter is the standard choice and the most cost-effective for a simple, unshaded roof. A hybrid inverter does the same job but can also charge and discharge a battery, which is what makes it the sensible pick if storage is anywhere in your plans.",
-        "Microinverters and optimisers work per panel rather than per string, which helps on complex roofs where shading or multiple orientations would otherwise drag the whole array down to its weakest panel. They cost more, so they are worth it on the roofs that need them and not on the ones that do not.",
-      ],
-      points: [
-        "Sized correctly to your array, not undersized to shave the quote",
-        "Hybrid specified when a battery is in your plans",
-        "Optimisers only where shading genuinely warrants them",
-        "Monitoring configured and demonstrated before we leave",
-      ],
-      image: "/images/panels-closeup.webp",
-      imageAlt: "Close detail of the photovoltaic cells on a solar panel",
-    },
-
-    features: [
-      { title: "Right type for your roof", line: "String, hybrid or optimised, chosen on the merits of your roof and plans rather than on what we happen to stock." },
-      { title: "Replacement service", line: "Inverters usually fail before panels do. We replace and upgrade all major brands, generally without touching the array." },
-      { title: "Battery-ready specification", line: "If storage is on the horizon, a hybrid now avoids paying twice later. We will show you the difference in cost." },
-      { title: "Properly sized", line: "Undersizing the inverter to trim a quote clips your output on the best days. We size it to the array." },
-      { title: "Full monitoring setup", line: "Configured, connected to your network and demonstrated on your phone before the job is signed off." },
-      { title: "Warranty supported", line: "Manufacturer warranty registered for you, and we handle the claim if anything goes wrong." },
-    ],
-
-    brands: ["Sungrow", "GoodWe", "SolarEdge", "Delta", "Alpha ESS"],
-    showRebates: false,
-
-    faqs: [
-      { q: "How long does a solar inverter last?", a: "Typically ten to fifteen years, which is shorter than the panels, so most systems need at least one inverter replacement in their lifetime. Warranties commonly run five to ten years with extensions available." },
-      { q: "What are the signs my inverter is failing?", a: "Error codes on the display, the system dropping out during the day, monitoring showing production well below normal for the conditions, or an inverter that is unusually hot or noisy. If you are seeing any of these, get it checked before it stops entirely." },
-      { q: "String or hybrid inverter?", a: "If a battery is anywhere in your plans, a hybrid is usually the cheaper path overall because it avoids replacing the inverter later. If you are confident you will never add storage, a quality string inverter does the job for less." },
-      { q: "Can I replace just the inverter?", a: "Yes, in most cases the array stays exactly as it is and only the inverter is swapped. We will check compatibility with your existing panel strings first and tell you if anything else needs to change." },
-      { q: "Do I need optimisers?", a: "Only if your roof needs them. They help on arrays with shading or multiple orientations, where one underperforming panel would otherwise drag down its whole string. On a clean, single-orientation roof they add cost without adding output." },
-    ],
-    related: ["solar-inverter-replacement", "solar-batteries", "residential-solar"],
-  },
 
   /* ------------------------------------------------------------------ */
   "ev-chargers": {
     slug: "ev-chargers",
     label: "EV Chargers",
-    seoTitle: "EV Charger Installation Melbourne | Lumenx",
+    seoTitle: "EV Charger Installation Melbourne",
     seoDescription:
       "Charge at home with a certified EV charger installation. Wallbox, SolarEdge and Delta, solar-integrated, with fixed pricing. Get a free quote.",
     eyebrow: "EV charging",
@@ -283,7 +230,7 @@ export const SERVICE_PAGES = {
   "heat-pump-hot-water": {
     slug: "heat-pump-hot-water",
     label: "Heat Pump Hot Water",
-    seoTitle: "Heat Pump Hot Water Systems Melbourne | Lumenx",
+    seoTitle: "Heat Pump Hot Water Systems Melbourne",
     seoDescription:
       "Cut hot water running costs with a heat pump system. Efficient, solar-friendly, with the VEU rebate handled. Supply and installation. Free quote.",
     eyebrow: "Heat pump hot water",
@@ -337,7 +284,7 @@ export const SERVICE_PAGES = {
   "pool-heating": {
     slug: "pool-heating",
     label: "Pool Heating",
-    seoTitle: "Pool Heating Melbourne: Heat Pumps & Solar | Lumenx",
+    seoTitle: "Pool Heating Melbourne: Heat Pumps & Solar",
     seoDescription:
       "Extend your swim season with efficient pool heating. Heat pumps and solar pool heating from Hayward, Supreme Heating and SensaHeat. Free quote.",
     eyebrow: "Pool heating",
@@ -391,7 +338,7 @@ export const SERVICE_PAGES = {
   "solar-packages": {
     slug: "solar-packages",
     label: "Solar Packages",
-    seoTitle: "Solar & Battery Packages Melbourne | Lumenx",
+    seoTitle: "Solar & Battery Packages Melbourne",
     seoDescription:
       "Solar, inverter and battery bundled at one fixed price with every rebate already applied. See what is included in each Lumenx package.",
     eyebrow: "Solar packages",
@@ -425,7 +372,7 @@ export const SERVICE_PAGES = {
       { title: "Fixed, itemised price", line: "Broken down line by line so you can see exactly what each component costs. No ranges, no post-deposit revisions." },
       { title: "Rebates pre-applied", line: "Federal STCs and the battery rebate come off before you see the number, and we file the paperwork." },
       { title: "One install visit", line: "Panels, inverter, battery and commissioning handled together rather than spread across separate trips." },
-      { title: "Backed 16 years", line: "The Lumenx workmanship warranty covers the whole installation, not just the parts you can see." },
+      { title: "Warranties in your name", line: "Every manufacturer warranty on the panels, inverter and battery is registered to you, with product and performance cover listed separately." },
     ],
 
     brands: ["Jinko Solar", "Longi", "Sungrow", "GoodWe", "Alpha ESS", "LG Energy Solution"],
@@ -438,68 +385,15 @@ export const SERVICE_PAGES = {
       { q: "Are the rebates already taken off?", a: "Yes. Federal STCs and, where you qualify, the battery rebate are deducted before the figure you see. You pay the discounted price and we handle the claim." },
       { q: "How long from quote to switch-on?", a: "Once you approve the design, the timeline is mostly grid connection approval, which varies by distributor. The install itself is usually a single day. We give you the expected dates in the proposal." },
     ],
-    related: ["residential-solar", "solar-batteries", "solar-inverters"],
+    related: ["residential-solar", "solar-batteries", "inverter-repair"],
   },
 
-  /* ------------------------------------------------------------------ */
-  "solar-inverter-replacement": {
-    slug: "solar-inverter-replacement",
-    label: "Inverter Replacement",
-    seoTitle: "Solar Inverter Replacement Melbourne | Lumenx",
-    seoDescription:
-      "Inverter faulty or failed? Lumenx replaces and upgrades all major brands across Melbourne and Sydney. Fast, warranted service on any existing system.",
-    eyebrow: "Inverter replacement",
-    h1: "Your panels are probably fine. It is the inverter that failed.",
-    lead: "Inverters carry the whole system's workload and they wear out first. Replacing one is a half-day job that usually leaves the array exactly as it is.",
-    hero: {
-      image: "/images/svc-inverter-replacement.webp",
-      alt: "A technician checking inverters with a tablet",
-    },
-    chips: ["All major brands", "Array usually untouched", "Often a half-day job"],
-
-    intro: {
-      heading: "How to tell it is the inverter",
-      body: [
-        "Panels routinely outlast their inverter by a decade or more. So when a system that used to perform suddenly does not, the inverter is the first thing to check, not the roof.",
-        "The signs are fairly consistent: an error code or red light on the display, production dropping well below what the weather should give you, the system cutting out through the middle of the day, or an inverter running hot and noisy. Any of those is worth a call before it stops entirely and you lose weeks of generation.",
-      ],
-      points: [
-        "Diagnosis first, because we will not replace a unit that can be repaired",
-        "Existing panel strings checked for compatibility before we quote",
-        "Warranty claim handled for you if the unit is still covered",
-        "Upgrade path to a hybrid explained if storage is on your horizon",
-      ],
-      image: "/images/svc-inverters.webp",
-      imageAlt: "Two solar inverters mounted on a wall with cabling below",
-    },
-
-    features: [
-      { title: "Any brand, any installer", line: "We replace and upgrade whoever fitted the original. You do not need to track down the company that installed it." },
-      { title: "Warranty checked first", line: "If the unit is still under manufacturer warranty we will tell you and manage the claim rather than selling you a new one." },
-      { title: "Like-for-like or upgrade", line: "Same output replacement, or a hybrid so the system can take a battery later. We price both so you can choose." },
-      { title: "Array stays put", line: "In most cases the panels, rails and wiring are untouched. Only the inverter and its isolators change." },
-      { title: "Fast turnaround", line: "Every day a dead inverter sits there is generation you paid for and are not getting. We prioritise faults." },
-      { title: "Recommissioned properly", line: "Monitoring reconnected, output verified against expected, and the new warranty registered before we leave." },
-    ],
-
-    brands: ["Sungrow", "GoodWe", "SolarEdge", "Delta", "Alpha ESS"],
-    showRebates: false,
-
-    faqs: [
-      { q: "How do I know if my inverter has failed?", a: "Error codes or a red light on the display, production well below what the conditions should produce, the system dropping out mid-day, or an inverter that is unusually hot or noisy. Your monitoring app is often the first place it shows." },
-      { q: "Do I need to replace the panels too?", a: "Almost never. Panels typically carry 25-year performance warranties and routinely outlive two inverters. We check the strings are compatible with the replacement and leave the array alone." },
-      { q: "Can you replace an inverter another company installed?", a: "Yes. It makes no difference to us who fitted the original, and you do not need to find them first." },
-      { q: "Should I replace like-for-like or upgrade to a hybrid?", a: "If a battery is anywhere in your plans, a hybrid now saves replacing the inverter again later. If it is genuinely not, a quality like-for-like replacement costs less. We quote both." },
-      { q: "How long does a replacement take?", a: "Usually half a day once the unit is on hand. The main variable is availability of the specific model, and we will tell you that up front." },
-    ],
-    related: ["solar-inverters", "solar-batteries", "residential-solar"],
-  },
 
   /* ------------------------------------------------------------------ */
   "tesla-powerwall": {
     slug: "tesla-powerwall",
     label: "Tesla Powerwall",
-    seoTitle: "Tesla Powerwall Installation Melbourne | Lumenx",
+    seoTitle: "Tesla Powerwall Installation Melbourne",
     seoDescription:
       "Tesla Powerwall supplied and installed across Victoria and New South Wales, with the federal battery rebate applied and backup configured.",
     eyebrow: "Tesla Powerwall",
@@ -547,6 +441,226 @@ export const SERVICE_PAGES = {
       { q: "How long does installation take?", a: "Typically a day for the battery itself. If the switchboard needs work or backup circuits are being reconfigured, allow longer. We give you the exact scope in the proposal." },
     ],
     related: ["solar-batteries", "solar-packages", "residential-solar"],
+  },
+
+  /* ==================================================================
+     Added 4 October 2026 for the restructured services menu.
+     ================================================================== */
+
+  /* ------------------------------------------------------------------ */
+  "battery-for-existing-solar": {
+    slug: "battery-for-existing-solar",
+    label: "Battery for Existing Solar",
+    seoTitle: "Add a Battery to Existing Solar | Melbourne & Sydney",
+    seoDescription:
+      "Already have solar? We check your inverter, switchboard and usage, then add storage sized to your evenings. The federal battery discount applied for you.",
+    eyebrow: "Battery retrofit",
+    h1: "You already have the panels. This is the other half.",
+    lead: "Adding storage to an existing system is a different job to installing both at once, and it starts with what is already on your wall.",
+    hero: {
+      image: "/images/svc-batteries.webp",
+      alt: "A home battery installed on an exterior wall",
+    },
+    chips: ["Any inverter brand", "Federal discount applied", "Sized to your evenings"],
+
+    intro: {
+      heading: "What has to be checked first",
+      body: [
+        "Your existing inverter decides the shape of the job. Some can take a battery directly. Some need a second, AC-coupled unit beside them. Some are old enough that replacing them is the cheaper answer. None of that can be guessed from the outside, which is why the quote form asks for your inverter brand and model.",
+        "The federal battery discount requires eligible solar, which you already have, so a retrofit is usually the cleanest way to qualify. We size the battery to the power you actually use after dark rather than to the largest unit that will fit on the wall.",
+      ],
+      points: [
+        "We check your current inverter, switchboard and usage before quoting",
+        "Hybrid or AC-coupled, whichever your existing system actually needs",
+        "The federal battery discount comes off the price, applied by us",
+        "Backup circuits chosen with you at design time, not after the install",
+      ],
+      image: "/images/real-install-1.webp",
+      imageAlt: "Battery and inverter equipment installed on a wall",
+    },
+
+    features: [
+      { title: "Your inverter decides the job", line: "Tell us the brand and model and we can quote far faster, and far more accurately, than from a photo of the roof." },
+      { title: "Hybrid or AC-coupled", line: "If your inverter cannot take storage directly, an AC-coupled battery sits alongside it. Both are normal; one is cheaper for you." },
+      { title: "Sized to your evenings", line: "The discount tapers above 14kWh, so the biggest battery is rarely the best-value one. We size it to what you draw after dark." },
+      { title: "Backup you choose", line: "You pick which circuits stay live in an outage at design stage, so nobody is surprised on the day it matters." },
+      { title: "No need to replace the panels", line: "A retrofit uses the array you already paid for. We only raise replacing anything if it is genuinely at end of life." },
+      { title: "One visit where possible", line: "Battery, any inverter change and the switchboard work handled together rather than spread across trips." },
+    ],
+
+    brands: ["Sungrow", "Alpha ESS", "LG Energy Solution"],
+    showRebates: true,
+
+    faqs: [
+      { q: "Will my existing inverter work with a battery?", a: "Sometimes directly, sometimes with an AC-coupled battery beside it, and occasionally it is cheaper to replace it. It depends entirely on the brand, model and age. Send us those three things and we can tell you before anyone visits." },
+      { q: "Why do you ask for my inverter brand and model?", a: "Because it decides the whole shape of the quote. Without it we are guessing at whether you need a hybrid unit, an AC-coupled battery or an inverter replacement, and those are very different numbers." },
+      { q: "Do I still get the federal battery discount?", a: "Yes. The discount requires eligible solar to be installed or installed at the same time, and yours already is. The battery itself still has to be on the approved list." },
+      { q: "How big a battery should I add?", a: "Enough to cover what you use between sunset and bed, plus whatever you want running in an outage. Since 1 May 2026 the discount tapers above 14kWh and again above 28kWh, so oversizing costs more per kilowatt hour than it used to." },
+      { q: "Can I add backup circuits to a system that did not have them?", a: "Usually, yes. It depends on your switchboard and which circuits you want covered. We work that out at design stage and show you exactly what will and will not stay on." },
+    ],
+    related: ["solar-batteries", "inverter-repair", "service-health-check"],
+  },
+
+  /* ------------------------------------------------------------------ */
+  "inverter-repair": {
+    slug: "inverter-repair",
+    label: "Inverter Repair",
+    seoTitle: "Solar Inverter Repair & Replacement | Melbourne & Sydney",
+    seoDescription:
+      "Faulty, failed or ageing solar inverter? We test, repair or replace, update firmware and the app, and give you a written report. Any brand, any installer.",
+    eyebrow: "Inverter repair",
+    h1: "The thing that fails first, fixed properly.",
+    lead: "An inverter is the hardest-working part of a solar system and the one most likely to stop. Repair is often possible; replacement is sometimes smarter. We tell you which.",
+    hero: {
+      image: "/images/svc-inverter-replacement.webp",
+      alt: "A solar inverter mounted on an exterior wall",
+    },
+    chips: ["Any brand", "Repair or replace", "Written report"],
+
+    intro: {
+      heading: "Repair, replace, or leave it alone",
+      body: [
+        "Panels routinely outlast the inverter attached to them. When yours starts faulting, the honest question is whether a repair buys you years or months, and that depends on the fault, the age and whether parts still exist for the model.",
+        "We test the panels, isolators, wiring, inverter and battery, then tell you plainly which of the three answers applies. If replacement is the right call, it is also the moment to decide whether to go battery-ready, because doing it twice costs more than doing it once.",
+      ],
+      points: [
+        "We test the whole system, not just the box that is complaining",
+        "Repair where parts and age support it, replacement where they do not",
+        "Firmware and monitoring app updated and demonstrated before we leave",
+        "A written report, with any further work quoted rather than assumed",
+      ],
+      image: "/images/real-install-2.webp",
+      imageAlt: "An installer working on solar equipment at a property",
+    },
+
+    features: [
+      { title: "Any brand, any installer", line: "We work on systems we installed and systems we did not. You do not need to find whoever put it in." },
+      { title: "Diagnosis before quoting", line: "We find the actual fault first. Replacing an inverter that was not the problem is an expensive way to not fix anything." },
+      { title: "Battery-ready if you replace", line: "If the unit is being changed anyway, a hybrid inverter costs little more now and saves a second job later." },
+      { title: "Firmware and app", line: "Updated and working before we leave, because an inverter you cannot monitor is one that fails quietly next time." },
+      { title: "A written report", line: "What we found, what we did, and anything else worth watching, in writing rather than mentioned at the van." },
+      { title: "Warranty claims handled", line: "If the unit is still in its manufacturer warranty, we deal with the claim rather than leaving it with you." },
+    ],
+
+    brands: ["Sungrow", "GoodWe", "SolarEdge", "Delta"],
+    showRebates: false,
+
+    faqs: [
+      { q: "How do I know if my inverter has failed?", a: "The usual signs are a red or flashing fault light, no output on a sunny day, the monitoring app showing nothing or showing zeros, or an error code on the display. Any of those is worth a call before it becomes a longer outage." },
+      { q: "Is it cheaper to repair or replace?", a: "It depends on the fault, the age and whether parts are still made. A five-year-old unit with a known fault is often worth repairing. A twelve-year-old one with no parts available is not. We tell you which you have." },
+      { q: "Do you work on systems you did not install?", a: "Yes, most of this work is on other people's installations. We will tell you honestly what we find, including when the original work was done well." },
+      { q: "Will I lose my rebate if I replace the inverter?", a: "A like-for-like replacement generally does not create new certificates, and it does not take away the discount already applied to the original install. If you add capacity at the same time, that part may qualify. We check before quoting." },
+      { q: "How long will I be without solar?", a: "Usually a day or less once the part is on hand. The waiting time is normally parts availability rather than labour, and we tell you that timeline up front." },
+    ],
+    related: ["service-health-check", "battery-for-existing-solar", "residential-solar"],
+  },
+
+  /* ------------------------------------------------------------------ */
+  "service-health-check": {
+    slug: "service-health-check",
+    label: "Service & Health Check",
+    seoTitle: "Solar System Service & Health Check | Melbourne & Sydney",
+    seoDescription:
+      "A full test of your solar system: panels, isolators, wiring, inverter and battery, with a written report. For systems we installed and systems installed by others.",
+    eyebrow: "Service and health check",
+    h1: "Find out what your system is actually doing.",
+    lead: "Most solar faults are quiet. Output drifts down, one string stops, a breaker trips and nothing tells you. A health check is how you find that before the bill does.",
+    hero: {
+      image: "/images/real-install-3.webp",
+      alt: "Solar panels on a rooftop being inspected",
+    },
+    chips: ["Any system", "Written report", "Ours or someone else's"],
+
+    intro: {
+      heading: "What gets checked",
+      body: [
+        "A solar system has no dashboard warning light. A failed isolator, a disconnected string or a degraded panel will not announce itself; it just quietly produces less, and most households do not notice until a quarterly bill is higher than it should be.",
+        "We test the panels, isolators, wiring, inverter and battery, check the monitoring is actually reporting, and give you a written report of what we found. Anything that needs work is quoted separately, so the check itself is a diagnosis rather than a sales visit.",
+      ],
+      points: [
+        "Panels, isolators, wiring, inverter and battery all tested",
+        "Monitoring and firmware checked, updated and demonstrated",
+        "A written report of what was found, not a verbal summary",
+        "Further work quoted separately, never assumed",
+      ],
+      image: "/images/installer-field.webp",
+      imageAlt: "An installer inspecting equipment on site",
+    },
+
+    features: [
+      { title: "For any system", line: "Ours or someone else's. A system installed by a company that no longer exists is one of the more common reasons people call." },
+      { title: "Diagnosis, not a sales visit", line: "The report says what we found. Anything that needs doing is quoted separately so you can take it elsewhere if you want." },
+      { title: "Safety first", line: "DC isolators are the single most common failure point on Australian roofs, and a failed one is a fire risk rather than a performance problem." },
+      { title: "Performance against expectation", line: "We compare what the system is producing with what it should produce, which is how quiet degradation gets caught." },
+      { title: "Monitoring restored", line: "If the app stopped reporting months ago, that gets fixed, because it is your early warning for everything else." },
+      { title: "Before you sell, or after you buy", line: "A health check is worth having when a house with solar on it changes hands in either direction." },
+    ],
+
+    brands: ["Sungrow", "GoodWe", "SolarEdge", "Alpha ESS", "LG Energy Solution"],
+    showRebates: false,
+
+    faqs: [
+      { q: "How often should a solar system be checked?", a: "Every two to three years for most systems, and sooner if output has dropped, the monitoring has stopped reporting, or the system is over about eight years old. Battery systems benefit from a slightly shorter interval." },
+      { q: "Will you service a system you did not install?", a: "Yes. A good share of this work is on other companies' installations, including ones where the original installer is no longer trading." },
+      { q: "What if you find something wrong?", a: "You get it in the report with a separate quote for the fix. There is no obligation to have us do that work, and we would rather you got a second opinion than felt cornered." },
+      { q: "Is a health check worth it if nothing seems wrong?", a: "Often, yes, because the faults that matter most are the ones that do not announce themselves. A failed DC isolator is a safety issue long before it is a performance one." },
+      { q: "Do you check the battery too?", a: "Yes, where one is fitted: state of health, charge and discharge behaviour, and whether the backup circuits still do what they were set up to do." },
+    ],
+    related: ["inverter-repair", "battery-for-existing-solar", "residential-solar"],
+  },
+
+  /* ------------------------------------------------------------------ */
+  "heating-and-cooling": {
+    slug: "heating-and-cooling",
+    label: "Heating & Cooling",
+    seoTitle: "Reverse-Cycle Heating & Cooling | Melbourne & Sydney",
+    seoDescription:
+      "Reverse-cycle split systems installed by ARCtick-licensed technicians. Run them on your own solar in daylight and cut the biggest seasonal load in the house.",
+    eyebrow: "Heating and cooling",
+    h1: "The cheapest heating you can run on your own power.",
+    lead: "A reverse-cycle system moves heat rather than making it, which is why it costs a fraction of what resistive heating does. Run it in daylight and it costs less again.",
+    hero: {
+      image: "/images/svc-heat-pump.webp",
+      alt: "A reverse-cycle split system unit mounted on a wall",
+    },
+    chips: ["ARCtick-licensed", "Runs on your solar", "Heating and cooling"],
+
+    intro: {
+      heading: "Why it pairs with solar",
+      body: [
+        "A reverse-cycle system is a heat pump. In winter it moves heat from the outside air into your house; in summer it moves it the other way. Because it is moving heat rather than generating it, it delivers several units of heating for every unit of electricity it draws.",
+        "That electricity is the point. Heating and cooling is usually the largest seasonal load in a house, and it runs hardest in the middle of the day in summer, which is exactly when your panels are producing most. Pairing the two is the difference between a system that pays for itself and one that just exports cheaply.",
+      ],
+      points: [
+        "Installed by ARCtick-licensed technicians, which is a legal requirement",
+        "Sized to the room and the construction, not to a catalogue number",
+        "Scheduled to run on daylight solar where your routine allows",
+        "Existing gas or electric systems decommissioned properly",
+      ],
+      image: "/images/pool-intro.webp",
+      imageAlt: "A home interior with climate control",
+    },
+
+    features: [
+      { title: "ARCtick-licensed", line: "Refrigerant handling is licensed work in Australia. Anyone installing a split system without that licence is working illegally." },
+      { title: "Sized to the room", line: "An undersized unit runs flat out and never gets there; an oversized one short-cycles and wastes power. Both are common and both are avoidable." },
+      { title: "Timed to your solar", line: "Pre-cooling or pre-heating during daylight uses power you generated rather than power you bought." },
+      { title: "Replaces gas", line: "Moving off gas heating removes a standing supply charge as well as the usage, which is often the larger saving." },
+      { title: "One trade, one visit", line: "If solar, hot water and climate are all being looked at, they get planned together rather than as three separate jobs." },
+      { title: "Incentives checked", line: "Efficiency upgrade schemes cover eligible replacements in both states. We check what applies before quoting." },
+    ],
+
+    brands: ["Sungrow", "GoodWe"],
+    showRebates: true,
+
+    faqs: [
+      { q: "Is reverse-cycle cheaper than gas heating?", a: "In most Victorian and NSW homes, yes, and the gap widens once you remove the gas supply charge. A reverse-cycle system delivers several units of heat per unit of electricity, where gas delivers less than one." },
+      { q: "Can I run it on solar?", a: "Through the day, largely yes, especially for cooling, which peaks when your panels do. Evening heating will draw from the grid or from a battery unless you pre-heat during daylight." },
+      { q: "What is ARCtick and why does it matter?", a: "It is the licence required in Australia to handle refrigerant. Installation by an unlicensed person is illegal, voids the manufacturer warranty and is not something any insurer will look kindly on." },
+      { q: "Do I need one unit per room?", a: "Not necessarily. A single well-placed split system can serve an open-plan area. Separate bedrooms usually need their own, or a ducted system. We size it on the layout rather than on room count." },
+      { q: "Is there a rebate?", a: "Victorian Energy Upgrades and the NSW Energy Savings Scheme both cover eligible efficient replacements, generally where you are replacing an existing system. We confirm what applies to you in writing." },
+    ],
+    related: ["heat-pump-hot-water", "residential-solar", "solar-batteries"],
   },
 };
 

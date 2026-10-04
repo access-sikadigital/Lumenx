@@ -141,7 +141,7 @@ function CategoryLedger() {
 
                   <Link
                     href={c.href}
-                    className="group mt-7 inline-flex items-center gap-2.5 text-[0.9rem] font-semibold text-ember"
+                    className="group mt-7 inline-flex items-center gap-2.5 text-[0.9rem] font-semibold text-blue"
                   >
                     <span className="border-b border-ember/30 pb-0.5 transition-colors group-hover:border-ember">
                       {c.hrefLabel}
@@ -213,10 +213,11 @@ function AllBrands() {
       >
         <div className="max-w-[38rem]">
           <p className="eyebrow mb-5 text-yellow">Every brand we install</p>
-          <h2 className="t-h2">Sixteen names, one warranty.</h2>
+          <h2 className="t-h2">Sixteen names, one standard.</h2>
           <p className="t-body mt-6 text-white/65">
-            Whichever hardware ends up on your roof, the installation is covered by our own 16-year
-            workmanship warranty. That part does not change with the brand.
+            Whichever hardware ends up on your roof, it is fitted by an SAA-accredited installer
+            and its manufacturer warranties are registered in your name. That part does not change
+            with the brand.
           </p>
         </div>
       </div>

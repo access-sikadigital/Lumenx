@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
 import { SERVICES } from "@/lib/site";
+import { useLang } from "@/lib/i18n";
 
 /**
  * Services as a readable grid.
@@ -21,6 +24,7 @@ const ACCENT = {
 };
 
 export default function ServicesGrid() {
+  const { tr } = useLang();
   return (
     <section
       id="services"
@@ -71,8 +75,8 @@ export default function ServicesGrid() {
                 <div className="flex flex-1 flex-col p-[clamp(1.5rem,1.7vw,2rem)]">
                   <h3 className="t-h3 text-blue">{s.title}</h3>
                   <p className="mt-3 flex-1 text-[0.95rem] leading-relaxed text-ink">{s.line}</p>
-                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-ember">
-                    Explore
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-blue">
+                    {tr("svc_explore")}
                     <svg
                       width="15"
                       height="15"

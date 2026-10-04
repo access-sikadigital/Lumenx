@@ -126,7 +126,7 @@ export default function Page() {
                 <p className="mt-2.5 flex-1 text-[0.88rem] leading-relaxed text-ink">
                   {s.line.split(".")[0]}.
                 </p>
-                <span className="mt-5 flex items-center gap-2 text-[0.74rem] font-semibold uppercase tracking-[0.12em] text-ember">
+                <span className="mt-5 flex items-center gap-2 text-[0.74rem] font-semibold uppercase tracking-[0.12em] text-blue">
                   Read more
                   <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1.5">
                     →

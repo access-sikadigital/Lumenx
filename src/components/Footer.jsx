@@ -39,8 +39,9 @@ export default function Footer() {
               className="h-10 w-auto md:h-12"
             />
             <p className="mt-6 max-w-[34ch] text-sm leading-relaxed text-white/55">
-              Solar, batteries and EV charging across Victoria and New South Wales. Accredited
-              installs, rebates handled, backed for sixteen years.
+              Solar, batteries and EV charging across Victoria and New South Wales.
+              SAA-accredited installs, rebates handled, manufacturer warranties registered in
+              your name.
             </p>
 
             <div className="mt-8">

@@ -167,7 +167,7 @@ function Checklist({ checklist, related }) {
               </li>
             ))}
           </ul>
-          <Link href="/get-a-quote" className="btn btn-ember mt-9">
+          <Link href="/get-a-quote" className="btn btn-primary mt-9">
             <span>Check what I qualify for</span>
           </Link>
         </div>

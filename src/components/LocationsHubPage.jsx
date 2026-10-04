@@ -303,7 +303,7 @@ const HUB_FAQS = [
   },
   {
     q: "Do you use your own installers or subcontractors?",
-    a: "Our own accredited crews. That is the reason we are careful about how far we travel. A warranty is only worth something if the people who honour it can get back to your roof.",
+    a: "Our own SAA-accredited installers. That is the reason we are careful about how far we travel: a manufacturer warranty claim still needs someone who can get back to your roof to assess it.",
   },
   {
     q: "Are the rebates different in New South Wales?",

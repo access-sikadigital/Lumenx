@@ -1,8 +1,11 @@
-import { Inter_Tight, Roboto } from "next/font/google";
+import { Inter_Tight, Noto_Sans_Arabic, Noto_Sans_SC, Roboto } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import TrackingBridge from "@/components/TrackingBridge";
+import { LanguageProvider } from "@/lib/i18n";
+import { StateProvider } from "@/lib/state-context";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -18,6 +21,33 @@ const roboto = Roboto({
   display: "swap",
 });
 
+/* Script fallbacks. Inter Tight and Roboto carry no Chinese or Arabic
+   glyphs, so without these the moment a translated string lands the browser
+   substitutes whatever it has locally: the page renders, but in a different
+   face at a different weight, and Arabic in particular loses its joining
+   behaviour. Declared as variables and appended to the font stacks in
+   globals.css, so they cost nothing until a non-Latin glyph is actually
+   asked for.
+
+   `preload: false` on purpose: these are large subsets and English is the
+   only live language, so preloading them would mean every Australian visitor
+   downloading a Chinese font they will never see. */
+const notoSC = Noto_Sans_SC({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-noto-sc",
+  display: "swap",
+  preload: false,
+});
+
+const notoArabic = Noto_Sans_Arabic({
+  subsets: ["arabic"],
+  weight: ["400", "500", "700"],
+  variable: "--font-noto-arabic",
+  display: "swap",
+  preload: false,
+});
+
 export const metadata = {
   metadataBase: new URL("https://lumenex.com.au"),
   title: {
@@ -25,7 +55,7 @@ export const metadata = {
     template: "%s | Lumenx",
   },
   description:
-    "Lumenx is an Australian solar energy company. CEC-accredited solar panels, batteries, EV chargers and heat pumps for homes and business across Victoria and NSW. Rebates handled, 16-year warranty. Get a free quote.",
+    "Lumenx is an Australian solar energy company. SAA-accredited installers fitting CEC-approved solar panels, batteries, EV chargers and heat pumps for homes and businesses across Victoria and NSW. Rebates handled. Get a free quote.",
   applicationName: "Lumenx",
   keywords: [
     "solar panels melbourne",
@@ -46,7 +76,7 @@ export const metadata = {
     siteName: "Lumenx",
     title: "Lumenx | Solar, Batteries & EV Charging in Melbourne & Sydney",
     description:
-      "Together, we build a brighter future. CEC-accredited solar, batteries and EV charging for Australian homes and business. Rebates handled, 16-year warranty.",
+      "Together, we build a brighter future. SAA-accredited installation of solar, batteries and EV charging for Australian homes and businesses. Rebates handled.",
     url: "/",
     locale: "en_AU",
     images: [
@@ -61,7 +91,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Lumenx | Solar, Batteries & EV Charging",
-    description: "CEC-accredited solar, batteries and EV charging across VIC & NSW. Rebates handled.",
+    description: "SAA-accredited solar, battery and EV charging installation across VIC & NSW. Rebates handled.",
     images: ["/og-default.jpg"],
   },
 };
@@ -73,12 +103,26 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en-AU" className={`${interTight.variable} ${roboto.variable}`}>
+    /* lang and dir start as en-AU/ltr and are rewritten on <html> by
+       LanguageProvider when a different language is chosen. They are set here
+       too so the server-rendered document is never missing them. */
+    <html
+      lang="en-AU"
+      dir="ltr"
+      className={`${interTight.variable} ${roboto.variable} ${notoSC.variable} ${notoArabic.variable}`}
+    >
       <body>
         <SmoothScroll />
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <TrackingBridge />
+        {/* State first: the language provider renders inside it so a
+            translated string can still read the chosen state. */}
+        <StateProvider>
+          <LanguageProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </LanguageProvider>
+        </StateProvider>
       </body>
     </html>
   );

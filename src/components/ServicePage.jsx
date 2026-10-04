@@ -7,6 +7,8 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import PageHero from "@/components/PageHero";
+import ServiceEssentials from "@/components/ServiceEssentials";
+import PackageTabs from "@/components/PackageTabs";
 import ServiceSignature from "@/components/ServiceSignature";
 import Process from "@/components/Process";
 import RebatesBand from "@/components/RebatesBand";
@@ -16,6 +18,8 @@ import CTA from "@/components/CTA";
 import Marquee from "@/components/Marquee";
 import { SERVICES } from "@/lib/site";
 import { SERVICE_PAGES, serviceUrl } from "@/lib/services";
+import { useLang } from "@/lib/i18n";
+import { localizeContent } from "@/lib/i18n/content";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -211,7 +215,7 @@ function Features({ items }) {
    look smaller than it is. It is now the same marquee the home page uses,
    with the full set, so the proof reads the same wherever you land. */
 function Brands() {
-  return <Marquee eyebrow="Tier-1 hardware we install" />;
+  return <Marquee eyebrow="Brands we install" />;
 }
 
 /* ---------------- related services ---------------- */
@@ -267,7 +271,7 @@ function Related({ slugs, current }) {
               <div className="flex flex-1 flex-col p-[clamp(1.4rem,1.7vw,2rem)]">
                 <h3 className="t-h3 text-blue">{title}</h3>
                 <p className="mt-3 flex-1 text-[0.93rem] leading-relaxed text-ink">{line}</p>
-                <span className="mt-6 flex items-center gap-2 text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-ember">
+                <span className="mt-6 flex items-center gap-2 text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-blue">
                   Explore
                   <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
                 </span>
@@ -287,31 +291,49 @@ function Related({ slugs, current }) {
    question is "how does this even work"; commercial and inverters set up the
    context first because the question is "which one, and is it worth it".
    Unlisted slugs fall back to DEFAULT_ORDER. */
-const DEFAULT_ORDER = ["intro", "signature", "features", "brands", "process", "rebates", "reviews", "faq", "related", "cta"];
+/* SHORTENED, 4 October 2026.
+ *
+ * "essentials" is new and goes first on every page: who it suits, one
+ * illustration, the price with finance beside it, the incentives for that
+ * service in the reader's state, and a quote button that arrives at the form
+ * with the service already chosen.
+ *
+ * "process", "rebates" and "reviews" came OUT of the default order. All three
+ * were identical on every service page, so by the third page a reader was
+ * scrolling past the same five-step diagram and the same rebate band for the
+ * third time, and the page-specific content was buried underneath it. The
+ * process now lives inside the essentials illustration where it is relevant,
+ * the incentives are service-specific rather than generic, and reviews belong
+ * on the pages that exist to carry proof.
+ *
+ * What is left is the client's five parts plus one page-specific explanation,
+ * the features that differ by service, the FAQ, and where to go next. The
+ * sections still exist in `render` below, so any single page can opt one back
+ * in through ORDERS if it genuinely earns it. */
+const DEFAULT_ORDER = ["essentials", "intro", "signature", "features", "faq", "related", "cta"];
 
 const ORDERS = {
-  // Sizes and prices are the reason people land here, so they come early.
-  "residential-solar": ["intro", "signature", "features", "brands", "process", "rebates", "reviews", "faq", "related", "cta"],
-  // The economic case has to land before anything else.
-  "commercial-solar": ["intro", "signature", "features", "brands", "reviews", "process", "faq", "related", "cta"],
-  // "What does a battery actually do all day" is the first question.
-  "solar-batteries": ["signature", "intro", "features", "brands", "rebates", "process", "reviews", "faq", "related", "cta"],
-  // Context first, then the three-way choice.
-  "solar-inverters": ["intro", "signature", "features", "brands", "process", "reviews", "faq", "related", "cta"],
-  "ev-chargers": ["intro", "signature", "features", "brands", "process", "reviews", "faq", "related", "cta"],
+  // "What does a battery actually do all day" is the first question, so the
+  // service's own signature section comes before the general explanation.
+  "solar-batteries": ["essentials", "signature", "intro", "features", "faq", "related", "cta"],
   // The mechanism is the sell: it explains the running cost.
-  "heat-pump-hot-water": ["signature", "intro", "features", "brands", "rebates", "process", "reviews", "faq", "related", "cta"],
-  "pool-heating": ["intro", "signature", "features", "brands", "process", "reviews", "faq", "related", "cta"],
-  "solar-packages": ["intro", "signature", "features", "brands", "rebates", "process", "reviews", "faq", "related", "cta"],
+  "heat-pump-hot-water": ["essentials", "signature", "intro", "features", "faq", "related", "cta"],
   // Someone here has a broken system; the symptom checker goes first.
-  "solar-inverter-replacement": ["signature", "intro", "features", "brands", "process", "faq", "related", "cta"],
-  // The comparison is the whole question on a single-product page.
-  "tesla-powerwall": ["intro", "signature", "features", "rebates", "brands", "process", "reviews", "faq", "related", "cta"],
+  "inverter-repair": ["essentials", "signature", "intro", "features", "faq", "related", "cta"],
+  // Proof earns its place here: it is the largest decision on the site and
+  // the reader is most likely to be holding another quote while they read.
+  // ("commercial-solar" is no longer listed: it has its own page component
+  // and does not route through this template at all.)
+  "solar-packages": ["essentials", "packages", "intro", "features", "reviews", "faq", "related", "cta"],
 };
 
 /* ================= page ================= */
 export default function ServicePage({ slug }) {
-  const s = SERVICE_PAGES[slug];
+  const { lang } = useLang();
+  /* The English entry is the source of truth; the active language's overlay
+     is merged over it. Anything that language has not translated falls
+     through to English, so a page is never blank and never half-rendered. */
+  const s = localizeContent("services", slug, SERVICE_PAGES[slug], lang);
   if (!s) return null;
 
   const order = ORDERS[slug] || DEFAULT_ORDER;
@@ -322,6 +344,26 @@ export default function ServicePage({ slug }) {
 
   const render = (key, i) => {
     switch (key) {
+      case "essentials":
+        return <ServiceEssentials key={key} slug={slug} label={s.label} />;
+      case "packages":
+        return (
+          <section
+            key={key}
+            className="bg-cloud"
+            style={{ paddingTop: "clamp(3.5rem,8vh,6rem)", paddingBottom: "clamp(3.5rem,8vh,6rem)" }}
+          >
+            <div className="shell">
+              <p className="eyebrow mb-5 text-ember">Packages</p>
+              <h2 className="t-h2 max-w-[20ch] text-blue">Complete systems, one fixed price.</h2>
+              <p className="t-body mt-6 max-w-[54ch] text-ink">
+                Three ways in, three tiers each. Choosing one carries it straight through to the
+                quote form, where you can change anything before you send it.
+              </p>
+              <PackageTabs className="mt-[clamp(2rem,4vw,3rem)]" />
+            </div>
+          </section>
+        );
       case "intro": {
         // Features is cloud; if it follows immediately, keep the intro white
         // so the two sections do not merge into one flat band.

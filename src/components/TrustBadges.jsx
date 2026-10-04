@@ -25,13 +25,25 @@ export default function TrustBadges({ size = "md", spread = false, className = "
   const h = size === "sm" ? 44 : size === "lg" ? 76 : 58;
   const pad = spread ? "px-4 py-4" : size === "sm" ? "px-3 py-2.5" : "px-4 py-3";
 
+  /* Column count follows TRUST.length rather than being hard-coded.
+     The row was written for four accreditations; removing the 16-year
+     warranty badge left a fourth column with nothing in it, which reads as a
+     missing logo rather than as a deliberate set of three. Deriving it means
+     the row stays correct whether Lumenx adds the SAA mark later or drops
+     another one. */
+  const cols = { 2: "sm:grid-cols-2", 3: "sm:grid-cols-3", 4: "sm:grid-cols-4" }[TRUST.length] ?? "sm:grid-cols-4";
+
   return (
     <ul
       className={
         // w-full so the grid still fills the row even when a parent is a flex
         // container, where a grid would otherwise size to its own content.
         spread
-          ? `grid w-full grid-cols-2 items-stretch gap-[clamp(0.6rem,1.1vw,1.1rem)] sm:grid-cols-4 ${className}`
+          // The last-child:nth-child(odd) pair handles an ODD count in the
+          // two-column mobile grid: the orphan spans both columns instead of
+          // sitting half-width against empty space. Reset at sm, where the
+          // real column count takes over.
+          ? `grid w-full grid-cols-2 items-stretch gap-[clamp(0.6rem,1.1vw,1.1rem)] [&>li:last-child:nth-child(odd)]:col-span-2 ${cols} sm:[&>li:last-child:nth-child(odd)]:col-span-1 ${className}`
           : `flex flex-wrap items-center gap-[clamp(0.6rem,1vw,0.9rem)] ${className}`
       }
     >

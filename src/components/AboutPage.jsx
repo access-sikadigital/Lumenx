@@ -281,7 +281,7 @@ function Offices() {
                 {o.state}
               </span>
               <p className="t-h3 mt-5 max-w-[22ch] text-blue">{o.address}</p>
-              <span className="mt-8 flex items-center gap-2 text-[0.78rem] font-semibold uppercase tracking-[0.12em] text-ember">
+              <span className="mt-8 flex items-center gap-2 text-[0.78rem] font-semibold uppercase tracking-[0.12em] text-blue">
                 Open in maps
                 <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
               </span>

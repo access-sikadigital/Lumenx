@@ -27,7 +27,7 @@ export const artFor = (service) => SERVICE_ART[service] || SERVICE_ART["Solar pa
 // No pricing, no savings figures, no rebate amounts.
 
 export const LOCATIONS_HUB = {
-  seoTitle: "Service Areas | Solar Across Victoria & NSW | Lumenx",
+  seoTitle: "Service Areas | Solar Across Victoria & NSW",
   seoDescription:
     "Where Lumenx installs solar, batteries, EV charging and hot water: Melbourne, Geelong, Ballarat, Bendigo, Sydney and the surrounding regions.",
   eyebrow: "Service areas",
@@ -42,9 +42,9 @@ export const LOCATIONS = [
     city: "Melbourne",
     label: "Solar Panels Melbourne",
     service: "Solar panels",
-    seoTitle: "Solar Panels Melbourne | Install & Battery | Lumenx",
+    seoTitle: "Solar Panels Melbourne | Install & Battery",
     seoDescription:
-      "Local Melbourne solar installer. Solar Victoria authorised, 16-year workmanship warranty, rebates handled. Serving all Melbourne metro suburbs.",
+      "Local Melbourne solar installer. Solar Victoria authorised, SAA-accredited installation, rebates handled. Serving all Melbourne metro suburbs.",
     h1: "Solar panels in Melbourne, from an office in Maribyrnong.",
     lead: "Our head office is in Melbourne's inner west, which means our crews are local, not driving in from interstate for the day.",
     office: "Victoria, Head Office",
@@ -63,9 +63,9 @@ export const LOCATIONS = [
     city: "Geelong",
     label: "Solar Panels Geelong",
     service: "Solar panels",
-    seoTitle: "Solar Panels Geelong | Install & Rebates | Lumenx",
+    seoTitle: "Solar Panels Geelong | Install & Rebates",
     seoDescription:
-      "Solar panel installation across Geelong, Bellarine and the Surf Coast. Solar Victoria authorised, rebates handled, 16-year workmanship warranty.",
+      "Solar panel installation across Geelong, Bellarine and the Surf Coast. Solar Victoria authorised, rebates handled, SAA-accredited installation.",
     h1: "Solar panels in Geelong and across the Bellarine.",
     lead: "Close enough to Melbourne that our crews cover it regularly, and coastal enough that corrosion and wind rating genuinely matter to the specification.",
     office: "Victoria, Head Office",
@@ -83,9 +83,9 @@ export const LOCATIONS = [
     city: "Bendigo",
     label: "Solar Panels Bendigo",
     service: "Solar panels",
-    seoTitle: "Solar Panels Bendigo | Install & Rebates | Lumenx",
+    seoTitle: "Solar Panels Bendigo | Install & Rebates",
     seoDescription:
-      "Solar panel installation across Bendigo and central Victoria. Solar Victoria authorised, rebates handled, 16-year workmanship warranty.",
+      "Solar panel installation across Bendigo and central Victoria. Solar Victoria authorised, rebates handled, SAA-accredited installation.",
     h1: "Solar panels in Bendigo and central Victoria.",
     lead: "Central Victoria gets more sun than Melbourne and hotter summers, which changes both the payback and how the system should be specified.",
     office: "Victoria, Head Office",
@@ -103,9 +103,9 @@ export const LOCATIONS = [
     city: "Ballarat",
     label: "Solar Panels Ballarat",
     service: "Solar panels",
-    seoTitle: "Solar Panels Ballarat | Install & Rebates | Lumenx",
+    seoTitle: "Solar Panels Ballarat | Install & Rebates",
     seoDescription:
-      "Solar panel installation across Ballarat and western Victoria. Solar Victoria authorised, rebates handled, 16-year workmanship warranty.",
+      "Solar panel installation across Ballarat and western Victoria. Solar Victoria authorised, rebates handled, SAA-accredited installation.",
     h1: "Solar panels in Ballarat and western Victoria.",
     lead: "Cold winters, decent summers and a lot of period housing. Ballarat systems are worth pairing with hot water and heating upgrades, because that is where the bill actually is.",
     office: "Victoria, Head Office",
@@ -123,9 +123,9 @@ export const LOCATIONS = [
     city: "Sydney",
     label: "Solar Panels Sydney",
     service: "Solar panels",
-    seoTitle: "Solar Panels Sydney | Install & Battery | Lumenx",
+    seoTitle: "Solar Panels Sydney | Install & Battery",
     seoDescription:
-      "Solar panel installation across Sydney from our Market Street office. CEC-accredited installers, federal rebates handled, 16-year workmanship warranty.",
+      "Solar panel installation across Sydney from our Market Street office. SAA-accredited installers, federal rebates handled, manufacturer warranties registered.",
     h1: "Solar panels in Sydney, from an office on Market Street.",
     lead: "Sydney gets meaningfully more sun than Melbourne, which shortens payback, and it has its own distributors, approvals and roof stock to work around.",
     office: "New South Wales",
@@ -144,7 +144,7 @@ export const LOCATIONS = [
     city: "Melbourne",
     label: "Solar Batteries Melbourne",
     service: "Solar batteries",
-    seoTitle: "Solar Batteries Melbourne | Install & Rebate | Lumenx",
+    seoTitle: "Solar Batteries Melbourne | Install & Rebate",
     seoDescription:
       "Home battery installation across Melbourne. Sungrow, Alpha ESS and LG, with the federal battery rebate applied. Retrofits to existing solar.",
     h1: "Home batteries in Melbourne, sized to your evenings.",
@@ -165,7 +165,7 @@ export const LOCATIONS = [
     city: "Sydney",
     label: "Solar Batteries Sydney",
     service: "Solar batteries",
-    seoTitle: "Solar Batteries Sydney | Install & Rebate | Lumenx",
+    seoTitle: "Solar Batteries Sydney | Install & Rebate",
     seoDescription:
       "Home battery installation across Sydney. Sungrow, Alpha ESS and LG, with the federal battery rebate applied. Retrofits to existing solar.",
     h1: "Home batteries in Sydney, and whether yours is worth it.",
@@ -186,7 +186,7 @@ export const LOCATIONS = [
     city: "Melbourne",
     label: "Commercial Solar Melbourne",
     service: "Commercial solar",
-    seoTitle: "Commercial Solar Melbourne | Business Solar | Lumenx",
+    seoTitle: "Commercial Solar Melbourne | Business Solar",
     seoDescription:
       "Commercial solar for Melbourne businesses. 20kW to 100kW+ systems, ROI modelled on your interval data, finance available.",
     h1: "Commercial solar for Melbourne businesses.",
@@ -200,14 +200,14 @@ export const LOCATIONS = [
     roofs:
       "Industrial estates in the north, west and south east typically offer large unobstructed metal roofs, which are the quickest and most affordable to fit.",
     areas: ["Inner west", "Northern industrial", "Dandenong", "Laverton", "Campbellfield", "Braeside", "Truganina", "Melbourne metro"],
-    services: ["commercial-solar", "solar-inverters", "ev-chargers", "solar-batteries"],
+    services: ["commercial-solar", "inverter-repair", "ev-chargers", "solar-batteries"],
   },
   {
     slug: "ev-charger-installation-melbourne",
     city: "Melbourne",
     label: "EV Charger Installation Melbourne",
     service: "EV charging",
-    seoTitle: "EV Charger Installation Melbourne | Lumenx",
+    seoTitle: "EV Charger Installation Melbourne",
     seoDescription:
       "Home and business EV charger installation across Melbourne. 7kW and 22kW units, solar-integrated, installed by licensed electricians.",
     h1: "EV charger installation across Melbourne.",

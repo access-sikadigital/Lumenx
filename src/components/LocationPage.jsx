@@ -359,7 +359,7 @@ function LocalServices({ l }) {
           <span aria-hidden="true" className="mb-7 block h-[3px] w-12 bg-ember" />
           <h2 className="t-h2 text-blue">What we install in {l.city}.</h2>
           <p className="t-body mt-6 text-ink">
-            The same accredited crews and the same warranty, whichever of these you are here for.
+            The same SAA-accredited installers and the same manufacturer warranties, whichever of these you are here for.
           </p>
         </div>
 
@@ -387,7 +387,7 @@ function LocalServices({ l }) {
                 <p className="mt-2 text-[0.87rem] leading-relaxed text-ink">{page.lead}</p>
                 <span
                   aria-hidden="true"
-                  className="mt-4 inline-block text-[0.8rem] font-semibold text-ember transition-transform duration-300 group-hover:translate-x-1.5"
+                  className="mt-4 inline-block text-[0.8rem] font-semibold text-blue transition-transform duration-300 group-hover:translate-x-1.5"
                 >
                   Read more →
                 </span>

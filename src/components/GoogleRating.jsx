@@ -25,7 +25,7 @@ function Stars({ className = "" }) {
  * ground, so it needs no white chip behind it.
  */
 export default function GoogleRating({ variant = "dark", className = "" }) {
-  const { rating, count, url } = GOOGLE_REVIEWS;
+  const { rating, count, url, checked } = GOOGLE_REVIEWS;
   const dark = variant === "dark";
 
   const inner = (
@@ -47,6 +47,10 @@ export default function GoogleRating({ variant = "dark", className = "" }) {
         </span>
         <span className={`mt-0.5 block text-[0.72rem] ${dark ? "text-white/55" : "text-ink-soft"}`}>
           {count ? `Rated by ${count} Google reviews` : "Rated on Google Reviews"}
+          {/* A rating with no date is a claim with no shelf life. Rendered
+              only once Lumenx supplies the figures and the date they were
+              read from the Business Profile. */}
+          {checked ? ` · checked ${checked}` : ""}
         </span>
       </span>
     </>

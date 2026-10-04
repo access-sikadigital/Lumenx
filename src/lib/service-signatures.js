@@ -80,52 +80,6 @@ export const SIGNATURES = {
     },
   },
 
-  /* ---------------------------------------------------------------- */
-  "solar-inverters": {
-    type: "compare",
-    eyebrow: "Which type",
-    heading: "Three ways to convert, and when each one wins.",
-    lead: "There is no universally best inverter, only the right one for your roof and your plans. Here is how the three approaches actually differ.",
-    columns: [
-      {
-        name: "String",
-        tag: "The standard choice",
-        line: "One inverter handles the whole array. Simple, proven and the most cost-effective option by a clear margin.",
-        rows: [
-          { k: "Best for", v: "Simple, unshaded roofs on one orientation" },
-          { k: "Battery ready", v: "Not without adding equipment later" },
-          { k: "Shading", v: "One weak panel drags its whole string" },
-          { k: "Cost", v: "Lowest" },
-        ],
-        pick: "Choose this if your roof is clean and storage is genuinely not in your plans.",
-      },
-      {
-        name: "Hybrid",
-        tag: "Battery ready",
-        featured: true,
-        line: "Does everything a string inverter does, and also charges and discharges a battery without extra hardware.",
-        rows: [
-          { k: "Best for", v: "Anyone who may add storage" },
-          { k: "Battery ready", v: "Yes, built in" },
-          { k: "Shading", v: "Same as string unless optimised" },
-          { k: "Cost", v: "Moderate" },
-        ],
-        pick: "Choose this if a battery is anywhere on your horizon. Fitting it now costs less than replacing later.",
-      },
-      {
-        name: "Optimised",
-        tag: "Per-panel control",
-        line: "Optimisers or microinverters work on each panel individually, so one shaded panel no longer limits its neighbours.",
-        rows: [
-          { k: "Best for", v: "Shaded or multi-orientation roofs" },
-          { k: "Battery ready", v: "Depends on the pairing" },
-          { k: "Shading", v: "Handled panel by panel" },
-          { k: "Cost", v: "Highest" },
-        ],
-        pick: "Choose this if trees, chimneys or dormers shade part of the array through the day.",
-      },
-    ],
-  },
 
   /* ---------------------------------------------------------------- */
   "ev-chargers": {
@@ -246,13 +200,13 @@ export const SIGNATURES = {
       { label: "Federal STCs claimed", a: true, b: true },
       { label: "Federal battery rebate claimed", a: false, b: true },
       { label: "Monitoring configured", a: true, b: true },
-      { label: "16-year workmanship warranty", a: true, b: true },
+      { label: "Manufacturer warranties registered in your name", a: true, b: true },
     ],
     note: "Adding a battery later is always possible, and we specify a battery-ready inverter either way. It simply costs less to do it once.",
   },
 
   /* ---------------------------------------------------------------- */
-  "solar-inverter-replacement": {
+  "inverter-repair": {
     type: "symptoms",
     eyebrow: "Is it the inverter?",
     heading: "Five signs, and what each one usually means.",

@@ -26,7 +26,7 @@ const jsonLd = {
       telephone: SITE.phone,
       slogan: SITE.tagline,
       description:
-        "Australian solar energy company. CEC-accredited solar panels, batteries, EV chargers and heat pumps for homes and business across Victoria and NSW.",
+        "Australian solar energy company. SAA-accredited installers fitting CEC-approved solar panels, batteries, EV chargers and heat pumps for homes and businesses across Victoria and NSW.",
       areaServed: ["Victoria", "New South Wales", "Australia"],
       knowsAbout: [
         "Solar panels",

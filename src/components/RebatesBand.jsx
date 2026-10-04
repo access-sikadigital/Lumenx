@@ -67,7 +67,7 @@ export default function RebatesBand() {
             More than one program can apply to the same job. We check every one you qualify for,
             claim them, and handle the paperwork, so the discount is already in your quote.
           </p>
-          <Link href="/solar-rebates-victoria" className="btn btn-ember mt-9">
+          <Link href="/solar-rebates-victoria" className="btn btn-primary mt-9">
             <span>See what you qualify for</span>
           </Link>
         </div>

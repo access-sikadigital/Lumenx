@@ -31,7 +31,7 @@
 export const PRIVACY = {
   slug: "privacy-policy",
   label: "Privacy Policy",
-  seoTitle: "Privacy Policy | Lumenx",
+  seoTitle: "Privacy Policy",
   seoDescription:
     "How Lumenx collects, uses, stores and discloses personal information, and how to access, correct or complain about it.",
   eyebrow: "Legal",
@@ -66,7 +66,7 @@ export const PRIVACY = {
     {
       h: "Why we collect it",
       p: [
-        "To answer your enquiry and prepare a quote. To design and install a system if you go ahead. To check your eligibility for rebates and lodge the paperwork as an accredited retailer. To honour our warranty and support you afterwards. To meet the record-keeping obligations that apply to accredited solar retailers and licensed electrical work.",
+        "To answer your enquiry and prepare a quote. To design and install a system if you go ahead. To check your eligibility for rebates and lodge the paperwork as an accredited retailer. To register and support your manufacturer warranty claims afterwards. To meet the record-keeping obligations that apply to accredited solar retailers and licensed electrical work.",
         "We do not use your information to build advertising profiles, and we do not add you to a marketing list because you asked for a quote.",
       ],
     },

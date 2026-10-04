@@ -18,9 +18,39 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-const MAX = { name: 120, email: 160, phone: 40, address: 200, notes: 2000 };
+const MAX = { name: 120, email: 160, phone: 40, address: 200, notes: 2000, abn: 20 };
+
+/* An 8MB base64 ceiling for the optional bill attachment. The form caps the
+   raw file at 6MB and base64 adds about a third, so this is that limit plus
+   headroom. It is enforced here as well as in the browser because a client
+   side cap is a convenience, not a control. */
+const MAX_ATTACHMENT_CHARS = 8 * 1024 * 1024;
 
 const clean = (v, max) => (typeof v === "string" ? v.trim().slice(0, max) : "");
+
+/**
+ * Accept the uploaded bill only if it is the shape the form sends and a type
+ * we asked for. Anything else is dropped silently rather than forwarded: the
+ * lead is still worth delivering without the attachment, and passing an
+ * unvalidated data URL straight through to a CRM is not something to do on
+ * trust.
+ */
+const ALLOWED_UPLOAD = /^(image\/(jpeg|png|webp|heic|heif)|application\/pdf|text\/csv|application\/vnd\.openxmlformats-officedocument\.spreadsheetml\.sheet)$/;
+
+function cleanAttachment(a) {
+  if (!a || typeof a !== "object") return null;
+  const type = clean(a.type, 120);
+  const data = typeof a.data === "string" ? a.data : "";
+  if (!ALLOWED_UPLOAD.test(type)) return null;
+  if (!data.startsWith(`data:${type};base64,`)) return null;
+  if (data.length > MAX_ATTACHMENT_CHARS) return null;
+  return {
+    name: clean(a.name, 160),
+    type,
+    size: Number.isFinite(a.size) ? a.size : null,
+    data,
+  };
+}
 
 export async function POST(request) {
   let body;
@@ -42,11 +72,36 @@ export async function POST(request) {
     phone: clean(body.phone, MAX.phone),
     address: clean(body.address, MAX.address),
     propertyType: clean(body.propertyType, 40),
-    interests: Array.isArray(body.interests) ? body.interests.slice(0, 10).map((i) => clean(i, 40)) : [],
+    abn: clean(body.abn, MAX.abn),
+    // Decides whether a battery retrofit is a hybrid swap, an AC-coupled
+    // unit, or an inverter replacement. Worth more to whoever quotes this
+    // than any other optional field on the form.
+    existingInverter: clean(body.existingInverter, 120),
+    interests: Array.isArray(body.interests) ? body.interests.slice(0, 12).map((i) => clean(i, 60)) : [],
+    // The slugs as well as the labels. The labels are for whoever reads the
+    // email; the slugs are stable identifiers for a CRM to route on without
+    // having to string-match human wording that might get reworded later.
+    serviceSlugs: Array.isArray(body.serviceSlugs)
+      ? body.serviceSlugs.slice(0, 12).map((i) => clean(i, 40))
+      : [],
+    chosenPackage: clean(body.chosenPackage, 40),
+    helpMeChoose: body.helpMeChoose === true,
+    wantsFinance: body.wantsFinance === true,
+    /* Marketing consent, recorded as its own field with the time it was
+       given. Under the Spam Act the burden is on the sender to show consent
+       existed, so "they filled in a form once" is not a record: the flag and
+       the timestamp are. Default false, and an absent field is a no. */
+    marketingOptIn: body.marketingOptIn === true,
+    marketingOptInAt: body.marketingOptIn === true ? new Date().toISOString() : null,
+    // Which state's programs the visitor was being shown when they submitted.
+    // Without it, a NSW enquiry quoted against Victorian rebates is an easy
+    // and expensive mistake to make.
+    state: /^(VIC|NSW)$/.test(body.state) ? body.state : "",
     bill: clean(body.bill, 40),
     notes: clean(body.notes, MAX.notes),
+    attachment: cleanAttachment(body.attachment),
     submittedAt: new Date().toISOString(),
-    source: "lumenex.com.au/get-a-quote",
+    source: "/get-a-quote",
   };
 
   const missing = ["name", "email", "phone", "address"].filter((k) => !lead[k]);

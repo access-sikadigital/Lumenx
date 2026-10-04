@@ -84,7 +84,7 @@ function Library() {
               </p>
               <span
                 aria-hidden="true"
-                className="mt-7 inline-flex items-center gap-2.5 text-[0.9rem] font-semibold text-ember"
+                className="mt-7 inline-flex items-center gap-2.5 text-[0.9rem] font-semibold text-blue"
               >
                 <span className="border-b border-ember/30 pb-0.5 transition-colors group-hover:border-ember">
                   Read the guide
@@ -123,7 +123,7 @@ function Library() {
                 <p className="mt-3 flex-1 text-[0.9rem] leading-relaxed text-ink">{g.line}</p>
                 <span
                   aria-hidden="true"
-                  className="mt-5 inline-block text-[0.82rem] font-semibold text-ember transition-transform duration-300 group-hover:translate-x-1.5"
+                  className="mt-5 inline-block text-[0.82rem] font-semibold text-blue transition-transform duration-300 group-hover:translate-x-1.5"
                 >
                   Read more →
                 </span>

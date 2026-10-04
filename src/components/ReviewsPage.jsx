@@ -152,7 +152,7 @@ function Wall() {
         </div>
 
         <div className="mt-[clamp(2.5rem,4vw,3.5rem)] flex flex-wrap items-center gap-5 border-t border-blue/12 pt-8">
-          <Link href="/get-a-quote" className="btn btn-ember">
+          <Link href="/get-a-quote" className="btn btn-primary">
             <span>Get a Free Quote</span>
           </Link>
           <p className="max-w-[44ch] text-[0.86rem] leading-relaxed text-ink-soft">

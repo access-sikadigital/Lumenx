@@ -395,7 +395,7 @@ export function OtherTools({ current }) {
               </span>
               <span
                 aria-hidden="true"
-                className="mt-4 inline-block text-[0.8rem] font-semibold text-ember transition-transform duration-300 group-hover:translate-x-1.5"
+                className="mt-4 inline-block text-[0.8rem] font-semibold text-blue transition-transform duration-300 group-hover:translate-x-1.5"
               >
                 Open →
               </span>

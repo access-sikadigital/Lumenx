@@ -21,6 +21,23 @@
      green is 1.8:1 on white, which is decorative only; this is 5.1:1. */
   --color-green-ink: #3d7d20;
 
+  /* The one action colour. Every main button on the site is this yellow with
+     navy text (client instruction, 4 Oct 2026). It is deliberately a separate
+     token from --color-yellow: the brand guidelines' yellow is #ffb120, the
+     illustration canvas specifies #F8C646 for actions, and until Lumenx
+     confirms which one governs the whole palette the two are kept apart so
+     the swap is a one-line change rather than a hunt. */
+  --color-action: #f8c646;
+  --color-action-deep: #e9ae2a;
+
+  /* Energy-source colours from the Lumenx illustration canvas. `solar` was
+     already referenced as `text-solar` in the stats block but never defined,
+     so the suffix was rendering uncoloured. */
+  --color-solar: #e3a008;
+  --color-battery: #13876a;
+  --color-grid: #2f63b5;
+  --color-idle: #aeb4c4;
+
   /* Neutrals */
   --color-ink: #3b425a;
   --color-ink-soft: #767c92;
@@ -32,9 +49,15 @@
      fields, cards that must read as paper, and third-party brand artwork. */
   --color-paper: #ffffff;
 
-  /* Type */
-  --font-display: var(--font-inter-tight), system-ui, -apple-system, sans-serif;
-  --font-body: var(--font-roboto), system-ui, -apple-system, sans-serif;
+  /* Type.
+     Noto Sans SC and Noto Sans Arabic sit at the END of both stacks as script
+     fallbacks. A Latin glyph never reaches them, so English pays nothing for
+     their presence; a Chinese or Arabic glyph finds a real designed face
+     instead of whatever the operating system happens to substitute. */
+  --font-display: var(--font-inter-tight), var(--font-noto-sc), var(--font-noto-arabic),
+    system-ui, -apple-system, sans-serif;
+  --font-body: var(--font-roboto), var(--font-noto-sc), var(--font-noto-arabic),
+    system-ui, -apple-system, sans-serif;
 
   /* System */
   --radius-card: 22px;
@@ -50,15 +73,26 @@
   --shell-pad: clamp(1rem, 4.2vw, 7rem);
   --gutter: clamp(1.5rem, 2.5vw, 3.5rem);
   /* Fixed header height. Full-height and pinned sections must offset by this
-     or their first line gets sliced by the header. */
-  --header-h: 72px;
+     or their first line gets sliced by the header.
+
+     The finance strip that used to sit under the nav is PARKED (4 Oct 2026):
+     its 46px pushed the strip over the hero headline. So --header-h is the
+     nav bar alone again.
+
+     TO RESTORE THE STRIP: set --finance-strip-h back to 46px AND uncomment
+     <FinanceStrip /> in Header.jsx. Both, together — the header height and
+     the strip's own declared height have to agree or every full-height hero
+     and every scroll-margin on the site is out by the difference. */
+  --nav-h: 72px;
+  --finance-strip-h: 0px;
+  --header-h: calc(var(--nav-h) + var(--finance-strip-h));
 
   /* Arrow used as a mask on the action buttons. Single quotes inside, so the
      whole value can sit in double quotes without escaping. */
   --btn-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.75 8h10.5M9 3.75 13.25 8 9 12.25'/%3E%3C/svg%3E");
 }
 @media (min-width: 768px) {
-  :root { --header-h: 80px; }
+  :root { --nav-h: 80px; }
 }
 
 .shell {
@@ -416,8 +450,7 @@ h1, h2, h3, h4 {
 /* Arrow on the action buttons only. It is a masked SVG on ::after, which
    sits in the flex flow after the label, so no markup changes are needed
    and it inherits the label colour through every hover state. */
-.btn-primary::after,
-.btn-ember::after {
+.btn-primary::after {
   content: "";
   position: relative;
   z-index: 1;
@@ -429,8 +462,7 @@ h1, h2, h3, h4 {
   mask: var(--btn-arrow) center / contain no-repeat;
   transition: transform 0.45s var(--ease-brand);
 }
-.btn-primary:hover::after,
-.btn-ember:hover::after { transform: translateX(4px); }
+.btn-primary:hover::after { transform: translateX(4px); }
 
 /* Compact variant for the header bar, where two full-size buttons plus six
    nav links overrun the shell at the lg breakpoint. */
@@ -445,29 +477,27 @@ h1, h2, h3, h4 {
 /* Flat fills read as placeholders at this size. A shallow vertical gradient
    plus a 1px inner highlight gives the pill a lit edge, and the warm drop
    shadow ties it to the brand rather than greying it out. */
+/* THE action button. There is exactly one, and it is yellow with navy text.
+   `.btn-ember` (orange-red, white label) was retired on 4 October 2026: the
+   site was running two competing primary colours, so "See what you qualify
+   for", the FAQ's "Get a Free Quote" and the rebate CTAs all read as a
+   different, more urgent action than the identical button beside them. */
 .btn-primary {
-  background: linear-gradient(180deg, #ffc04d 0%, var(--color-yellow) 52%, #f2a30d 100%);
+  /* A TIGHT gradient, not a wide one. The client specified #F8C646 exactly,
+     so the button has to read as that colour; the two stops either side are
+     only there to give the pill a lit top edge and a grounded bottom. The
+     previous bottom stop was dark enough that the button read olive rather
+     than gold. */
+  background: linear-gradient(180deg, #fbd166 0%, var(--color-action) 55%, #eeb833 100%);
   color: var(--color-blue);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45),
-    0 6px 18px -8px rgba(232, 66, 10, 0.5);
+    0 6px 18px -8px rgba(185, 134, 11, 0.5);
 }
 .btn-primary:hover {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
-    0 16px 30px -12px rgba(232, 66, 10, 0.6);
+    0 16px 30px -12px rgba(185, 134, 11, 0.6);
 }
 .btn-primary::before { background: var(--color-white); }
-
-.btn-ember {
-  background: linear-gradient(180deg, #f2551f 0%, var(--color-ember) 52%, #cf3808 100%);
-  color: var(--color-white);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 6px 18px -8px rgba(232, 66, 10, 0.55);
-}
-.btn-ember:hover {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24),
-    0 16px 30px -12px rgba(232, 66, 10, 0.65);
-}
-.btn-ember::before { background: var(--color-blue); }
 
 /* The secondary action, used for the phone number beside every primary CTA.
    It was an outline, which on the navy sections read as a disabled or
@@ -516,8 +546,98 @@ h1, h2, h3, h4 {
     0 14px 28px -14px rgba(255, 177, 32, 0.55);
 }
 
+/* ---------- Illustration energy lines ----------
+   The travelling dots on an active energy line. Animating stroke-dashoffset
+   keeps the whole thing on the compositor, so a scene with six live lines
+   costs nothing measurable.
+
+   Duration is set per line from JS (about 7 seconds per mode change, per the
+   client spec). Under reduced motion the global rule at the bottom of this
+   file collapses every animation to nothing, which leaves the coloured line
+   drawn and static: still correct, just not moving. */
+@keyframes nrg-dots { to { stroke-dashoffset: -320; } }
+@keyframes nrg-dots-rev { to { stroke-dashoffset: 320; } }
+
+/* Runs a FIXED number of times and then stops, rather than looping forever.
+   The client spec is about seven seconds per mode change, then still. A
+   perpetual animation on a marketing page is a permanent demand on attention
+   and, on a diagram, it implies live telemetry that this is not.
+
+   `animation-fill-mode: forwards` holds the final frame so the line stays
+   drawn and coloured once the dots have stopped. */
+.nrg-dots {
+  animation: nrg-dots 7s linear 1 forwards;
+}
+.nrg-dots--rev { animation-name: nrg-dots-rev; }
+
+/* Restarting it: the Replay control bumps a key that remounts the paths, so
+   the animation begins again from zero. No class toggling and no reflow
+   hacks. */
+
+/* ---------- Right-to-left ----------
+   Arabic flips the whole layout. Most of the site already uses logical
+   properties or symmetric layout, so this handles the cases that do not
+   survive a mirror on their own.
+
+   THE ONE EXCEPTION the punch list names: the energy-flow scene stays
+   left-to-right in every language. The diagram reads sun, roof, inverter,
+   home, grid, and mirroring it would show the energy travelling backwards.
+   Anything that must not flip carries `.ltr-lock`; its TEXT is still set in
+   the reading direction of the language, which is why the lock is applied to
+   the drawing and the labels override it. */
+.ltr-lock {
+  direction: ltr;
+}
+[dir="rtl"] .ltr-lock [data-rtl-text] {
+  direction: rtl;
+  text-align: right;
+}
+
+/* PHONE NUMBERS, EMAIL ADDRESSES AND OTHER LTR STRINGS.
+
+   In a right-to-left paragraph the bidirectional algorithm reorders runs of
+   digits separated by spaces, so "1800 577 319" renders as "319 577 1800".
+   That is not a styling nitpick: it publishes a phone number nobody can ring
+   and an address nobody can reach.
+
+   `unicode-bidi: isolate` with an explicit direction takes these out of the
+   surrounding paragraph's bidi resolution entirely, so they keep their own
+   order while still sitting in the right place in the RTL layout. Applied to
+   every tel: and mailto: link site-wide, plus `.num-ltr` for any other
+   left-to-right string (model numbers, URLs, ABNs) that needs it. */
+[dir="rtl"] a[href^="tel:"],
+[dir="rtl"] a[href^="mailto:"],
+[dir="rtl"] .num-ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* Decorative glows are positioned from the left edge by design, and an
+   RTL mirror drags them across the headline they were lighting. Pin them. */
+[dir="rtl"] .glow {
+  transform: scaleX(-1);
+}
+
+/* The button arrow points at the next step, which in Arabic is to the left. */
+[dir="rtl"] .btn-primary::after {
+  transform: scaleX(-1);
+}
+[dir="rtl"] .btn-primary:hover::after {
+  transform: scaleX(-1) translateX(4px);
+}
+
+/* The marquee is a continuous loop in a fixed direction; mirroring the track
+   would fight the keyframes rather than reverse them. Left alone on purpose. */
+[dir="rtl"] .marquee-track {
+  direction: ltr;
+}
+
 /* ---------- Reveal primitives ---------- */
-.reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease-soft), transform 1s var(--ease-soft); }
+/* 280ms, not 1s. At a full second the fade was still running well after the
+   section had settled, so headings and cards sat visibly washed out while you
+   read them ("What we do" was reported blank on first view). The travel is
+   shorter too: 30px over 280ms reads as a snap rather than a drift. */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.28s var(--ease-soft), transform 0.28s var(--ease-soft); }
 .reveal.is-in { opacity: 1; transform: none; }
 
 /* Masked line reveal: wrap text in .line > span.

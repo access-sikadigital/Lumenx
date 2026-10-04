@@ -95,7 +95,7 @@ function Library() {
               Not answered here? Ask us directly. We would rather have the conversation than let you
               guess.
             </p>
-            <Link href="/get-a-quote" className="btn btn-ember btn-sm mt-5">
+            <Link href="/get-a-quote" className="btn btn-primary btn-sm mt-5">
               <span>Ask a question</span>
             </Link>
             <a href={SITE.phoneHref} className="btn btn-sm btn-ghost btn-ghost-ink mt-3">

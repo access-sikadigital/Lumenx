@@ -15,7 +15,7 @@
 // and the review avatars are hot-linked from another company's website.
 
 export const REVIEWS_PAGE = {
-  seoTitle: "Lumenx Reviews | What Our Customers Say",
+  seoTitle: "Reviews | What Our Customers Say",
   seoDescription:
     "Read what Victorian and NSW households say about their Lumenx solar, battery and hot water installations.",
   eyebrow: "Reviews",
@@ -26,7 +26,7 @@ export const REVIEWS_PAGE = {
     image: "/images/svc-residential.webp",
     alt: "A family looking up at the solar panels on their roof",
   },
-  chips: ["Verified Google reviews", "Victoria & New South Wales", "16-year workmanship warranty"],
+  chips: ["Verified Google reviews", "Victoria & New South Wales", "SAA-accredited installation"],
 
   intro: {
     heading: "Why we do not curate this page",
@@ -58,7 +58,7 @@ export const REVIEWS_PAGE = {
     },
     {
       q: "What happens if something goes wrong?",
-      a: "Call us. Most issues are resolved quickly, and the 16-year workmanship warranty covers the installation itself. If you are not satisfied with how we handle it, the NETCC code we are signed to includes a formal complaints process you can escalate through.",
+      a: "Call us. Most issues are resolved quickly, and the manufacturer warranties on the hardware are registered in your name. If you are not satisfied with how we handle it, the NETCC code we are signed to includes a formal complaints process you can escalate through.",
     },
     {
       q: "Can I speak to a past customer?",

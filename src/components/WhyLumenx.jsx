@@ -5,7 +5,7 @@ import Image from "next/image";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { WHY, TRUST } from "@/lib/site";
+import { WARRANTIES, WHY, TRUST } from "@/lib/site";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,14 +59,33 @@ export default function WhyLumenx() {
               Premium solar, done properly, and backed.
             </h2>
           </div>
-          <div className="flex items-end gap-3 rounded-2xl bg-blue px-6 py-4 text-white">
-            <p className="numeral text-[clamp(2rem,2.6vw,3rem)] leading-none text-yellow">16</p>
-            <p className="pb-1 text-[0.68rem] uppercase leading-tight tracking-[0.16em] text-white/65">
-              year
-              <br />
-              warranty
-            </p>
-          </div>
+          {/* Was a single "16 YEAR WARRANTY" badge. Removed 4 October 2026
+              with every other 16-year claim.
+
+              It survived the first sweep because the number and the words sat
+              in separate elements, so no search for "16 year" or "16-year"
+              could ever match it. Worth remembering: a claim assembled out of
+              two text nodes is invisible to grep but perfectly legible to a
+              customer.
+
+              What replaces it is the manufacturer's cover, with product and
+              performance kept apart and "up to" where the term varies by
+              model. Each row links to the manufacturer's own warranty
+              document once Lumenx supplies the URLs; until then WARRANTIES
+              carries `doc: null` and these render as plain text rather than
+              as dead links. */}
+          <ul className="flex flex-col gap-2 rounded-2xl bg-blue px-6 py-4 text-white">
+            {WARRANTIES.slice(0, 2).map((w) => (
+              <li key={w.item} className="flex items-baseline gap-3">
+                <span className="text-[0.68rem] uppercase tracking-[0.16em] text-white/55">
+                  {w.item}
+                </span>
+                <span className="text-[0.82rem] font-semibold text-yellow">
+                  {w.performance ?? w.product}
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* spec panel */}
@@ -87,7 +106,7 @@ export default function WhyLumenx() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-blue/60 via-blue/10 to-transparent" />
               <p className="absolute bottom-6 left-6 max-w-[22ch] text-[0.82rem] leading-snug text-white/85">
-                CEC-accredited crews across Victoria and New South Wales.
+                SAA-accredited installers across Victoria and New South Wales.
               </p>
             </div>
 

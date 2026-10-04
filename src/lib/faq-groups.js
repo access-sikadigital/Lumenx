@@ -11,7 +11,7 @@ import { SYSTEMS_HUB } from "@/lib/systems";
 import { GUIDES } from "@/lib/guides";
 
 export const FAQ_PAGE = {
-  seoTitle: "Solar FAQ | Panels, Batteries, Rebates & Install | Lumenx",
+  seoTitle: "Solar FAQ | Panels, Batteries, Rebates & Install",
   seoDescription:
     "Straight answers on solar panels, batteries, inverters, rebates, installation and warranties, from a Solar Victoria authorised retailer.",
   eyebrow: "Frequently asked",
@@ -33,11 +33,11 @@ const WORKING_WITH_US = [
   },
   {
     q: "Do you use your own installers?",
-    a: "Yes. Our own Clean Energy Council accredited crews do the work, which is the only reason a 16-year workmanship warranty means anything. If the people who install it are not the people who stand behind it, the warranty is a piece of paper.",
+    a: "Yes. Our own SAA-accredited installers do the work, and Lumenx stays the retailer you deal with afterwards. If the people who install it are not the people who answer the phone about it later, any promise made at the quote is a piece of paper.",
   },
   {
-    q: "What does the 16-year workmanship warranty actually cover?",
-    a: "Our work: the mounting, the wiring, the sealing, the compliance. The panels, inverter and battery carry their own manufacturer warranties on top, which we set out on your quote so you can see both.",
+    q: "What warranties do I actually get?",
+    a: "The manufacturer's. Panels carry a product warranty and a separate performance warranty, up to 25 years on the performance side depending on the panel. Batteries carry a 10-year product warranty. Inverters are typically 5 to 10 years and most brands let you extend. Your quote lists each one against the exact model being supplied, with product and performance shown separately, and we register them in your name.",
   },
   {
     q: "How long does the whole process take?",
@@ -67,7 +67,7 @@ export function faqGroups() {
     { id: "residential", title: "Residential solar", items: SERVICE_PAGES["residential-solar"]?.faqs },
     { id: "sizing", title: "System sizing", items: SYSTEMS_HUB.faqs },
     { id: "batteries", title: "Batteries and storage", items: SERVICE_PAGES["solar-batteries"]?.faqs },
-    { id: "inverters", title: "Inverters", items: SERVICE_PAGES["solar-inverters"]?.faqs },
+    { id: "inverters", title: "Inverters", items: SERVICE_PAGES["inverter-repair"]?.faqs },
     { id: "commercial", title: "Commercial solar", items: SERVICE_PAGES["commercial-solar"]?.faqs },
     { id: "ev-chargers", title: "EV charging", items: SERVICE_PAGES["ev-chargers"]?.faqs },
     { id: "hot-water", title: "Hot water and pool heating", items: SERVICE_PAGES["heat-pump-hot-water"]?.faqs },

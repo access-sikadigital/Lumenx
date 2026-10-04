@@ -12,7 +12,7 @@
 // we stock. Specifications belong in the written quote.
 
 export const PRODUCTS_HUB = {
-  seoTitle: "Solar Products | Panels, Inverters & Batteries | Lumenx",
+  seoTitle: "Solar Products | Panels, Inverters & Batteries",
   seoDescription:
     "The solar panels, inverters, batteries, EV chargers and hot water systems Lumenx installs, and how we choose what goes on your roof.",
   eyebrow: "Products",
@@ -60,7 +60,7 @@ export const PRODUCTS_HUB = {
       line: "The component most likely to need attention first.",
       body: "The inverter does the conversion, the monitoring and, if you add storage later, the coordination. It is also the component with the shortest life of the three, so its replacement cost and its parts availability matter more than its headline efficiency. String, hybrid and microinverter platforms each suit different roofs, and we will say which yours is.",
       brands: ["Sungrow", "GoodWe", "SolarEdge", "Delta"],
-      href: "/solar-inverters",
+      href: "/inverter-repair",
       hrefLabel: "Solar inverters",
       image: "/images/svc-inverters.webp",
       imageAlt: "A wall-mounted solar inverter and isolators",
@@ -122,7 +122,7 @@ export const PRODUCTS_HUB = {
     },
     {
       q: "What happens if a manufacturer goes out of business?",
-      a: "Their product warranty becomes difficult to claim, which is one of the reasons we are selective about who we stock. Our own 16-year workmanship warranty is ours to honour regardless, and it covers the installation rather than the hardware.",
+      a: "Their product warranty becomes difficult to claim, which is one of the reasons we are selective about who we stock. We stay the retailer you deal with regardless, and we will tell you honestly what cover is left and what the options are.",
     },
   ],
 };

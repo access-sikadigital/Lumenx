@@ -7,11 +7,13 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TRUST, SITE } from "@/lib/site";
+import { useLang } from "@/lib/i18n";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
   const root = useRef(null);
+  const { tr } = useLang();
 
   useGSAP(
     () => {
@@ -57,9 +59,14 @@ export default function Hero() {
       {/* full-bleed media */}
       <div className="hero-media absolute inset-0">
         <div className="hero-img absolute inset-0">
+          {/* A REAL Lumenx install, not stock. Swapped 4 October 2026: the
+              previous image was a stock tiled roof, and the client asked for
+              the hero to show actual work. This is a completed job at dusk
+              in an Australian suburb, which also supplies the warm light the
+              artificial glow used to fake. */}
           <Image
-            src="/images/rooftop-home.webp"
-            alt="Solar panels on a tiled roof against an evening sky"
+            src="/images/real-install-3.webp"
+            alt="A completed Lumenx rooftop solar installation at dusk, overlooking an Australian suburb"
             fill
             priority
             quality={90}
@@ -71,15 +78,14 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-t from-blue via-blue/20 to-blue/70" />
       </div>
 
-      {/* sun glow */}
-      <div
-        aria-hidden="true"
-        className="glow glow--solar right-[-10%] top-[6%] h-[40vw] w-[40vw]"
-        style={{
-          background: "radial-gradient(circle, rgba(255,177,32,.85), rgba(232,66,10,.5) 45%, transparent 72%)",
-          animation: "sunpulse 7s ease-in-out infinite",
-        }}
-      />
+      {/* The abstract orange glow was removed on 4 October 2026 at the
+          client's request. It was a 40vw radial gradient pulsing on a seven
+          second loop over the top of the photograph, and it was doing two
+          unhelpful things: inventing a light source the image did not have,
+          and reading as the site's loudest element above the headline.
+
+          The replacement photograph is a real install at dusk and carries its
+          own warm light, so nothing was needed in its place. */}
 
       {/* Logomark, kept low-right so it never collides with the headline.
           Yellow rather than ember: it sits over the warm sunset image and the
@@ -106,17 +112,24 @@ export default function Hero() {
       {/* Vertical padding lives on .hero-copy in globals.css so it can change
           at the md breakpoint — inline styles carry no media query. */}
       <div className="shell hero-copy relative z-10 flex flex-1 flex-col justify-center">
+        {/* The tagline demoted to the small line ABOVE the headline, which is
+            the client's instruction. It is a brand promise, not a proposition:
+            as the h1 it told a visitor nothing about what Lumenx sells, and
+            the page had no heading a search engine could match to solar. */}
         <p className="hero-eyebrow eyebrow mb-[clamp(1rem,2vw,2rem)] text-yellow">
-          Make the switch to solar
+          {tr("hero_eyebrow")}
         </p>
 
-        {/* max-w stops "future." running into the frame edge */}
-        <h1 className="t-mega max-w-[16ch] text-white">
-          <span className="line"><span className="hero-line-in block">Together, we build</span></span>
+        {/* Client-specified wording, verbatim. Do not reword without them. */}
+        <h1 className="t-mega max-w-[18ch] text-white">
           <span className="line">
-            <span className="hero-line-in block">
-              a brighter future.
-            </span>
+            <span className="hero-line-in block">{tr("hero_h1_a")}</span>
+          </span>
+          <span className="line">
+            <span className="hero-line-in block">{tr("hero_h1_b")}</span>
+          </span>
+          <span className="line">
+            <span className="hero-line-in block">{tr("hero_h1_c")}</span>
           </span>
         </h1>
 
@@ -125,17 +138,62 @@ export default function Hero() {
             width away from the headline they belong to. */}
         <div className="mt-[clamp(1.75rem,3vw,3rem)] flex flex-col items-start gap-[clamp(1.75rem,2.6vw,2.5rem)]">
           <p className="hero-lead t-lead max-w-[46ch] text-white/72">
-            CEC-accredited solar, batteries and EV charging for homes and business across
-            Victoria and New South Wales. Rebates handled, every install backed for 16 years.
+            {tr("hero_lead")}
           </p>
 
-          <div className="flex flex-wrap items-center gap-3.5">
-            <Link href="/get-a-quote" className="hero-act btn btn-primary">
-              <span>Get a Free Quote</span>
-            </Link>
-            <a href={SITE.phoneHref} className="hero-act btn btn-ghost">
-              <span>{SITE.phone}</span>
-            </a>
+          {/* Three starting buttons, per the client brief. They are a WAY IN
+              rather than three competing calls to action: each one opens the
+              quote form with that service already chosen, so the first
+              question the form would have asked is answered by the click that
+              got you there. The phone sits underneath as the alternative for
+              anyone who would rather talk. */}
+          <div>
+            <p className="mb-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-white/45">
+              {tr("hero_start")}
+            </p>
+
+            {/* min-w on each button so the three read as ONE set of choices
+                rather than three unrelated buttons of random width. Without
+                it "Solar" is half the width of "Solar + battery" and the row
+                looks like a mistake. They still grow for longer labels, they
+                just cannot shrink below a common floor. */}
+            <div className="flex flex-wrap items-center gap-3">
+              {[
+                { key: "hero_solar", slug: "solar" },
+                { key: "hero_battery", slug: "battery" },
+                { key: "hero_both", slug: "solar-battery" },
+              ].map((s) => (
+                <Link
+                  key={s.slug}
+                  href={`/get-a-quote?service=${s.slug}`}
+                  className="hero-act btn btn-primary min-w-[clamp(9rem,13vw,11.5rem)] justify-center"
+                >
+                  <span>{tr(s.key)}</span>
+                </Link>
+              ))}
+            </div>
+
+            {/* The phone is a TEXT link, not a second pill.
+                It was a small white button sitting directly under the first
+                yellow one, which put two different button sizes and two
+                different fills in the same corner and made the row look
+                broken. As a text line it is still one tap on a phone, still
+                unmistakably the number, and it stops competing with the three
+                buttons it is meant to be an alternative to.
+
+                It is deliberately NOT given .hero-act: that class is on the
+                staggered button animation, and including it made the phone
+                arrive last and on its own, which read as a fourth button that
+                had fallen out of the row. */}
+            <p className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <span className="text-[0.88rem] text-white/50">{tr("hero_prefer_talk")}</span>
+              <a
+                href={SITE.phoneHref}
+                className="font-[family-name:var(--font-display)] text-[1.08rem] font-bold text-white underline-offset-[6px] transition-colors duration-300 hover:text-action hover:underline"
+              >
+                {SITE.phone}
+              </a>
+            </p>
           </div>
         </div>
       </div>

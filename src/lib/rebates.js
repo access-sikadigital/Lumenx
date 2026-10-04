@@ -12,7 +12,7 @@
 // visitor to a confirmed eligibility check.
 
 export const REBATES_PAGE = {
-  seoTitle: "Solar & Battery Rebates Victoria | Lumenx",
+  seoTitle: "Solar & Battery Rebates Victoria",
   seoDescription:
     "Every Victorian solar and battery rebate explained in plain English: federal STCs, the federal battery rebate, Solar Victoria and Victorian Energy Upgrades.",
   eyebrow: "Rebates",
@@ -56,18 +56,18 @@ export const REBATES_PAGE = {
       name: "Federal Battery Rebate",
       full: "Cheaper Home Batteries",
       level: "Federal",
-      line: "Introduced in 2025, this is the single biggest reason home storage now pays back faster than it used to. It discounts eligible battery systems at the point of installation.",
-      applies: "Home batteries",
-      note: "Eligibility depends on the battery and the installation meeting program requirements.",
+      line: "A discount on eligible battery systems at the point of installation. Since 1 May 2026 the certificate factor is lower and tapers above 14kWh and again above 28kWh, so the support rewards a battery sized to your evening usage rather than the largest one that fits.",
+      applies: "Home batteries, installed with eligible solar",
+      note: "Requires eligible solar already installed or being installed at the same time, and the battery and installation must meet the program requirements.",
     },
     {
       n: "03",
       name: "Solar Victoria",
       full: "Solar Homes Program",
       level: "Victoria",
-      line: "The state program, offering rebates and in some cases interest-free loans to eligible Victorian households across solar, battery and hot water categories.",
-      applies: "Solar, battery, hot water",
-      note: "Has household eligibility criteria and limited release rounds, so timing matters.",
+      line: "The state program. It offers rebates to eligible Victorian households on solar and hot water, and a separate optional solar loan. The loan is repaid; it is not a discount, and there is no battery loan.",
+      applies: "Solar, hot water",
+      note: "Has household eligibility criteria and limited release rounds, so timing matters. You confirm your eligibility before installation.",
     },
     {
       n: "04",
@@ -89,7 +89,10 @@ export const REBATES_PAGE = {
     rows: [
       { name: "Federal STCs", marks: [true, false, false] },
       { name: "Federal Battery Rebate", marks: [false, true, false] },
-      { name: "Solar Victoria", marks: ["Varies", "Varies", "Varies"] },
+      // Battery is now false, not "Varies": the Solar Victoria battery rebate
+      // and the battery loan are both closed to new applications, so showing
+      // it as a maybe implies support that is not available.
+      { name: "Solar Victoria", marks: ["Varies", false, "Varies"] },
       { name: "Victorian Energy Upgrades", marks: [false, false, true] },
     ],
     note: "Indicative only. Each program sets its own eligibility, and state programs in particular open and close in rounds. We confirm your actual position in writing before you commit to anything.",

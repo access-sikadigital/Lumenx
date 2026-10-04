@@ -27,7 +27,13 @@ export function Reveal({ as: Tag = "div", delay = 0, className = "", children, .
           }
         });
       },
-      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
+      /* Fires EARLIER than it used to. The old settings waited for 15% of the
+         element to be inside a root shortened by 8%, so a tall section only
+         began fading in once a good part of it was already being read. The
+         root now extends 15% BELOW the viewport and any intersection at all
+         counts, so the transition is finished by the time the content is in
+         comfortable reading position. */
+      { threshold: 0, rootMargin: "0px 0px 15% 0px" }
     );
     io.observe(el);
     return () => io.disconnect();

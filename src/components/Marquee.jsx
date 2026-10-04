@@ -22,9 +22,14 @@ import { BRANDS } from "@/lib/site";
  * rather than left dark on dark.
  */
 export default function Marquee({
-  eyebrow = "Tier-1 hardware we install",
+  eyebrow = "Brands we install",
   tone = "light",
   bare = false,
+  // Runs right-to-left by default. The brands row is meant to travel the
+  // OPPOSITE way to the accreditation strip that sits above it, so the two
+  // never read as one long band moving together. Pass reverse={false} for a
+  // row that should run the other way.
+  reverse = true,
   className = "",
 }) {
   const row = [...BRANDS, ...BRANDS];
@@ -60,7 +65,13 @@ export default function Marquee({
       </div>
 
       <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-        <ul className="flex w-max animate-[marquee_52s_linear_infinite] items-center gap-[clamp(2.5rem,4vw,5rem)] pr-[clamp(2.5rem,4vw,5rem)]">
+        <ul
+          className={`marquee-track flex w-max items-center gap-[clamp(2.5rem,4vw,5rem)] pr-[clamp(2.5rem,4vw,5rem)] ${
+            reverse
+              ? "animate-[marquee-rev_52s_linear_infinite]"
+              : "animate-[marquee_52s_linear_infinite]"
+          }`}
+        >
           {row.map((b, i) => (
             <li key={`${b.file}-${i}`} className="shrink-0">
               <img

@@ -5,7 +5,7 @@
 // page and in the LocalBusiness schema, so a wrong value is a wrong promise.
 
 export const CONTACT = {
-  seoTitle: "Contact Lumenx | Solar Melbourne & Sydney",
+  seoTitle: "Contact Us | Solar Melbourne & Sydney",
   seoDescription:
     "Talk to Lumenx about solar, batteries, EV charging or hot water. Offices in Maribyrnong and Sydney, installing across Victoria and New South Wales.",
   eyebrow: "Contact",

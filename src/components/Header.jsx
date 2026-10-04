@@ -7,6 +7,9 @@ import { usePathname } from "next/navigation";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { NAV_GROUPS, SITE, TRUST } from "@/lib/site";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useLang } from "@/lib/i18n";
+// FinanceStrip is parked — see the note further down where it used to render.
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -17,6 +20,7 @@ export default function Header() {
   const tl = useRef(null);
   const closeTimer = useRef(null);
   const pathname = usePathname();
+  const { tr } = useLang();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -142,6 +146,28 @@ export default function Header() {
         <nav className="hidden items-center gap-7 xl:flex 2xl:gap-9" aria-label="Main">
           {NAV_GROUPS.map((g) => {
             const on = menu === g.label;
+
+            /* A group with no columns is a plain link, not a trigger.
+               Commercial is one: it has a single destination, so giving it a
+               chevron that opens nothing would be a lie about the control.
+               `highlight` sets it apart from the residential services beside
+               it, which is the point of listing it separately at all. */
+            if (!g.columns) {
+              return (
+                <Link
+                  key={g.label}
+                  href={g.href}
+                  onMouseEnter={release}
+                  className={`group relative py-2 text-[0.95rem] font-semibold transition-colors ${
+                    g.highlight ? "text-action hover:text-white" : "text-white/85 hover:text-white"
+                  }`}
+                >
+                  {g.labelKey ? tr(g.labelKey) : g.label}
+                  <span className="absolute -bottom-0.5 left-0 h-[2px] w-0 bg-action transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-full" />
+                </Link>
+              );
+            }
+
             return (
               <div key={g.label} onMouseEnter={() => hold(g.label)} onFocus={() => hold(g.label)}>
                 <Link
@@ -149,7 +175,7 @@ export default function Header() {
                   aria-expanded={on}
                   className="group relative flex items-center gap-1.5 py-2 text-[0.95rem] font-medium text-white/85 transition-colors hover:text-white"
                 >
-                  {g.label}
+                  {g.labelKey ? tr(g.labelKey) : g.label}
                   <svg
                     width="9"
                     height="6"
@@ -172,20 +198,21 @@ export default function Header() {
         </nav>
 
         <div className="hidden items-center gap-2.5 xl:flex">
+          <LanguageSwitcher tone="dark" />
           {/* Same ghost treatment as the hero, so the phone reads as an equal
               action rather than a label beside a button. */}
           <a href={SITE.phoneHref} className="btn btn-sm btn-ghost">
             <span>{SITE.phone}</span>
           </a>
           <Link href="/get-a-quote" className="btn btn-sm btn-primary">
-            <span>Get a Free Quote</span>
+            <span>{tr("cta_quote")}</span>
           </Link>
         </div>
 
         {/* toggle */}
         <button
           type="button"
-          aria-label={open ? "Close menu" : "Open menu"}
+          aria-label={open ? tr("menu_close") : tr("menu_open")}
           aria-expanded={open}
           aria-controls="mobile-menu"
           onClick={() => setOpen((v) => !v)}
@@ -211,6 +238,8 @@ export default function Header() {
 
       {/* ---------------- desktop dropdown panels ---------------- */}
       {NAV_GROUPS.map((g) => {
+        // Commercial has no columns, so it has no panel to render.
+        if (!g.columns) return null;
         const on = menu === g.label;
         return (
           <div
@@ -267,6 +296,26 @@ export default function Header() {
         );
       })}
 
+      {/* PARKED, 4 October 2026, at the client's request.
+
+          The pinned finance strip used to render here. It carried the VIC/NSW
+          selector and the available finance offers, which made the state
+          control the first thing on every page. It was removed because the
+          extra 46px pushed the strip over the hero headline.
+
+          Nothing is deleted: <FinanceStrip /> still exists and still works.
+          To restore it, uncomment the line below AND put the 46px back into
+          --header-h in globals.css. Those two changes go together — the
+          header height and the strip's own height have to agree or every
+          full-height hero and scroll-margin on the site is out by 46px.
+
+          While it is parked, the VIC/NSW selector still appears on the pages
+          where it decides the content: every service page, the commercial
+          page and the rebate checker. What is lost is only its presence on
+          pages that do not show incentives.
+
+          <FinanceStrip /> */}
+
       {/* ---------------- mobile menu ---------------- */}
       <div
         id="mobile-menu"
@@ -307,8 +356,41 @@ export default function Header() {
             <nav className="flex flex-col" aria-label="Main">
               {NAV_GROUPS.map((g, i) => {
                 const expanded = section === g.label;
-                const links = g.columns.flatMap((c) => c.links);
                 const panelId = `mm-panel-${i}`;
+
+                /* A group with no columns is a destination, not a section.
+                   Rendering it as a collapsed accordion row would hide a
+                   single link behind a tap that reveals nothing. */
+                if (!g.columns) {
+                  return (
+                    <section key={g.label} className="mm-group border-t border-white/10 first:border-t-0">
+                      <span className="line block" style={{ fontSize: "clamp(1.35rem, 6.4vw, 1.95rem)" }}>
+                        <Link
+                          href={g.href}
+                          onClick={() => setOpen(false)}
+                          className={`mm-line flex w-full items-center gap-3.5 py-5 text-left font-[family-name:var(--font-display)] font-bold leading-[1.12] tracking-[-0.03em] ${
+                            g.highlight ? "text-action" : "text-white"
+                          }`}
+                        >
+                          <span className="numeral shrink-0 text-[0.55rem] font-semibold tracking-[0.14em] text-yellow/70">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <span className="min-w-0 flex-1">{g.labelKey ? tr(g.labelKey) : g.label}</span>
+                          <span
+                            aria-hidden="true"
+                            className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/25 text-white"
+                          >
+                            <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                              <path d="M4 8h8M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          </span>
+                        </Link>
+                      </span>
+                    </section>
+                  );
+                }
+
+                const links = g.columns.flatMap((c) => c.links);
 
                 return (
                   <section key={g.label} className="mm-group border-t border-white/10 first:border-t-0">
@@ -327,7 +409,7 @@ export default function Header() {
                         <span className="numeral shrink-0 text-[0.55rem] font-semibold tracking-[0.14em] text-yellow/70">
                           {String(i + 1).padStart(2, "0")}
                         </span>
-                        <span className="min-w-0 flex-1">{g.label}</span>
+                        <span className="min-w-0 flex-1">{g.labelKey ? tr(g.labelKey) : g.label}</span>
                         <span
                           aria-hidden="true"
                           className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -380,7 +462,7 @@ export default function Header() {
                 onClick={() => setOpen(false)}
                 className="mm-meta btn btn-primary w-full justify-center"
               >
-                <span>Get a Free Quote</span>
+                <span>{tr("cta_quote")}</span>
               </Link>
 
               <a

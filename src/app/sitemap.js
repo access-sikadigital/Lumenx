@@ -5,6 +5,7 @@ import { GUIDE_SLUGS } from "@/lib/guides";
 import { LOCATION_SLUGS } from "@/lib/locations";
 import { POSTS } from "@/lib/blog";
 import { ALL_TOOL_SLUGS } from "@/lib/calculators";
+import { BRIGHTE_APPROVED, NSW_PROGRAM_ACCESS } from "@/lib/finance";
 
 /**
  * XML sitemap, generated from the same data the pages are built from, so a
@@ -29,6 +30,19 @@ export default function sitemap() {
     { url: `${SITE.domain}/blog/`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${SITE.domain}/tools/`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE.domain}/privacy-policy/`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
+
+    /* Gated pages. Both routes 404 until their flag is set, so they are
+       listed here on exactly the same condition. Listing a URL that returns
+       404 is a Search Console error, and listing one that exists but has not
+       been approved for release is worse than that. Flip the flag in
+       lib/finance.js and the page, the nav and this entry all turn on
+       together. */
+    ...(BRIGHTE_APPROVED || NSW_PROGRAM_ACCESS
+      ? [{ url: `${SITE.domain}/0-percent-finance/`, lastModified: now, changeFrequency: "monthly", priority: 0.7 }]
+      : []),
+    ...(NSW_PROGRAM_ACCESS
+      ? [{ url: `${SITE.domain}/nsw-rebates-and-finance/`, lastModified: now, changeFrequency: "monthly", priority: 0.9 }]
+      : []),
 
     // Service hubs and their nested sub-pages.
     ...SERVICE_SLUGS.map((slug) => ({

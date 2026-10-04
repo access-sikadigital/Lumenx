@@ -9,16 +9,20 @@ import Faq from "@/components/Faq";
 import CTA from "@/components/CTA";
 import { OtherTools, ToolCard } from "@/components/CalculatorPage";
 import Select from "@/components/Select";
+import { EligibilityLegend } from "@/components/illustrations/ServiceDiagrams";
 import { SITE } from "@/lib/site";
 import { REBATE_CHECK } from "@/lib/calculators";
 
 gsap.registerPlugin(ScrollTrigger);
 
+/* Four statuses, worded to match the Lumenx eligibility board. "Info" is not
+   a program and is never counted; "Not available" is the opposite of an
+   entitlement, so it is not counted either. See REBATE_CHECK.countable(). */
 const STATUS = {
-  likely: { label: "Likely applies", dot: "bg-green", ring: "border-green/30", tint: "bg-green/[0.05]" },
-  check: { label: "Needs checking", dot: "bg-yellow", ring: "border-yellow/35", tint: "bg-yellow/[0.06]" },
-  unlikely: { label: "Probably not", dot: "bg-ink-soft", ring: "border-blue/15", tint: "bg-cloud" },
-  note: { label: "Worth knowing", dot: "bg-ember", ring: "border-ember/30", tint: "bg-ember/[0.05]" },
+  likely: { label: "Likely eligible", dot: "bg-green", ring: "border-green/30", tint: "bg-green/[0.05]" },
+  check: { label: "Check", dot: "bg-yellow", ring: "border-yellow/35", tint: "bg-yellow/[0.06]" },
+  unlikely: { label: "Not available", dot: "bg-ink-soft", ring: "border-blue/15", tint: "bg-cloud" },
+  note: { label: "Info", dot: "bg-ember", ring: "border-ember/30", tint: "bg-ember/[0.05]" },
 };
 
 /* ----------------------------------------------------------------
@@ -36,6 +40,11 @@ function Checker() {
   }, []);
   const [a, setA] = useState(initial);
   const results = REBATE_CHECK.evaluate(a);
+  // Every number shown to the reader counts only the programs that can
+  // actually reduce the price. Notes and unavailable programs are still
+  // RENDERED, because knowing a thing is closed is useful, but they are not
+  // added up as if they were entitlements.
+  const counted = REBATE_CHECK.countable(results);
 
   useGSAP(
     () => {
@@ -103,10 +112,17 @@ function Checker() {
                     </a>
                   </div>
                   <p className="numeral mt-2 text-[clamp(1.9rem,3.4vw,2.6rem)] leading-none text-blue">
-                    {results.length}
+                    {counted.length}
                   </p>
                   <p className="mt-2 text-[0.84rem] leading-relaxed text-ink">
-                    {results.length === 1 ? "program worth looking at" : "programs worth looking at"}
+                    {counted.length === 1 ? "program worth looking at" : "programs worth looking at"}
+                    {results.length > counted.length && (
+                      <span className="mt-1 block text-ink-soft">
+                        plus {results.length - counted.length}{" "}
+                        {results.length - counted.length === 1 ? "note" : "notes"} below, which are
+                        not discounts
+                      </span>
+                    )}
                   </p>
                 </div>
               }
@@ -147,12 +163,18 @@ function Checker() {
         style={{ paddingTop: "clamp(3.5rem, 8vh, 6rem)", paddingBottom: "clamp(4rem, 9vh, 7rem)" }}
       >
         <div className="shell" aria-live="polite">
-          <div className="mb-8 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+          <div className="mb-6 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
             <h2 className="t-h2 text-blue">
-              {results.length} {results.length === 1 ? "program" : "programs"} to look at
+              {counted.length} {counted.length === 1 ? "program" : "programs"} to look at
             </h2>
             <span className="text-[0.85rem] text-ink-soft">No amounts, on purpose</span>
           </div>
+
+          {/* The four statuses explained once, before the cards that use
+              them. "Info" and "Not available" are the two that get
+              misread as entitlements, and this is where that gets headed
+              off rather than inferred from a coloured dot. */}
+          <EligibilityLegend className="mb-8" />
 
           <div className="grid gap-[clamp(0.9rem,1.4vw,1.25rem)] lg:grid-cols-2">
             {results.map((r) => {
@@ -195,7 +217,7 @@ function Checker() {
               quote, so the figure you compare against other quotes is the figure you pay.
             </p>
             <div className="flex flex-wrap items-center gap-3.5">
-              <Link href="/get-a-quote" className="btn btn-ember btn-sm">
+              <Link href="/get-a-quote" className="btn btn-primary btn-sm">
                 <span>Check what I qualify for</span>
               </Link>
               <a href={SITE.phoneHref} className="btn btn-sm btn-ghost btn-ghost-ink">

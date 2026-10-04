@@ -26,20 +26,27 @@ export const NAV = [
   { label: "Residential", href: "/residential-solar" },
   { label: "Commercial", href: "/commercial-solar" },
   { label: "Batteries", href: "/solar-batteries" },
-  { label: "Inverters", href: "/solar-inverters" },
+  { label: "Inverter Repair", href: "/inverter-repair" },
   { label: "EV Chargers", href: "/ev-chargers" },
   { label: "Rebates", href: "/solar-rebates-victoria" },
   { label: "About", href: "/about" },
 ];
 
 // Google review badge.
-// TODO before launch: replace `rating`, `count` and `url` with the real figures
-// from the Lumenx Google Business Profile. These are public factual claims, so
-// they must match the profile exactly.
+//
+// BLOCKED ON LUMENX (punch list, Priority 1). Every one of these is a public
+// factual claim and must match the Google Business Profile exactly:
+//   - `rating` and `count` must be the live figures, shown with `checked`
+//     beside them so the reader knows how current they are.
+//   - `url` must be the real Google Business Profile.
+//   - each review in REVIEWS needs its own `url` to that review on Google.
+// Until the profile URL arrives, `url` stays null and the UI renders the badge
+// as plain text rather than as a dead link.
 export const GOOGLE_REVIEWS = {
   rating: "5.0",
   count: "",           // e.g. "128". Leave empty to hide the count.
-  url: "#",            // e.g. the GBP "write a review" / profile link
+  url: null,           // the Google Business Profile URL
+  checked: null,       // e.g. "2 October 2026" — the date the figures were read
 };
 
 // What you actually get when you ask for a quote. Used by the closing CTA.
@@ -66,9 +73,15 @@ export const CTA_PROMISES = [
  * transparent png). They are all knocked back to transparency here and then
  * sat on a white chip in the UI, so the row is consistent on any ground.
  *
- * NOTE: the NETCC artwork reads "Approved Seller". The site elsewhere says
- * "NETCC Signatory". Those are not the same status; the label below follows
- * the logo Lumenx supplied.
+ * NETCC: the supplied artwork reads "Approved Seller", so that is the wording
+ * used EVERYWHERE on the site. "Signatory" is a different status and the two
+ * were previously mixed, which is exactly the kind of inconsistency an
+ * accreditation body reads as a misrepresentation. One wording only.
+ *
+ * The "16-Year Workmanship Warranty" badge was removed on 4 October 2026 along
+ * with every other 16-year claim (client instruction, punch list Priority 1).
+ * The artwork file is left in /public/accreditations so it can be restored if
+ * the claim is ever substantiated, but nothing renders it.
  */
 export const TRUST = [
   { label: "Solar Victoria Authorised Retailer", file: "solar-victoria.webp", w: 480, h: 160, scale: 1 },
@@ -78,93 +91,144 @@ export const TRUST = [
   // has to fit its text INSIDE that circle, so matching heights leaves the
   // badges unreadable. Optical weight is the thing to match, not raw height.
   { label: "NETCC Approved Seller", file: "netcc.webp", w: 160, h: 160, scale: 1.42 },
-  { label: "16-Year Workmanship Warranty", file: "warranty-16yr.webp", w: 171, h: 160, scale: 1.42 },
+];
+
+/**
+ * Manufacturer warranties, which replaced the 16-year workmanship claim.
+ *
+ * These are the manufacturer's own warranties, not a Lumenx promise, so each
+ * one is deliberately written as a RANGE or a ceiling ("up to") rather than a
+ * single number: it varies by brand and model, and the exact figure belongs in
+ * the written quote for the hardware actually being supplied.
+ *
+ * Product cover and performance cover are listed separately on purpose. They
+ * are different things with different terms, and collapsing them into one
+ * number is the misrepresentation the punch list is asking us to stop making.
+ *
+ * `doc` is the manufacturer's own warranty document. Left null until Lumenx
+ * supplies the URLs; the UI renders the row as plain text when there is no
+ * link rather than inventing one.
+ */
+export const WARRANTIES = [
+  {
+    item: "Solar panels",
+    product: "Up to 15-year product warranty",
+    performance: "Up to 25-year performance warranty",
+    doc: null,
+  },
+  {
+    item: "Batteries",
+    product: "10-year product warranty",
+    performance: "Retained-capacity warranty over the same term",
+    doc: null,
+  },
+  {
+    item: "Inverters",
+    product: "5 to 10-year product warranty, extendable by most brands",
+    performance: null,
+    doc: null,
+  },
 ];
 
 // Core service cards (icons live in /public/icons).
 // Every card links to a real hub page from the SEO blueprint's sitemap, so
 // there are no cards here without a destination. "Monitoring & Support" was
 // dropped as a card for that reason and folded into the residential page.
+/**
+ * The home page "What we do" grid.
+ *
+ * REBUILT 4 October 2026 to match the restructured menu: the same eight
+ * services, in the same order the client specified, then Commercial.
+ *
+ * It previously still listed the old twelve-service set, including "Solar
+ * Inverters" and "Pool Heating". That was the most visible half-finished
+ * thing on the site: the navigation had been restructured but the grid
+ * underneath it had not, so the home page and the menu disagreed about what
+ * Lumenx sells.
+ *
+ * Pool heating is off this grid for the same reason it is off the menu. It is
+ * a quote-form option now.
+ */
 export const SERVICES = [
   {
-    id: "residential-solar",
+    id: "solar-packages",
     n: "01",
-    title: "Residential Solar",
-    icon: "/icons/rooftop-solar.svg",
-    image: "/images/svc-residential.webp",
-    line: "Rooftop systems sized to your home and your bill, from 5kW to 15kW, with premium panels and a payback you can see on paper.",
-    href: "/residential-solar",
+    title: "Solar + Battery",
+    icon: "/icons/solar-battery.svg",
+    image: "/images/svc-packages.webp",
+    line: "The complete setup, installed in one visit. Panels, inverter and storage at one fixed price with every incentive already deducted.",
+    href: "/solar-packages",
     tone: "yellow",
   },
   {
-    id: "commercial-solar",
+    id: "battery-for-existing-solar",
     n: "02",
-    title: "Commercial Solar",
-    icon: "/icons/smart-grid.svg",
-    image: "/images/svc-commercial.webp",
-    line: "Cut the biggest line on your operating budget. Scalable 20kW to 100kW+ systems with real ROI modelling and finance options.",
-    href: "/commercial-solar",
-    tone: "blue",
-  },
-  {
-    id: "solar-batteries",
-    n: "03",
-    title: "Solar Batteries",
-    icon: "/icons/solar-battery.svg",
+    title: "Battery for Existing Solar",
+    icon: "/icons/power-storage.svg",
     image: "/images/svc-batteries.webp",
-    line: "Store your daytime power and run on it after dark. Sungrow, Alpha ESS and LG, with the federal battery rebate applied for you.",
-    href: "/solar-batteries",
-    tone: "ember",
-  },
-  {
-    id: "solar-inverters",
-    n: "04",
-    title: "Solar Inverters",
-    icon: "/icons/energy-monitor.svg",
-    image: "/images/svc-inverters.webp",
-    line: "The brain of the system. Sungrow, GoodWe, SolarEdge and Delta, supplied, installed and replaced when an old one fails.",
-    href: "/solar-inverters",
+    line: "Already have panels? We check your inverter, switchboard and usage, then add storage sized to your evenings.",
+    href: "/battery-for-existing-solar",
     tone: "green",
   },
   {
-    id: "ev-chargers",
-    n: "05",
-    title: "EV Charging",
-    icon: "/icons/ev-charging.svg",
-    image: "/images/svc-ev-chargers.webp",
-    line: "Charge at home on your own sunshine. 7kW and 22kW chargers installed and tuned to your solar and your tariff.",
-    href: "/ev-chargers",
-    tone: "yellow",
+    id: "residential-solar",
+    n: "03",
+    title: "Solar Only",
+    icon: "/icons/rooftop-solar.svg",
+    image: "/images/svc-residential.webp",
+    line: "Rooftop systems sized to your home and your bill, from 5kW to 15kW, with a battery-ready inverter so storage can come later.",
+    href: "/residential-solar",
+    tone: "blue",
+  },
+  {
+    id: "inverter-repair",
+    n: "04",
+    title: "Inverter Repair",
+    icon: "/icons/energy-monitor.svg",
+    image: "/images/svc-inverter-replacement.webp",
+    line: "The part that fails first. We test, repair or replace it, any brand, on systems we installed and systems we did not.",
+    href: "/inverter-repair",
+    tone: "ember",
   },
   {
     id: "heat-pump-hot-water",
-    n: "06",
-    title: "Heat Pump Hot Water",
+    n: "05",
+    title: "Hot Water Heat Pumps",
     icon: "/icons/clean-energy.svg",
     image: "/images/svc-heat-pump.webp",
-    line: "The most affordable hot water you can run. High-efficiency heat pumps that pair with solar and unlock their own rebate.",
+    line: "Your second biggest bill. High-efficiency heat pumps that pair with solar and unlock their own rebate.",
     href: "/heat-pump-hot-water",
-    tone: "ember",
+    tone: "yellow",
   },
   {
-    id: "pool-heating",
-    n: "07",
-    title: "Pool Heating",
-    icon: "/icons/clean-energy.svg",
+    id: "heating-and-cooling",
+    n: "06",
+    title: "Heating & Cooling",
+    icon: "/icons/smart-grid.svg",
     image: "/images/svc-pool-heating.webp",
-    line: "Swim months longer for a fraction of the running cost. Heat pumps and solar pool heating from Hayward, Supreme and SensaHeat.",
-    href: "/pool-heating",
+    line: "Reverse-cycle split systems installed by ARCtick-licensed technicians. Run them in daylight on your own power.",
+    href: "/heating-and-cooling",
     tone: "blue",
   },
   {
-    id: "solar-packages",
-    n: "08",
-    title: "Solar Packages",
-    icon: "/icons/rooftop-solar.svg",
-    image: "/images/svc-packages.webp",
-    line: "Panels, inverter and battery bundled at one fixed price, with every rebate already taken off before you see the number.",
-    href: "/solar-packages",
+    id: "ev-chargers",
+    n: "07",
+    title: "EV Chargers",
+    icon: "/icons/ev-charging.svg",
+    image: "/images/svc-ev-chargers.webp",
+    line: "An add-on to solar and battery rather than a trade on its own. Charge in the day and the car runs on your own sunshine.",
+    href: "/ev-chargers",
     tone: "green",
+  },
+  {
+    id: "service-health-check",
+    n: "08",
+    title: "Service & Health Check",
+    icon: "/icons/solar-panel.svg",
+    image: "/images/svc-inverters.webp",
+    line: "Most solar faults are quiet. We test the panels, isolators, wiring, inverter and battery, and give you a written report.",
+    href: "/service-health-check",
+    tone: "ember",
   },
 ];
 
@@ -237,16 +301,16 @@ export const STEPS = [
   {
     n: "03",
     title: "Accredited installation",
-    line: "Our CEC-accredited crews install to standard, tidy and on time, in Melbourne, Sydney and the surrounding regions.",
+    line: "Our SAA-accredited installers install to standard, tidy and on time, in Melbourne, Sydney and the surrounding regions.",
     image: "/images/installation.webp",
     meta: "Usually one day",
   },
   {
     n: "04",
     title: "Switch on & save",
-    line: "We handle the paperwork, grid connection and rebates. You watch your bill drop from day one, backed for 16 years.",
+    line: "We handle the paperwork, grid connection and rebates. You watch your bill drop from day one, with every manufacturer warranty registered in your name.",
     image: "/images/rooftop-home.webp",
-    meta: "Backed 16 years",
+    meta: "Warranties registered",
   },
 ];
 
@@ -255,7 +319,7 @@ export const WHY = [
   {
     n: "01",
     title: "Accredited and accountable",
-    line: "Solar Victoria Authorised Retailer, Clean Energy Council member and NETCC signatory. The people who quote it are the people who stand behind it.",
+    line: "Solar Victoria Authorised Retailer, Clean Energy Council member and NETCC Approved Seller. The people who quote it are the people who stand behind it.",
     image: "/images/installer-field.webp",
   },
   {
@@ -272,8 +336,8 @@ export const WHY = [
   },
   {
     n: "04",
-    title: "Backed for 16 years",
-    line: "A 16-year workmanship warranty plus full manufacturer cover. Local crews in two states who answer the phone after the install too.",
+    title: "Warranties that are the manufacturer's",
+    line: "Panels carry up to a 25-year performance warranty and batteries a 10-year product warranty, registered in your name. Local crews in two states who answer the phone after the install too.",
     image: "/images/commercial-solar.webp",
   },
 ];
@@ -289,12 +353,19 @@ export const REBATES = [
   {
     n: "02",
     name: "Federal Battery Rebate",
-    line: "Officially the Cheaper Home Batteries program, introduced in 2025. It is the single biggest reason home storage now pays back faster.",
+    // Rewritten 4 Oct 2026. The old line ("the single biggest reason home
+    // storage now pays back faster") ignored the 1 May 2026 changes and read
+    // as a blanket payback promise. The discount now scales differently, so
+    // the honest message is about sizing the battery correctly, not speed.
+    line: "Officially the Cheaper Home Batteries program. Since 1 May 2026 the certificate factor is lower and tapers above 14kWh and again above 28kWh, so the discount rewards a battery sized to your evenings rather than the biggest one you can fit.",
   },
   {
     n: "03",
     name: "Solar Victoria",
-    line: "Rebates and interest-free loans for eligible Victorian households, including solar, battery and hot water programs.",
+    // The old line bundled "interest-free loans" with battery, which Solar
+    // Victoria does not offer. Rebate and loan are now separate claims, and
+    // the loan is described as a loan.
+    line: "Rebates for eligible Victorian households across solar and hot water. An optional solar loan is available separately: it is a loan to be repaid, not a discount.",
   },
 ];
 
@@ -303,10 +374,14 @@ export const REBATES = [
 // visitor nothing about why it matters to them.
 export const STATS = [
   {
-    value: "16",
+    // Replaced the 16-year workmanship figure on 4 Oct 2026. This one is the
+    // MANUFACTURER's warranty, which is a checkable fact rather than a claim
+    // about ourselves, and 10 years is the standard product term across the
+    // batteries actually listed in BRANDS.
+    value: "10",
     suffix: "yr",
-    label: "Workmanship warranty",
-    line: "Our own labour warranty, in writing, on every system we install.",
+    label: "Battery product warranty",
+    line: "The manufacturer's product warranty on the batteries we install, registered in your name.",
   },
   {
     value: "2",
@@ -317,8 +392,8 @@ export const STATS = [
   {
     value: "100",
     suffix: "%",
-    label: "CEC-accredited installs",
-    line: "Every job signed off by a Clean Energy Council accredited installer.",
+    label: "SAA-accredited installs",
+    line: "Every job signed off by an SAA-accredited installer.",
   },
   {
     // TODO before launch: this is a public claim about the Google rating and
@@ -447,7 +522,7 @@ export const FAQS = [
   },
   {
     q: "Is a solar battery worth it now?",
-    a: "For most households, yes. The 2025 federal battery rebate changed the maths. Storing your own daytime power to use at night now pays back faster than ever, and it keeps the essentials on during an outage. We'll model it on your real usage before you commit.",
+    a: "It depends on how much power you actually use after dark, and the answer changed on 1 May 2026. The federal discount is smaller than it was and tapers above 14kWh and again above 28kWh, so an oversized battery now attracts proportionally less support. The battery that pays for itself is the one sized to your evening usage, not the largest one that fits. We model it on your real usage and show you the numbers before you commit.",
   },
   {
     q: "How long does installation take?",
@@ -487,7 +562,7 @@ export const FOOTER_LINKS = {
     { label: "Residential Solar", href: "/residential-solar" },
     { label: "Commercial Solar", href: "/commercial-solar" },
     { label: "Solar Batteries", href: "/solar-batteries" },
-    { label: "Solar Inverters", href: "/solar-inverters" },
+    { label: "Inverter Repair", href: "/inverter-repair" },
     { label: "EV Chargers", href: "/ev-chargers" },
     { label: "Heat Pump Hot Water", href: "/heat-pump-hot-water" },
     { label: "Pool Heating", href: "/pool-heating" },
@@ -525,41 +600,66 @@ export const LEGAL_LINKS = [{ label: "Privacy Policy", href: "/privacy-policy" }
  * Every href here must resolve to a real route. The link checker in the verify
  * sweep fails the build-equivalent if one does not.
  */
+/**
+ * SERVICES MENU, rebuilt 4 October 2026 to the client's specified order.
+ *
+ * Eight services, then Commercial as a separate, highlighted item. The old
+ * menu carried twelve, which is more choices than anyone can hold, and
+ * several of them were not really separate decisions: "Solar Inverters" and
+ * "Inverter Replacement" are one job, and "Solar Packages" and "System Sizes"
+ * are two ways of asking the same question.
+ *
+ * Two things moved OFF the menu on purpose:
+ *   - Pool heating is now a quote-form option. There is real demand for it
+ *     and not enough to justify a menu slot competing with solar.
+ *   - EV chargers and VPP are framed as add-ons to solar and battery rather
+ *     than standalone trades, because that is how they are actually sold.
+ */
 export const NAV_GROUPS = [
   {
+    labelKey: "nav_services",
     label: "Services",
-    href: "/residential-solar",
+    href: "/solar-packages",
     columns: [
       {
-        heading: "Solar",
+        heading: "Solar & storage",
         links: [
-          { label: "Residential Solar", href: "/residential-solar", line: "Panels for homes" },
-          { label: "Commercial Solar", href: "/commercial-solar", line: "20kW and up" },
-          { label: "Solar Packages", href: "/solar-packages", line: "Panels, inverter, storage" },
-          { label: "System Sizes", href: "/solar-systems", line: "5kW to 15kW compared" },
+          { label: "Solar + Battery", href: "/solar-packages", line: "The complete setup" },
+          { label: "Battery for Existing Solar", href: "/battery-for-existing-solar", line: "You already have panels" },
+          { label: "Solar Only", href: "/residential-solar", line: "Panels and an inverter" },
+          { label: "Solar Batteries", href: "/solar-batteries", line: "Sized to your evenings" },
         ],
       },
       {
-        heading: "Storage & power",
+        heading: "Service & repair",
         links: [
-          { label: "Solar Batteries", href: "/solar-batteries", line: "Shift solar to the evening" },
+          { label: "Inverter Repair", href: "/inverter-repair", line: "Faulty, failed or ageing" },
+          { label: "Service & Health Check", href: "/service-health-check", line: "Any system, ours or not" },
           { label: "Tesla Powerwall", href: "/solar-batteries/tesla-powerwall", line: "Compared honestly" },
-          { label: "Solar Inverters", href: "/solar-inverters", line: "String, hybrid, micro" },
-          { label: "Inverter Replacement", href: "/solar-inverter-replacement", line: "Repair or replace" },
+          { label: "All Products", href: "/solar-products", line: "Every brand we install" },
         ],
       },
       {
-        heading: "Electrify",
+        heading: "Electrify the rest",
         links: [
-          { label: "EV Chargers", href: "/ev-chargers", line: "Charge off your own solar" },
-          { label: "Heat Pump Hot Water", href: "/heat-pump-hot-water", line: "Your second biggest bill" },
-          { label: "Pool Heating", href: "/pool-heating", line: "Extend the season" },
-          { label: "All Products", href: "/solar-products", line: "Every brand we install" },
+          { label: "Hot Water Heat Pumps", href: "/heat-pump-hot-water", line: "Your second biggest bill" },
+          { label: "Heating & Cooling", href: "/heating-and-cooling", line: "Reverse-cycle split systems" },
+          { label: "EV Chargers", href: "/ev-chargers", line: "An add-on to solar + battery" },
+          { label: "System Sizes", href: "/solar-systems", line: "5kW to 15kW compared" },
         ],
       },
     ],
   },
   {
+    // Highlighted and separate, because a business buyer is a different
+    // reader with a different decision, not a ninth residential service.
+    labelKey: "nav_commercial",
+    label: "Commercial",
+    href: "/commercial-solar",
+    highlight: true,
+  },
+  {
+    labelKey: "nav_rebates",
     label: "Rebates",
     href: "/solar-rebates-victoria",
     columns: [
@@ -581,6 +681,7 @@ export const NAV_GROUPS = [
     ],
   },
   {
+    labelKey: "nav_tools",
     label: "Tools",
     href: "/tools",
     columns: [
@@ -603,6 +704,7 @@ export const NAV_GROUPS = [
     ],
   },
   {
+    labelKey: "nav_company",
     label: "Company",
     href: "/about",
     columns: [

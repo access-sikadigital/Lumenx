@@ -1,4 +1,5 @@
-import ServicePage from "@/components/ServicePage";
+import CommercialPage from "@/components/CommercialPage";
+import CTA from "@/components/CTA";
 import { SERVICE_PAGES } from "@/lib/services";
 import { SITE } from "@/lib/site";
 
@@ -43,11 +44,18 @@ const jsonLd = {
   ],
 };
 
+/* Commercial no longer renders through ServicePage.
+   It is its own page with its own look — steel grey and navy rather than the
+   residential cream and yellow — because a business buyer working from
+   interval data is a different reader with a different decision. Running it
+   through the shared residential template is what made it look like a
+   residential company having a go at commercial. */
 export default function Page() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <ServicePage slug={SLUG} />
+      <CommercialPage />
+      <CTA />
     </>
   );
 }

@@ -2,7 +2,7 @@ import ServicePage from "@/components/ServicePage";
 import { SERVICE_PAGES } from "@/lib/services";
 import { SITE } from "@/lib/site";
 
-const SLUG = "solar-inverters";
+const SLUG = "heating-and-cooling";
 const s = SERVICE_PAGES[SLUG];
 
 export const metadata = {

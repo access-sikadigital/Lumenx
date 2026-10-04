@@ -30,7 +30,7 @@
 // does not exist yet — deliberately, so an empty blog cannot generate URLs.
 
 export const BLOG_HUB = {
-  seoTitle: "Solar Guides & Resources | Lumenx",
+  seoTitle: "Solar Guides & Resources",
   seoDescription:
     "Plain-English guides to solar rebates, system sizing, batteries and equipment in Victoria and New South Wales, from a Solar Victoria authorised retailer.",
   eyebrow: "Guides & resources",

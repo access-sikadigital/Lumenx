@@ -27,21 +27,67 @@ export default function Stats() {
     () => {
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      // count up
+      /* Count-up.
+       *
+       * The FINAL number is what renders in the HTML, not "0". The previous
+       * version shipped `<span data-count="16">0</span>`, so every crawler and
+       * every no-JS reader was served a zero, and anyone who landed with the
+       * band already on screen saw whatever mid-animation value the tween
+       * happened to be on.
+       *
+       * So: the markup carries the real figure, and the tween only runs for a
+       * stat that is still BELOW the fold when this mounts. If it is already
+       * in view there is nothing to scroll into, and resetting it to zero just
+       * to animate back up would make the number flicker on load. */
       root.current.querySelectorAll("[data-count]").forEach((el) => {
         const target = parseFloat(el.dataset.count);
-        if (reduce) {
-          el.textContent = String(target);
-          return;
-        }
+        if (!Number.isFinite(target)) return;
+
+        /* Bail out and leave the real number alone if:
+           - the reader prefers reduced motion;
+           - the band is already on screen, so there is nothing to scroll
+             into and zeroing it would only make the figure flicker on load;
+           - the viewport reports no height. That happens in headless
+             renderers, prerender passes and some embedded panes, and it
+             matters because the animation would start, the frame loop would
+             never advance, and the stat would be left reading 0 forever. An
+             un-animated correct number always beats an animated wrong one. */
+        const vh = window.innerHeight;
+        if (reduce || !vh) return;
+        if (el.getBoundingClientRect().top < vh * 0.88) return;
+
+        // Match the written precision, so a "5.0" never animates up to "5".
+        const dp = (el.dataset.count.split(".")[1] || "").length;
+
         const obj = { v: 0 };
+
+        /* The element is NOT zeroed here.
+         *
+         * An earlier version set textContent to "0" as soon as this ran and
+         * left it there until the band was scrolled into view, which put the
+         * site straight back into the bug this was meant to fix: the real
+         * number was in the server-rendered HTML, then JavaScript replaced it
+         * with a zero that any crawler executing JS, and anyone reading the
+         * DOM, would see.
+         *
+         * Instead the real figure stays in the DOM until the moment the
+         * animation actually begins. `onStart` is the first frame of the
+         * tween, which ScrollTrigger only reaches when the band arrives, so
+         * the zero exists for the 1.8 seconds of the count and never before.
+         */
         gsap.to(obj, {
           v: target,
           duration: 1.8,
           ease: "power2.out",
           scrollTrigger: { trigger: el, start: "top 88%", once: true },
+          onStart: () => {
+            el.textContent = (0).toFixed(dp);
+          },
           onUpdate: () => {
-            el.textContent = Math.round(obj.v);
+            el.textContent = obj.v.toFixed(dp);
+          },
+          onComplete: () => {
+            el.textContent = el.dataset.count;
           },
         });
       });
@@ -126,7 +172,7 @@ export default function Stats() {
                   className="numeral leading-[0.92]"
                   style={{ fontSize: "clamp(3.25rem, 5.4vw, 6.75rem)" }}
                 >
-                  <span data-count={s.value}>0</span>
+                  <span data-count={s.value}>{s.value}</span>
                   <span className="text-solar">{s.suffix}</span>
                 </p>
 

@@ -11,7 +11,7 @@ export const GUIDES = {
   "victorian-battery-rebate": {
     slug: "victorian-battery-rebate",
     label: "Victorian Battery Rebate",
-    seoTitle: "Battery Rebate Victoria | Cheaper Home Batteries | Lumenx",
+    seoTitle: "Battery Rebate Victoria | Cheaper Home Batteries",
     seoDescription:
       "How the federal battery rebate and Victorian battery programs work, who qualifies, and how Lumenx applies them to your quote before you pay.",
     eyebrow: "Battery rebates",
@@ -78,7 +78,7 @@ export const GUIDES = {
   "heat-pump-rebate-victoria": {
     slug: "heat-pump-rebate-victoria",
     label: "Heat Pump Rebate Victoria",
-    seoTitle: "Heat Pump Rebate Victoria | Hot Water | Lumenx",
+    seoTitle: "Heat Pump Rebate Victoria | Hot Water",
     seoDescription:
       "How Victorian Energy Upgrades and Solar Victoria rebates apply to heat pump hot water systems, and how Lumenx applies them to your quote.",
     eyebrow: "Heat pump rebates",

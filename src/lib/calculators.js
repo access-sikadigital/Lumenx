@@ -162,7 +162,7 @@ const savings = {
   answerLabel: "You could save",
   label: "Solar Savings Calculator",
   nav: "Savings",
-  seoTitle: "Solar Savings Calculator | Use Your Own Bill | Lumenx",
+  seoTitle: "Solar Savings Calculator | Use Your Own Bill",
   seoDescription:
     "Work out what a solar system would be worth to you using the tariff and feed-in rate printed on your own electricity bill. No invented prices.",
   eyebrow: "Calculator",
@@ -229,7 +229,7 @@ const sizing = {
   answerLabel: "You need about",
   label: "Solar System Size Calculator",
   nav: "System size",
-  seoTitle: "Solar System Size Calculator | What kW Do I Need? | Lumenx",
+  seoTitle: "Solar System Size Calculator | What kW Do I Need?",
   seoDescription:
     "Work out what size solar system suits your usage, in kW, panel count and roof space. Based on the kWh on your own bill.",
   eyebrow: "Calculator",
@@ -319,7 +319,7 @@ const battery = {
   answerLabel: "You would need",
   label: "Solar Battery Calculator",
   nav: "Battery size",
-  seoTitle: "Solar Battery Size Calculator | How Many kWh? | Lumenx",
+  seoTitle: "Solar Battery Size Calculator | How Many kWh?",
   seoDescription:
     "Work out what size home battery suits your evening usage, and whether your solar system is big enough to charge it.",
   eyebrow: "Calculator",
@@ -413,7 +413,7 @@ const payback = {
   answerLabel: "Pays for itself in",
   label: "Solar Payback Calculator",
   nav: "Payback",
-  seoTitle: "Solar Payback Calculator | Check Any Quote | Lumenx",
+  seoTitle: "Solar Payback Calculator | Check Any Quote",
   seoDescription:
     "Enter the price on a solar quote you have already received and see its real payback period, using the tariffs on your own bill.",
   eyebrow: "Calculator",
@@ -498,7 +498,7 @@ const feedIn = {
   answerLabel: "You would earn",
   label: "Feed-in Tariff Calculator",
   nav: "Feed-in tariff",
-  seoTitle: "Feed-in Tariff Calculator | What Exporting Earns | Lumenx",
+  seoTitle: "Feed-in Tariff Calculator | What Exporting Earns",
   seoDescription:
     "See what your exported solar actually earns at your feed-in tariff, and what each exported kilowatt hour costs you compared with using it.",
   eyebrow: "Calculator",
@@ -566,7 +566,7 @@ export const getCalculator = (slug) => CALCULATORS.find((c) => c.slug === slug) 
    Tools hub
    ========================================================================= */
 export const TOOLS_HUB = {
-  seoTitle: "Solar Calculators & Tools | Lumenx",
+  seoTitle: "Solar Calculators & Tools",
   seoDescription:
     "Free solar calculators that run on the numbers from your own bill: savings, system size, battery size, payback and feed-in tariff, plus a rebate eligibility check.",
   eyebrow: "Tools",
@@ -622,7 +622,7 @@ export const REBATE_CHECK = {
   slug: "solar-rebate-eligibility",
   label: "Rebate Eligibility Check",
   nav: "Rebate eligibility",
-  seoTitle: "Solar Rebate Eligibility Check | VIC & NSW | Lumenx",
+  seoTitle: "Solar Rebate Eligibility Check | VIC & NSW",
   seoDescription:
     "Find out which solar, battery and hot water rebate programs may apply to you in Victoria or New South Wales, and what is needed to claim them.",
   eyebrow: "Eligibility check",
@@ -666,28 +666,56 @@ export const REBATE_CHECK = {
   /**
    * Returns the programs worth pursuing. Every entry describes what a program
    * DOES and what it needs. None of them names an amount.
+   *
+   * Four statuses, and they are not interchangeable:
+   *   likely   — meets the basic rules
+   *   check    — depends on details we have not asked for
+   *   unlikely — closed, or does not apply to this combination
+   *   note     — INFORMATION. Not a discount, and never counted as a program.
+   *
+   * `countable()` below is what the UI must use for any "N programs" figure.
+   * Counting a note as a program is how a checker ends up telling someone they
+   * qualify for something that is not a discount at all.
    */
   evaluate(a) {
     const out = [];
     const wantsSolar = a.installing === "Solar panels" || a.installing === "Solar and a battery together";
     const wantsBattery = a.installing === "A home battery" || a.installing === "Solar and a battery together";
     const wantsHeatPump = a.installing === "Heat pump hot water";
+    // The federal battery discount is conditional on eligible solar: already
+    // on the roof, or going on at the same time. A battery on its own does
+    // not attract it, and showing it as "likely" to someone with no solar is
+    // the single most misleading thing this tool could do.
+    const solarPresentOrPlanned = a.existingSolar === "Yes" || wantsSolar;
 
     if (wantsSolar) {
       out.push({
         name: "Federal small-scale renewable energy scheme",
         status: "likely",
         line: "Applies nationally to eligible new solar installations and is delivered as a discount at the point of sale rather than claimed back later. We assign the certificates on your behalf.",
-        needs: ["A Clean Energy Council accredited installer", "Approved panels and inverter", "Your installation address"],
+        needs: ["An SAA-accredited installer", "CEC-approved panels and inverter", "Your installation address"],
       });
     }
 
-    if (wantsBattery) {
+    if (wantsBattery && solarPresentOrPlanned) {
       out.push({
         name: "Federal Cheaper Home Batteries program",
         status: "likely",
-        line: "Applies nationally to eligible battery installations, introduced in 2025, and is the main reason storage economics changed. Applied as a discount on your quote.",
-        needs: ["An approved, eligible battery", "Accredited installation", "Your installation address"],
+        line: "Applies nationally to eligible battery installations fitted with eligible solar. Applied as a discount on your quote. Since 1 May 2026 the certificate factor is lower and tapers above 14kWh and again above 28kWh, so the discount favours a battery sized to your evening usage.",
+        needs: [
+          "An approved, eligible battery",
+          "Eligible solar already installed, or installed at the same time",
+          "Accredited installation",
+        ],
+      });
+    }
+
+    if (wantsBattery && !solarPresentOrPlanned) {
+      out.push({
+        name: "Federal Cheaper Home Batteries program",
+        status: "unlikely",
+        line: "This discount is tied to solar. It applies where eligible solar is already installed or is being installed alongside the battery, so a battery on its own does not attract it. Adding solar at the same time changes that.",
+        needs: ["Eligible solar already installed, or installed alongside the battery"],
       });
     }
 
@@ -697,6 +725,25 @@ export const REBATE_CHECK = {
         status: "check",
         line: "Solar Victoria runs programs for eligible Victorian households, including separate streams for rental properties. These run in limited rounds that open and close, and eligibility depends on your circumstances.",
         needs: ["A Solar Victoria authorised retailer, which we are", "Eligibility confirmation against your property and circumstances", "An open program round"],
+      });
+
+      // Listed separately from the rebate, and as information rather than as
+      // a program: a loan is repaid. Bundling the two was the specific thing
+      // the 2 October punch list called out.
+      out.push({
+        name: "Solar Victoria optional solar loan",
+        status: "note",
+        line: "Separate from the rebate and entirely optional. It is a loan, repaid over its term, not a discount, so it changes when you pay rather than what you pay.",
+        needs: ["The same eligibility check as the rebate", "A credit assessment by the lender"],
+      });
+    }
+
+    if (a.state === "Victoria" && wantsBattery) {
+      out.push({
+        name: "Solar Victoria battery loan",
+        status: "unlikely",
+        line: "Closed to new applications. Victorian battery support now runs through the federal program rather than a state loan, so do not count on it when comparing quotes.",
+        needs: ["Nothing: the program is not accepting applications"],
       });
     }
 
@@ -746,6 +793,15 @@ export const REBATE_CHECK = {
     }
 
     return out;
+  },
+
+  /**
+   * The programs that may actually reduce the price. Notes are information,
+   * and a "Not available" result is the opposite of an entitlement, so neither
+   * belongs in a count presented to the reader as what they qualify for.
+   */
+  countable(results) {
+    return results.filter((r) => r.status === "likely" || r.status === "check");
   },
 
   faqs: [

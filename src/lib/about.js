@@ -15,7 +15,7 @@
 //     "Amber Heard — Technician", which are demo-template placeholders.
 
 export const ABOUT = {
-  seoTitle: "About Lumenx | Solar Company Melbourne & Sydney",
+  seoTitle: "About Us | Solar Company Melbourne & Sydney",
   seoDescription:
     "Lumenx is a Solar Victoria authorised retailer and Clean Energy Council member installing solar, batteries and EV charging across Victoria and New South Wales.",
   eyebrow: "Who we are",
@@ -25,7 +25,7 @@ export const ABOUT = {
     image: "/images/real-install-2.webp",
     alt: "A Lumenx van outside a home with a completed rooftop solar system",
   },
-  chips: ["Solar Victoria Authorised Retailer", "Clean Energy Council Member", "NETCC Signatory"],
+  chips: ["Solar Victoria Authorised Retailer", "Clean Energy Council Member", "NETCC Approved Seller"],
 
   intro: {
     heading: "Accessible solar, done properly",
@@ -35,9 +35,9 @@ export const ABOUT = {
     ],
     points: [
       "Fixed, itemised quotes with every rebate already applied",
-      "CEC-accredited installers on every job, in both states",
+      "SAA-accredited installers on every job, in both states",
       "Rebate paperwork filed by us, not left with you",
-      "A 16-year workmanship warranty on the installation itself",
+      "Manufacturer warranties registered in your name, not ours",
     ],
     image: "/images/real-install-1.webp",
     imageAlt: "Equipment installed by Lumenx on the exterior wall of a property",
@@ -81,12 +81,12 @@ export const ABOUT = {
         line: "Bound by the CEC's approved retailer commitments covering advertising, contracts, warranties and complaint handling.",
       },
       {
-        name: "NETCC Signatory",
+        name: "NETCC Approved Seller",
         line: "Signed up to the New Energy Tech Consumer Code, which governs how new energy technology is sold and serviced in Australia.",
       },
       {
-        name: "16-Year Workmanship Warranty",
-        line: "Our own commitment on the installation, separate from and additional to the manufacturer warranties on the hardware.",
+        name: "SAA-Accredited Installation",
+        line: "Every system is installed and signed off by an installer accredited by Solar Accreditation Australia, which is the accreditation the certificates and the rebates actually depend on.",
       },
     ],
   },
@@ -104,15 +104,15 @@ export const ABOUT = {
     },
     {
       q: "Are you accredited?",
-      a: "Yes. Lumenx is a Solar Victoria Authorised Retailer, a Clean Energy Council member and a NETCC signatory, and every installation is signed off by a CEC-accredited installer.",
+      a: "Yes. Lumenx is a Solar Victoria Authorised Retailer, a Clean Energy Council member and a NETCC Approved Seller, and every installation is signed off by an SAA-accredited installer.",
     },
     {
       q: "Do you use subcontractors?",
-      a: "Installations are carried out by CEC-accredited installers working to our standards, and the workmanship warranty is ours regardless of who holds the drill. You deal with Lumenx for the life of the system.",
+      a: "Installations are carried out by SAA-accredited installers working to our standards, and Lumenx remains the retailer you deal with regardless of who holds the drill, for the life of the system.",
     },
     {
       q: "What happens after the install?",
-      a: "Monitoring is configured and demonstrated before we leave, the rebate paperwork is filed by us, and the 16-year workmanship warranty covers the installation. If something looks wrong on the monitoring, call us.",
+      a: "Monitoring is configured and demonstrated before we leave, the rebate paperwork is filed by us, and every manufacturer warranty is registered in your name. If something looks wrong on the monitoring, call us.",
     },
     {
       q: "Why should I choose Lumenx over a cheaper quote?",

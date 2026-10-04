@@ -15,7 +15,7 @@
 // • No prices anywhere. Every page routes to a quote instead.
 
 export const SYSTEMS_HUB = {
-  seoTitle: "Solar System Sizes & Prices | 5kW to 15kW | Lumenx",
+  seoTitle: "Solar System Sizes & Prices | 5kW to 15kW",
   seoDescription:
     "Compare solar system sizes from 5kW to 15kW: panel counts, roof space and which household each one suits. Get a fixed, itemised quote from Lumenx.",
   eyebrow: "System sizes",
@@ -73,7 +73,7 @@ export const SYSTEM_SIZES = [
     slug: "5kw",
     kw: "5kW",
     kwNum: 5,
-    seoTitle: "5kW Solar System | Size, Panels & Savings | Lumenx",
+    seoTitle: "5kW Solar System | Size, Panels & Savings",
     seoDescription:
       "A 5kW solar system suits smaller households and units. See panel count, roof space needed and who it suits. Free, itemised quote from Lumenx.",
     h1: "A 5kW system, and the household it actually suits.",
@@ -96,7 +96,7 @@ export const SYSTEM_SIZES = [
     slug: "6-6kw",
     kw: "6.6kW",
     kwNum: 6.6,
-    seoTitle: "6.6kW Solar System | Panels, Savings & Price | Lumenx",
+    seoTitle: "6.6kW Solar System | Panels, Savings & Price",
     seoDescription:
       "The 6.6kW system is Australia's most common size. See panel count, roof space and who it suits. Free quote from Lumenx.",
     h1: "6.6kW is the most common system in Australia. Usually for good reason.",
@@ -119,7 +119,7 @@ export const SYSTEM_SIZES = [
     slug: "10kw",
     kw: "10.4kW",
     kwNum: 10.4,
-    seoTitle: "10kW Solar System | Panels, Savings & Price | Lumenx",
+    seoTitle: "10kW Solar System | Panels, Savings & Price",
     seoDescription:
       "A 10kW solar system suits larger homes with air conditioning, a pool or an EV. See panel count, roof space and who it suits. Free quote from Lumenx.",
     h1: "10kW is where larger households stop leaving money on the roof.",
@@ -142,7 +142,7 @@ export const SYSTEM_SIZES = [
     slug: "13-2kw",
     kw: "13.2kW",
     kwNum: 13.2,
-    seoTitle: "13.2kW Solar System | Size, Panels & Output | Lumenx",
+    seoTitle: "13.2kW Solar System | Size, Panels & Output",
     seoDescription:
       "A 13.2kW solar system suits high-consumption homes and small business premises. See panel count and roof space needed. Free quote from Lumenx.",
     h1: "13.2kW, for houses that use power like small businesses.",
@@ -165,7 +165,7 @@ export const SYSTEM_SIZES = [
     slug: "15kw",
     kw: "15kW",
     kwNum: 15,
-    seoTitle: "15kW Solar System | Size, Panels & Savings | Lumenx",
+    seoTitle: "15kW Solar System | Size, Panels & Savings",
     seoDescription:
       "A 15kW solar system suits small businesses and very large homes. See panel count, roof space and who it suits. Free quote from Lumenx.",
     h1: "15kW is where residential ends and commercial thinking begins.",
