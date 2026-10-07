@@ -15,9 +15,9 @@
 //     "Amber Heard — Technician", which are demo-template placeholders.
 
 export const ABOUT = {
-  seoTitle: "About Us | Solar Company Melbourne & Sydney",
+  seoTitle: "About Us | Solar Installers in Melbourne & Sydney",
   seoDescription:
-    "Lumenx is a Solar Victoria authorised retailer and Clean Energy Council member installing solar, batteries and EV charging across Victoria and New South Wales.",
+    "Meet Lumenx: a Solar Victoria authorised retailer, CEC member and NETCC approved seller installing solar, batteries and EV chargers across VIC and NSW.",
   eyebrow: "Who we are",
   h1: "A solar company that would rather be trusted than be the biggest.",
   lead: "We install solar, batteries, EV charging, hot water and pool heating across Victoria and New South Wales. We would rather quote you honestly and lose the job than sell you a system you did not need.",

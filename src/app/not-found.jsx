@@ -2,7 +2,7 @@ import Link from "next/link";
 import { SITE, SERVICES } from "@/lib/site";
 
 export const metadata = {
-  title: "Page not found | Lumenx",
+  title: "Page Not Found",
   robots: { index: false, follow: true },
 };
 

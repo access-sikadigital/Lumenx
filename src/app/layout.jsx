@@ -51,11 +51,11 @@ const notoArabic = Noto_Sans_Arabic({
 export const metadata = {
   metadataBase: new URL("https://lumenex.com.au"),
   title: {
-    default: "Lumenx | Solar, Batteries & EV Charging in Melbourne & Sydney",
+    default: "Lumenx Solar | Solar & Battery Installers in VIC & NSW",
     template: "%s | Lumenx",
   },
   description:
-    "Lumenx is an Australian solar energy company. SAA-accredited installers fitting CEC-approved solar panels, batteries, EV chargers and heat pumps for homes and businesses across Victoria and NSW. Rebates handled. Get a free quote.",
+    "Solar panels, batteries and EV chargers for homes and businesses in VIC and NSW. Solar Victoria authorised, every rebate applied. Free quote: 1800 577 319.",
   applicationName: "Lumenx",
   keywords: [
     "solar panels melbourne",
@@ -66,7 +66,9 @@ export const metadata = {
     "solar rebates victoria",
     "Lumenx",
   ],
-  alternates: { canonical: "/" },
+  // No canonical here: a layout canonical is inherited by every page that does
+  // not set its own, which would tell Google those pages are copies of the
+  // home page. The home page and each indexed page declare their own.
   icons: { icon: "/favicon.png", apple: "/favicon.png" },
   // Default share card. Pages that set their own openGraph.images override it;
   // everything else inherits this, so no Lumenx link is ever shared as a bare
@@ -74,9 +76,9 @@ export const metadata = {
   openGraph: {
     type: "website",
     siteName: "Lumenx",
-    title: "Lumenx | Solar, Batteries & EV Charging in Melbourne & Sydney",
+    title: "Lumenx Solar | Solar & Battery Installers in VIC & NSW",
     description:
-      "Together, we build a brighter future. SAA-accredited installation of solar, batteries and EV charging for Australian homes and businesses. Rebates handled.",
+      "Solar panels, batteries and EV chargers for homes and businesses in VIC and NSW. Solar Victoria authorised, every rebate applied. Free quote: 1800 577 319.",
     url: "/",
     locale: "en_AU",
     images: [
@@ -88,10 +90,11 @@ export const metadata = {
       },
     ],
   },
+  // No twitter title/description: pages never set their own, so a fixed one
+  // here made every shared page show the home page's text. Without it X reads
+  // each page's og:title and og:description instead.
   twitter: {
     card: "summary_large_image",
-    title: "Lumenx | Solar, Batteries & EV Charging",
-    description: "SAA-accredited solar, battery and EV charging installation across VIC & NSW. Rebates handled.",
     images: ["/og-default.jpg"],
   },
 };

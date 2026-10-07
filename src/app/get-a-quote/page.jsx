@@ -4,7 +4,8 @@ import TrustBadges from "@/components/TrustBadges";
 import QuoteForm from "@/components/QuoteForm";
 import { SITE, TRUST, OFFICES, CTA_PROMISES } from "@/lib/site";
 
-const TITLE = "Get a Free Solar Quote | Lumenx";
+// The layout template appends " | Lumenx", so the brand is not repeated here.
+const TITLE = "Get a Free Solar, Battery & EV Charger Quote";
 const DESCRIPTION =
   "Request a free, fixed and itemised solar, battery or EV charger quote from Lumenx. Every rebate applied, no obligation and no pushy sales visit.";
 
@@ -15,7 +16,7 @@ export const metadata = {
   // A conversion page has no business in search results competing with the
   // service hubs, and it should never be indexed with form state in the URL.
   robots: { index: false, follow: true },
-  openGraph: { type: "website", title: TITLE, description: DESCRIPTION, url: "/get-a-quote" },
+  openGraph: { type: "website", title: `${TITLE} | Lumenx`, description: DESCRIPTION, url: "/get-a-quote" },
 };
 
 const STEPS = [

@@ -120,7 +120,11 @@ export default function Hero() {
           {tr("hero_eyebrow")}
         </p>
 
-        {/* Client-specified wording, verbatim. Do not reword without them. */}
+        {/* Reworded 7 October 2026 for search: the client's line ("Solar and
+            batteries for lower bills and a more resilient home.") named no
+            service a searcher types and no place. This keeps its promise of
+            lower bills and adds "installers" and VIC & NSW. Three short lines
+            so it still sits in three rows inside max-w-[18ch]. */}
         <h1 className="t-mega max-w-[18ch] text-white">
           <span className="line">
             <span className="hero-line-in block">{tr("hero_h1_a")}</span>

@@ -14,7 +14,7 @@
 export const PRODUCTS_HUB = {
   seoTitle: "Solar Products | Panels, Inverters & Batteries",
   seoDescription:
-    "The solar panels, inverters, batteries, EV chargers and hot water systems Lumenx installs, and how we choose what goes on your roof.",
+    "The panels, inverters, batteries, EV chargers and hot water systems we install, from Jinko, Longi, Sungrow, GoodWe, Alpha ESS, LG and more, and how we choose.",
   eyebrow: "Products",
   h1: "We do not sell one brand. We specify the right one.",
   lead: "A retailer tied to a single manufacturer will always find a reason it suits your roof. We are not, so the recommendation follows the job rather than the stock.",

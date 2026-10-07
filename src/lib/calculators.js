@@ -162,9 +162,9 @@ const savings = {
   answerLabel: "You could save",
   label: "Solar Savings Calculator",
   nav: "Savings",
-  seoTitle: "Solar Savings Calculator | Use Your Own Bill",
+  seoTitle: "Solar Savings Calculator | Based on Your Own Bill",
   seoDescription:
-    "Work out what a solar system would be worth to you using the tariff and feed-in rate printed on your own electricity bill. No invented prices.",
+    "Free solar savings calculator that uses the tariff and feed-in rate from your own electricity bill, not made-up prices. See what solar is worth to your home.",
   eyebrow: "Calculator",
   h1: "What solar would actually be worth on your bill.",
   lead: "Most savings calculators pick their own electricity price and hand you a big number. This one uses the rates printed on your bill, so the answer is about your household rather than an average one.",
@@ -231,7 +231,7 @@ const sizing = {
   nav: "System size",
   seoTitle: "Solar System Size Calculator | What kW Do I Need?",
   seoDescription:
-    "Work out what size solar system suits your usage, in kW, panel count and roof space. Based on the kWh on your own bill.",
+    "Free calculator: find the right solar system size for your home in kW, panel count and roof space, worked out from the kWh usage printed on your own bill.",
   eyebrow: "Calculator",
   h1: "What size system does your house actually need?",
   lead: "Oversize it and you export power for a few cents. Undersize it and you keep buying at full price. This works backwards from the usage on your bill.",
@@ -321,7 +321,7 @@ const battery = {
   nav: "Battery size",
   seoTitle: "Solar Battery Size Calculator | How Many kWh?",
   seoDescription:
-    "Work out what size home battery suits your evening usage, and whether your solar system is big enough to charge it.",
+    "Free battery size calculator: see how many kWh of storage your evenings need, and whether your solar system is big enough to charge it. Uses your own bill.",
   eyebrow: "Calculator",
   h1: "How much battery do your evenings actually need?",
   lead: "A battery is not sized from your roof, it is sized from what you use after dark. This checks both halves: what you need to store, and whether your solar can fill it.",
@@ -413,9 +413,9 @@ const payback = {
   answerLabel: "Pays for itself in",
   label: "Solar Payback Calculator",
   nav: "Payback",
-  seoTitle: "Solar Payback Calculator | Check Any Quote",
+  seoTitle: "Solar Payback Calculator | Check Any Solar Quote",
   seoDescription:
-    "Enter the price on a solar quote you have already received and see its real payback period, using the tariffs on your own bill.",
+    "Enter the price from any solar quote, ours or someone else's, and see its real payback period at the tariffs on your own bill. A free, honest second opinion.",
   eyebrow: "Calculator",
   h1: "Check the payback on a quote you have already been given.",
   lead: "We will not invent a price to make this look good. Put in the figure from any quote, ours or someone else's, and this tells you what it actually pays back at your tariffs.",
@@ -498,9 +498,9 @@ const feedIn = {
   answerLabel: "You would earn",
   label: "Feed-in Tariff Calculator",
   nav: "Feed-in tariff",
-  seoTitle: "Feed-in Tariff Calculator | What Exporting Earns",
+  seoTitle: "Feed-in Tariff Calculator | What Your Exports Earn",
   seoDescription:
-    "See what your exported solar actually earns at your feed-in tariff, and what each exported kilowatt hour costs you compared with using it.",
+    "Free feed-in tariff calculator: see what your exported solar earns at your rate, and what each exported kWh costs you compared with using it in your home.",
   eyebrow: "Calculator",
   h1: "What your exported power is really worth.",
   lead: "Feed-in tariffs have fallen a long way. This shows what yours earns, and what you give up every time a kilowatt hour leaves your roof instead of running something in your house.",
@@ -566,9 +566,9 @@ export const getCalculator = (slug) => CALCULATORS.find((c) => c.slug === slug) 
    Tools hub
    ========================================================================= */
 export const TOOLS_HUB = {
-  seoTitle: "Solar Calculators & Tools",
+  seoTitle: "Free Solar Calculators | Savings, Size & Payback",
   seoDescription:
-    "Free solar calculators that run on the numbers from your own bill: savings, system size, battery size, payback and feed-in tariff, plus a rebate eligibility check.",
+    "Free solar calculators that use the numbers on your own bill: savings, system size, battery size, payback and feed-in tariff, plus a rebate eligibility check.",
   eyebrow: "Tools",
   h1: "Calculators that use your numbers, not ours.",
   lead: "Every solar site has a savings calculator that picks its own electricity price and produces a flattering answer. These ask for the rates on your bill instead, and they show every assumption they make.",
@@ -622,9 +622,9 @@ export const REBATE_CHECK = {
   slug: "solar-rebate-eligibility",
   label: "Rebate Eligibility Check",
   nav: "Rebate eligibility",
-  seoTitle: "Solar Rebate Eligibility Check | VIC & NSW",
+  seoTitle: "Solar Rebate Eligibility Checker | VIC & NSW",
   seoDescription:
-    "Find out which solar, battery and hot water rebate programs may apply to you in Victoria or New South Wales, and what is needed to claim them.",
+    "Check which solar, battery and hot water rebates you may qualify for in Victoria or NSW, and exactly what you need to claim each one. Free and no obligation.",
   eyebrow: "Eligibility check",
   h1: "Which rebate programs apply to you?",
   lead: "This tells you which programs are worth pursuing and what each one needs. It does not put a dollar figure on them, because those change through the year and a stale number is worse than no number.",

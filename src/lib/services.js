@@ -13,9 +13,9 @@ export const SERVICE_PAGES = {
   "residential-solar": {
     slug: "residential-solar",
     label: "Residential Solar",
-    seoTitle: "Residential Solar Panels Melbourne",
+    seoTitle: "Residential Solar Panels Installed in VIC & NSW",
     seoDescription:
-      "Quality residential solar for Victorian homes. Premium panels, SAA-accredited installation and every rebate handled. See system sizes and what suits your roof.",
+      "Home solar from 5kW to 15kW, designed around your roof and real bill. SAA-accredited installers, every rebate applied, fixed itemised quote. Get yours free.",
     eyebrow: "Residential solar",
     h1: "Solar panels sized to your home, not a catalogue.",
     lead: "Most quotes start with a system and work backwards. We start with your roof, your bill and how your household actually uses power, then design around that.",
@@ -67,9 +67,9 @@ export const SERVICE_PAGES = {
   "commercial-solar": {
     slug: "commercial-solar",
     label: "Commercial Solar",
-    seoTitle: "Commercial Solar Melbourne | Business Solar",
+    seoTitle: "Commercial Solar for Business | 20kW to 100kW+",
     seoDescription:
-      "Cut business energy costs with commercial solar. Tailored 20kW to 100kW+ systems, clear ROI modelling, finance and rebates. Talk to Lumenx.",
+      "Commercial solar for Victorian and NSW businesses: 20kW to 100kW+ systems, ROI modelled on your actual load, rebates and finance options. Talk to Lumenx today.",
     eyebrow: "Commercial solar",
     h1: "Turn your largest overhead into a fixed cost.",
     lead: "Energy is one of the few operating costs you can permanently reduce with a single capital decision. We model it properly before you commit a cent.",
@@ -121,9 +121,9 @@ export const SERVICE_PAGES = {
   "solar-batteries": {
     slug: "solar-batteries",
     label: "Solar Batteries",
-    seoTitle: "Solar Batteries Melbourne: Sungrow, Alpha ESS, LG",
+    seoTitle: "Solar Battery Installation | Sungrow, Alpha ESS, LG",
     seoDescription:
-      "Store your solar and cut bills with a home battery. Sungrow, Alpha ESS and LG Energy Solution, with the federal battery rebate applied. Free quote.",
+      "Store your daytime solar and stop buying power back at night. Sungrow, Alpha ESS and LG batteries installed with the federal rebate applied. Free quote.",
     eyebrow: "Solar batteries",
     h1: "Stop exporting power for cents and buying it back for dollars.",
     lead: "Without storage, most households export the bulk of what they generate at a low feed-in rate, then buy power back at peak prices after dark. A battery closes that gap.",
@@ -176,9 +176,9 @@ export const SERVICE_PAGES = {
   "ev-chargers": {
     slug: "ev-chargers",
     label: "EV Chargers",
-    seoTitle: "EV Charger Installation Melbourne",
+    seoTitle: "Home EV Charger Installation | 7kW & 22kW Chargers",
     seoDescription:
-      "Charge at home with a certified EV charger installation. Wallbox, SolarEdge and Delta, solar-integrated, with fixed pricing. Get a free quote.",
+      "Charge your EV on your own solar. Wallbox, SolarEdge and Delta chargers in 7kW and 22kW, installed by licensed electricians at a fixed price. Get a free quote.",
     eyebrow: "EV charging",
     h1: "Charge the car on power you already made.",
     lead: "A home charger turns your roof into the cheapest fuel you will ever buy. Set up properly, it waits for your solar surplus instead of pulling from the grid at peak rates.",
@@ -230,9 +230,9 @@ export const SERVICE_PAGES = {
   "heat-pump-hot-water": {
     slug: "heat-pump-hot-water",
     label: "Heat Pump Hot Water",
-    seoTitle: "Heat Pump Hot Water Systems Melbourne",
+    seoTitle: "Heat Pump Hot Water Systems | Supply & Install",
     seoDescription:
-      "Cut hot water running costs with a heat pump system. Efficient, solar-friendly, with the VEU rebate handled. Supply and installation. Free quote.",
+      "Replace gas or electric hot water with a heat pump that runs on a fraction of the power. Solar-friendly, with the VEU rebate applied for you. Get a free quote.",
     eyebrow: "Heat pump hot water",
     h1: "Hot water is usually the second biggest number on your bill.",
     lead: "Electric resistance and gas storage systems both burn energy to make heat. A heat pump moves heat instead, which is why it runs on a fraction of the power.",
@@ -284,9 +284,9 @@ export const SERVICE_PAGES = {
   "pool-heating": {
     slug: "pool-heating",
     label: "Pool Heating",
-    seoTitle: "Pool Heating Melbourne: Heat Pumps & Solar",
+    seoTitle: "Pool Heating | Heat Pumps & Solar Pool Heaters",
     seoDescription:
-      "Extend your swim season with efficient pool heating. Heat pumps and solar pool heating from Hayward, Supreme Heating and SensaHeat. Free quote.",
+      "Swim for months longer with efficient pool heating. Heat pumps and solar pool heating from Hayward, Supreme Heating and SensaHeat, fully installed. Free quote.",
     eyebrow: "Pool heating",
     h1: "Most Melbourne pools get used for about ten weeks a year.",
     lead: "Heating changes that. The question is only which method suits your pool, your roof and how far into the shoulder seasons you actually want to swim.",
@@ -338,9 +338,9 @@ export const SERVICE_PAGES = {
   "solar-packages": {
     slug: "solar-packages",
     label: "Solar Packages",
-    seoTitle: "Solar & Battery Packages Melbourne",
+    seoTitle: "Solar & Battery Packages | Fixed Price, Rebates Off",
     seoDescription:
-      "Solar, inverter and battery bundled at one fixed price with every rebate already applied. See what is included in each Lumenx package.",
+      "Panels, inverter and battery designed, supplied and installed in one visit at one fixed price, with every rebate already deducted. See what is included.",
     eyebrow: "Solar packages",
     h1: "One price, everything included, rebates already off.",
     lead: "Buying the parts separately usually costs more and always takes longer. A package bundles the design, the hardware and the install into a single fixed number.",
@@ -393,9 +393,9 @@ export const SERVICE_PAGES = {
   "tesla-powerwall": {
     slug: "tesla-powerwall",
     label: "Tesla Powerwall",
-    seoTitle: "Tesla Powerwall Installation Melbourne",
+    seoTitle: "Tesla Powerwall Installation | Melbourne & Sydney",
     seoDescription:
-      "Tesla Powerwall supplied and installed across Victoria and New South Wales, with the federal battery rebate applied and backup configured.",
+      "Tesla Powerwall supplied and installed across VIC and NSW, with backup set up and the federal battery rebate applied. Honest advice on whether it suits you.",
     eyebrow: "Tesla Powerwall",
     h1: "The battery most people have heard of, fitted by people who fit a lot of them.",
     lead: "Powerwall is a strong product with a loyal following. It is also not automatically the right one for your house, and we will say so if it is not.",
@@ -451,9 +451,9 @@ export const SERVICE_PAGES = {
   "battery-for-existing-solar": {
     slug: "battery-for-existing-solar",
     label: "Battery for Existing Solar",
-    seoTitle: "Add a Battery to Existing Solar | Melbourne & Sydney",
+    seoTitle: "Add a Battery to Existing Solar | Battery Retrofit",
     seoDescription:
-      "Already have solar? We check your inverter, switchboard and usage, then add storage sized to your evenings. The federal battery discount applied for you.",
+      "Already have solar? We check your inverter, switchboard and usage, then add a battery sized to your evenings, federal rebate applied. Any inverter brand.",
     eyebrow: "Battery retrofit",
     h1: "You already have the panels. This is the other half.",
     lead: "Adding storage to an existing system is a different job to installing both at once, and it starts with what is already on your wall.",
@@ -505,9 +505,9 @@ export const SERVICE_PAGES = {
   "inverter-repair": {
     slug: "inverter-repair",
     label: "Inverter Repair",
-    seoTitle: "Solar Inverter Repair & Replacement | Melbourne & Sydney",
+    seoTitle: "Solar Inverter Repair & Replacement | Any Brand",
     seoDescription:
-      "Faulty, failed or ageing solar inverter? We test, repair or replace, update firmware and the app, and give you a written report. Any brand, any installer.",
+      "Inverter showing a fault or no output? We test, repair or replace any brand of solar inverter, whoever installed it, with a written report. Book a repair.",
     eyebrow: "Inverter repair",
     h1: "The thing that fails first, fixed properly.",
     lead: "An inverter is the hardest-working part of a solar system and the one most likely to stop. Repair is often possible; replacement is sometimes smarter. We tell you which.",
@@ -559,9 +559,9 @@ export const SERVICE_PAGES = {
   "service-health-check": {
     slug: "service-health-check",
     label: "Service & Health Check",
-    seoTitle: "Solar System Service & Health Check | Melbourne & Sydney",
+    seoTitle: "Solar Panel Service & Health Check | Any System",
     seoDescription:
-      "A full test of your solar system: panels, isolators, wiring, inverter and battery, with a written report. For systems we installed and systems installed by others.",
+      "Is your solar underperforming? We test panels, isolators, wiring, inverter and battery, then send a written report. Any system, any installer. Book a check.",
     eyebrow: "Service and health check",
     h1: "Find out what your system is actually doing.",
     lead: "Most solar faults are quiet. Output drifts down, one string stops, a breaker trips and nothing tells you. A health check is how you find that before the bill does.",
@@ -613,9 +613,9 @@ export const SERVICE_PAGES = {
   "heating-and-cooling": {
     slug: "heating-and-cooling",
     label: "Heating & Cooling",
-    seoTitle: "Reverse-Cycle Heating & Cooling | Melbourne & Sydney",
+    seoTitle: "Reverse-Cycle Heating & Cooling | Split Systems",
     seoDescription:
-      "Reverse-cycle split systems installed by ARCtick-licensed technicians. Run them on your own solar in daylight and cut the biggest seasonal load in the house.",
+      "Reverse-cycle split systems installed by ARCtick-licensed technicians. Run them on your own solar and cut the biggest seasonal load in your home. Free quote.",
     eyebrow: "Heating and cooling",
     h1: "The cheapest heating you can run on your own power.",
     lead: "A reverse-cycle system moves heat rather than making it, which is why it costs a fraction of what resistive heating does. Run it in daylight and it costs less again.",

@@ -58,9 +58,9 @@ export const T = {
     vi: "Cùng nhau, chúng ta kiến tạo một tương lai tươi sáng hơn",
     ar: "معًا نبني مستقبلًا أكثر إشراقًا",
   },
-  hero_h1_a: { en: "Solar and batteries for", zh: "太阳能与电池，", vi: "Điện mặt trời và pin lưu trữ cho", ar: "طاقة شمسية وبطاريات من أجل" },
-  hero_h1_b: { en: "lower bills and a more", zh: "降低电费，", vi: "hóa đơn thấp hơn và một ngôi nhà", ar: "فواتير أقل ومنزل أكثر" },
-  hero_h1_c: { en: "resilient home.", zh: "让家更有韧性。", vi: "vững vàng hơn.", ar: "قدرة على الصمود." },
+  hero_h1_a: { en: "Solar and battery", zh: "太阳能与电池安装，", vi: "Lắp đặt điện mặt trời và pin lưu trữ", ar: "تركيب الطاقة الشمسية والبطاريات" },
+  hero_h1_b: { en: "installers for lower", zh: "为维州和新州家庭", vi: "giúp giảm hóa đơn điện tại", ar: "لفواتير أقل في" },
+  hero_h1_c: { en: "bills in VIC & NSW.", zh: "降低电费。", vi: "Victoria và NSW.", ar: "فيكتوريا ونيو ساوث ويلز." },
   hero_lead: {
     en: "SAA-accredited installation of solar, batteries and EV charging for homes and businesses across Victoria and New South Wales. Rebates handled, manufacturer warranties registered in your name.",
     zh: "由 SAA 认证技师为维多利亚州和新南威尔士州的家庭与企业安装太阳能、电池及电动车充电设备。补贴由我们代办，厂商保修以您的名义登记。",

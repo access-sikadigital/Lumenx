@@ -25,9 +25,9 @@ import { SITE } from "@/lib/site";
  */
 
 export const metadata = {
-  title: "0% Interest Finance for Solar & Batteries",
+  title: "0% Interest Solar & Battery Finance | How It Works",
   description:
-    "How 0% interest payment plans work for solar and battery installations, what they cost in fees, who is eligible, and the difference between finance and a rebate.",
+    "How 0% interest payment plans for solar and batteries work, what fees apply, who is eligible, and how finance differs from a rebate. Explained in plain English.",
   alternates: { canonical: "/0-percent-finance" },
   // Not indexed until it is approved. Belt and braces alongside the 404.
   robots: BRIGHTE_APPROVED || NSW_PROGRAM_ACCESS ? undefined : { index: false, follow: false },

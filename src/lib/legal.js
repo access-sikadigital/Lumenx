@@ -33,7 +33,7 @@ export const PRIVACY = {
   label: "Privacy Policy",
   seoTitle: "Privacy Policy",
   seoDescription:
-    "How Lumenx collects, uses, stores and discloses personal information, and how to access, correct or complain about it.",
+    "How Lumenx collects, uses, stores and discloses your personal information, and how to access it, correct it or make a privacy complaint.",
   eyebrow: "Legal",
   h1: "Privacy policy",
   lead: "Plain English, and short, because a policy nobody reads protects nobody. This describes exactly what we collect, why, and what we do not do with it.",

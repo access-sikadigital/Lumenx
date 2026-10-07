@@ -30,9 +30,9 @@
 // does not exist yet — deliberately, so an empty blog cannot generate URLs.
 
 export const BLOG_HUB = {
-  seoTitle: "Solar Guides & Resources",
+  seoTitle: "Solar Guides | Rebates, Sizing & Batteries",
   seoDescription:
-    "Plain-English guides to solar rebates, system sizing, batteries and equipment in Victoria and New South Wales, from a Solar Victoria authorised retailer.",
+    "Plain-English guides to solar rebates, system sizing, batteries and equipment in Victoria and NSW. Learn what makes a good solar quote before you sign anything.",
   eyebrow: "Guides & resources",
   h1: "The things worth understanding before you sign anything.",
   lead: "Not content marketing. These are the questions that decide whether a solar quote is good or bad, written out properly so you can judge ours against anyone else's.",

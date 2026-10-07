@@ -15,9 +15,9 @@
 // • No prices anywhere. Every page routes to a quote instead.
 
 export const SYSTEMS_HUB = {
-  seoTitle: "Solar System Sizes & Prices | 5kW to 15kW",
+  seoTitle: "Solar System Sizes Compared | 5kW to 15kW",
   seoDescription:
-    "Compare solar system sizes from 5kW to 15kW: panel counts, roof space and which household each one suits. Get a fixed, itemised quote from Lumenx.",
+    "Compare 5kW, 6.6kW, 10kW, 13.2kW and 15kW solar systems: panel counts, roof space and which household each suits. Sized from your bill, quoted at a fixed price.",
   eyebrow: "System sizes",
   h1: "How big a system do you actually need?",
   lead: "The honest answer depends on how much power you use and when you use it, not on how much roof you have. Here is what each size looks like in practice.",
@@ -73,9 +73,9 @@ export const SYSTEM_SIZES = [
     slug: "5kw",
     kw: "5kW",
     kwNum: 5,
-    seoTitle: "5kW Solar System | Size, Panels & Savings",
+    seoTitle: "5kW Solar System | Is It Right for Your Home?",
     seoDescription:
-      "A 5kW solar system suits smaller households and units. See panel count, roof space needed and who it suits. Free, itemised quote from Lumenx.",
+      "A 5kW solar system uses about 12 panels and 24 m² of roof, and suits units, townhouses and smaller households. See if it fits your usage. Free, itemised quote.",
     h1: "A 5kW system, and the household it actually suits.",
     lead: "The smallest system we generally recommend installing. Right for a unit, a townhouse or a low-consumption household, and genuinely wrong for anyone with ducted air conditioning.",
     image: "/images/sys-small.webp",
@@ -96,9 +96,9 @@ export const SYSTEM_SIZES = [
     slug: "6-6kw",
     kw: "6.6kW",
     kwNum: 6.6,
-    seoTitle: "6.6kW Solar System | Panels, Savings & Price",
+    seoTitle: "6.6kW Solar System | Australia's Most Common Size",
     seoDescription:
-      "The 6.6kW system is Australia's most common size. See panel count, roof space and who it suits. Free quote from Lumenx.",
+      "A 6.6kW solar system uses about 15 panels and 30 m² of roof, and suits the typical 3 to 4 person household. See if it fits your bill. Free, itemised quote.",
     h1: "6.6kW is the most common system in Australia. Usually for good reason.",
     lead: "It pairs with a 5kW inverter, which is the largest most distributors approve without additional application, and it covers a typical family's daytime usage.",
     image: "/images/sys-small.webp",
@@ -119,9 +119,9 @@ export const SYSTEM_SIZES = [
     slug: "10kw",
     kw: "10.4kW",
     kwNum: 10.4,
-    seoTitle: "10kW Solar System | Panels, Savings & Price",
+    seoTitle: "10kW Solar System | For Larger Homes, Pools & EVs",
     seoDescription:
-      "A 10kW solar system suits larger homes with air conditioning, a pool or an EV. See panel count, roof space and who it suits. Free quote from Lumenx.",
+      "A 10kW solar system uses about 23 panels and 46 m² of roof, built for larger homes with ducted air, a pool or an EV. See if it suits you. Free, itemised quote.",
     h1: "10kW is where larger households stop leaving money on the roof.",
     lead: "Once you are running ducted air conditioning, a pool pump or charging a car at home, 6.6kW stops covering your daytime load and the extra capacity starts paying for itself.",
     image: "/images/sys-large.webp",
@@ -142,9 +142,9 @@ export const SYSTEM_SIZES = [
     slug: "13-2kw",
     kw: "13.2kW",
     kwNum: 13.2,
-    seoTitle: "13.2kW Solar System | Size, Panels & Output",
+    seoTitle: "13.2kW Solar System | For High-Usage Homes",
     seoDescription:
-      "A 13.2kW solar system suits high-consumption homes and small business premises. See panel count and roof space needed. Free quote from Lumenx.",
+      "A 13.2kW solar system uses about 30 panels and 60 m² of roof, and suits high-consumption homes and small premises. See if it fits your usage. Free quote.",
     h1: "13.2kW, for houses that use power like small businesses.",
     lead: "High-consumption households, home businesses and properties running multiple large loads through the day. At this size the design matters more than the headline number.",
     image: "/images/sys-large.webp",
@@ -165,9 +165,9 @@ export const SYSTEM_SIZES = [
     slug: "15kw",
     kw: "15kW",
     kwNum: 15,
-    seoTitle: "15kW Solar System | Size, Panels & Savings",
+    seoTitle: "15kW Solar System | Large Homes & Small Business",
     seoDescription:
-      "A 15kW solar system suits small businesses and very large homes. See panel count, roof space and who it suits. Free quote from Lumenx.",
+      "A 15kW solar system uses about 34 panels and 68 m² of roof, and suits very large homes and small business premises. See if it fits your load. Free quote.",
     h1: "15kW is where residential ends and commercial thinking begins.",
     lead: "The largest system we fit under a residential design. Past this point the right approach is a commercial assessment based on your load profile rather than your roof.",
     image: "/images/sys-large.webp",

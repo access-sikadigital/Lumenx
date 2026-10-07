@@ -26,9 +26,9 @@ import { SITE } from "@/lib/site";
  */
 
 export const metadata = {
-  title: "NSW Solar Rebates & Finance",
+  title: "NSW Solar Rebates & Finance | Batteries & Hot Water",
   description:
-    "The federal and New South Wales programs that apply to solar, batteries and hot water in NSW, what each one is conditional on, and the difference between a rebate and a loan.",
+    "The federal and NSW programs for solar, batteries and hot water in New South Wales, what each one depends on, and the difference between a rebate and a loan.",
   alternates: { canonical: "/nsw-rebates-and-finance" },
   robots: NSW_PROGRAM_ACCESS ? undefined : { index: false, follow: false },
 };

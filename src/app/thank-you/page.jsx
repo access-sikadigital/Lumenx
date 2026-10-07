@@ -2,7 +2,7 @@ import Link from "next/link";
 import TrustBadges from "@/components/TrustBadges";
 import { SITE, TRUST, SERVICES } from "@/lib/site";
 
-const TITLE = "Thank you | Lumenx";
+const TITLE = "Thank You";
 
 export const metadata = {
   title: TITLE,

@@ -12,9 +12,9 @@
 // visitor to a confirmed eligibility check.
 
 export const REBATES_PAGE = {
-  seoTitle: "Solar & Battery Rebates Victoria",
+  seoTitle: "Solar Rebates Victoria | Solar & Battery Rebates",
   seoDescription:
-    "Every Victorian solar and battery rebate explained in plain English: federal STCs, the federal battery rebate, Solar Victoria and Victorian Energy Upgrades.",
+    "Every Victorian solar and battery rebate explained: federal STCs, Cheaper Home Batteries, Solar Victoria and VEU. We check, claim and apply them for you.",
   eyebrow: "Rebates",
   h1: "Four rebate programs. Most people qualify for more than one.",
   lead: "They stack, they change, and each has its own paperwork. We check every one you qualify for, claim them, and take them off your quote before you see the price.",

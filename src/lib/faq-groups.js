@@ -13,7 +13,7 @@ import { GUIDES } from "@/lib/guides";
 export const FAQ_PAGE = {
   seoTitle: "Solar FAQ | Panels, Batteries, Rebates & Install",
   seoDescription:
-    "Straight answers on solar panels, batteries, inverters, rebates, installation and warranties, from a Solar Victoria authorised retailer.",
+    "Straight answers to what people ask before going solar: panels, batteries, inverters, rebates, installation and warranties. No sales gloss, just the facts.",
   eyebrow: "Frequently asked",
   h1: "Everything people ask us before they commit.",
   lead: "Grouped by topic, answered without the sales gloss. If yours is not here, call us and we will answer it properly rather than sending a brochure.",

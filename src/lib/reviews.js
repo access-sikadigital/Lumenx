@@ -15,9 +15,9 @@
 // and the review avatars are hot-linked from another company's website.
 
 export const REVIEWS_PAGE = {
-  seoTitle: "Reviews | What Our Customers Say",
+  seoTitle: "Customer Reviews | Solar & Battery Installations",
   seoDescription:
-    "Read what Victorian and NSW households say about their Lumenx solar, battery and hot water installations.",
+    "Read what Victorian and NSW homeowners say about their Lumenx solar, battery and hot water installations, from the first quote to the final switch-on.",
   eyebrow: "Reviews",
   h1: "The part of a solar quote you cannot put in writing.",
   lead: "Anyone can promise a tidy install and a call back. These are the people who can tell you whether we did it.",

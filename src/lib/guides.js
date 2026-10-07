@@ -11,9 +11,9 @@ export const GUIDES = {
   "victorian-battery-rebate": {
     slug: "victorian-battery-rebate",
     label: "Victorian Battery Rebate",
-    seoTitle: "Battery Rebate Victoria | Cheaper Home Batteries",
+    seoTitle: "Victorian Battery Rebate | Cheaper Home Batteries",
     seoDescription:
-      "How the federal battery rebate and Victorian battery programs work, who qualifies, and how Lumenx applies them to your quote before you pay.",
+      "How the federal Cheaper Home Batteries rebate and Victorian battery programs work, who qualifies, and how Lumenx deducts them from your quote before you pay.",
     eyebrow: "Battery rebates",
     h1: "The rebate that changed the maths on home storage.",
     lead: "Batteries used to be a long payback. The federal Cheaper Home Batteries program, introduced in 2025, is the single biggest reason that is no longer true.",
@@ -78,9 +78,9 @@ export const GUIDES = {
   "heat-pump-rebate-victoria": {
     slug: "heat-pump-rebate-victoria",
     label: "Heat Pump Rebate Victoria",
-    seoTitle: "Heat Pump Rebate Victoria | Hot Water",
+    seoTitle: "Heat Pump Rebate Victoria | Hot Water Rebates",
     seoDescription:
-      "How Victorian Energy Upgrades and Solar Victoria rebates apply to heat pump hot water systems, and how Lumenx applies them to your quote.",
+      "How Victorian Energy Upgrades and Solar Victoria rebates cut the cost of heat pump hot water, who qualifies, and how we apply them at the point of sale.",
     eyebrow: "Heat pump rebates",
     h1: "Replacing gas or electric hot water is one of the cheapest upgrades you can make.",
     lead: "Hot water is usually the second largest line on a household energy bill, and the rebates available on heat pumps are among the most generous in Victoria.",

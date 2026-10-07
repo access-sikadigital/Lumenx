@@ -18,6 +18,9 @@ const jsonLd = {
       "@type": ["Organization", "LocalBusiness"],
       "@id": `${SITE.domain}/#organization`,
       name: "Lumenx",
+      // How people actually search for the business: the trading name with
+      // its category, and the domain spelling (lumenex.com.au).
+      alternateName: ["Lumenx Solar", "Lumenex"],
       legalName: "Lumenx",
       url: SITE.domain,
       email: SITE.email,
@@ -51,10 +54,32 @@ const jsonLd = {
       "@id": `${SITE.domain}/#website`,
       url: SITE.domain,
       name: "Lumenx",
+      alternateName: ["Lumenx Solar", "Lumenex"],
       inLanguage: "en-AU",
       publisher: { "@id": `${SITE.domain}/#organization` },
     },
   ],
+};
+
+// The home page is the one page that leads with the brand, because it is the
+// page that answers a search for "Lumenx". "Lumenx Solar" rather than bare
+// "Lumenx" because other, unrelated businesses share the name; the extra word
+// is what tells a searcher (and Google) which Lumenx this is. `absolute` skips
+// the layout's "%s | Lumenx" template so the brand is not printed twice.
+const HOME_TITLE = "Lumenx Solar | Solar & Battery Installers in VIC & NSW";
+const HOME_DESCRIPTION =
+  "Solar panels, batteries and EV chargers for homes and businesses in VIC and NSW. Solar Victoria authorised, every rebate applied. Free quote: 1800 577 319.";
+
+export const metadata = {
+  title: { absolute: HOME_TITLE },
+  description: HOME_DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    url: "/",
+  },
 };
 
 export default function HomePage() {
