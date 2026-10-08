@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import TrackingBridge from "@/components/TrackingBridge";
 import { LanguageProvider } from "@/lib/i18n";
 import { StateProvider } from "@/lib/state-context";
+import { SITE } from "@/lib/site";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -49,7 +50,7 @@ const notoArabic = Noto_Sans_Arabic({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://lumenex.com.au"),
+  metadataBase: new URL(SITE.domain),
   title: {
     default: "Lumenx Solar | Solar & Battery Installers in VIC & NSW",
     template: "%s | Lumenx",

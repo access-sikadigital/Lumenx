@@ -19,7 +19,7 @@ const jsonLd = {
       "@id": `${SITE.domain}/#organization`,
       name: "Lumenx",
       // How people actually search for the business: the trading name with
-      // its category, and the domain spelling (lumenex.com.au).
+      // its category, and the older "Lumenex" spelling.
       alternateName: ["Lumenx Solar", "Lumenex"],
       legalName: "Lumenx",
       url: SITE.domain,

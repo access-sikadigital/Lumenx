@@ -6,9 +6,10 @@ export const SITE = {
   name: "Lumenx",
   legalName: "Lumenx",
   tagline: "Together, we build a brighter future.",
-  // Confirmed against the live site. Note the deliberate spelling split:
-  // the DOMAIN is lumenex.com.au, the EMAIL is @lumenx.com.au.
-  domain: "https://lumenex.com.au",
+  // The site is served (and verified in Search Console) at www.lumenx.com.au.
+  // Every canonical, sitemap URL and schema @id is built from this, so it must
+  // match the Search Console property exactly, www included.
+  domain: "https://www.lumenx.com.au",
   email: "hello@lumenx.com.au",
 
   // Two live numbers, used the way the current site uses them: the 1800 in

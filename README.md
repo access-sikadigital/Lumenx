@@ -5,7 +5,7 @@ EV charging, heat pumps) serving Victoria and New South Wales.
 
 > Together, we build a brighter future.
 
-Brand name is always written **"Lumenx"** (capital L, lowercase x). Domain: **lumenex.com.au**.
+Brand name is always written **"Lumenx"** (capital L, lowercase x). Domain: **www.lumenx.com.au**.
 
 ## Tech stack
 
