@@ -1,55 +1,60 @@
 import { NextResponse } from "next/server";
+import { validateQuote } from "@/lib/quote-validation";
+import { SERVICE_SLUGS, labelForSlug } from "@/lib/quote-services";
+import { SITE } from "@/lib/site";
 
 /**
- * Quote request endpoint.
+ * Quote request endpoint → GoHighLevel inbound webhook.
  *
  * FAILS CLOSED BY DESIGN.
  *
- * There is no destination wired up yet. Rather than accept a submission and
- * quietly drop it — which loses a real lead and shows the customer a success
- * screen that is a lie — this returns 503 until `QUOTE_WEBHOOK_URL` is set.
- * The form then tells the visitor to call or email instead, with the real
- * numbers on screen.
+ * Until `QUOTE_WEBHOOK_URL` is set this returns 503 rather than accepting a
+ * submission and quietly dropping it, which would lose a real lead and show
+ * the customer a success screen that is a lie. The form then tells the
+ * visitor to call or email instead, with the real numbers on screen.
  *
- * TO GO LIVE: set QUOTE_WEBHOOK_URL in the environment to whatever should
- * receive the lead — a CRM inbound webhook, Zapier/Make, a Formspree-style
- * endpoint, or your own mailer. The payload below is posted to it as JSON.
+ * TO GO LIVE: in GHL create a workflow with the "Inbound Webhook" trigger,
+ * copy its URL into QUOTE_WEBHOOK_URL (Vercel → Settings → Environment
+ * Variables), redeploy, and map the fields below. docs/GHL.md has the field
+ * list and the mapping.
+ *
+ * THE PAYLOAD IS FLAT AND ALL STRINGS, ON PURPOSE. GHL's workflow mapper reads
+ * {{inboundWebhookRequest.first_name}}-style paths; flat keys are one click to
+ * map, and strings ("Yes"/"No", comma lists) drop straight into text, radio
+ * and dropdown custom fields without a conversion step. No key is ever null or
+ * missing, so a mapping never breaks on a lead that skipped an optional field.
  */
 
 export const dynamic = "force-dynamic";
 
-const MAX = { name: 120, email: 160, phone: 40, address: 200, notes: 2000, abn: 20 };
-
-/* An 8MB base64 ceiling for the optional bill attachment. The form caps the
-   raw file at 6MB and base64 adds about a third, so this is that limit plus
-   headroom. It is enforced here as well as in the browser because a client
-   side cap is a convenience, not a control. */
-const MAX_ATTACHMENT_CHARS = 8 * 1024 * 1024;
-
-const clean = (v, max) => (typeof v === "string" ? v.trim().slice(0, max) : "");
-
-/**
- * Accept the uploaded bill only if it is the shape the form sends and a type
- * we asked for. Anything else is dropped silently rather than forwarded: the
- * lead is still worth delivering without the attachment, and passing an
- * unvalidated data URL straight through to a CRM is not something to do on
- * trust.
- */
+/* The bill upload: the browser sends only the file's name and type, never the
+   file. A GHL inbound webhook cannot turn file data into a contact
+   attachment, and a multi-megabyte payload risks the whole lead being
+   rejected. The lead is flagged instead so the team knows to ask for it.
+   See docs/GHL.md, "Bill uploads". */
 const ALLOWED_UPLOAD = /^(image\/(jpeg|png|webp|heic|heif)|application\/pdf|text\/csv|application\/vnd\.openxmlformats-officedocument\.spreadsheetml\.sheet)$/;
 
-function cleanAttachment(a) {
+const str = (v, max = 300) => (typeof v === "string" ? v.trim().slice(0, max) : "");
+const yesNo = (b) => (b ? "Yes" : "No");
+
+function attachmentInfo(a) {
   if (!a || typeof a !== "object") return null;
-  const type = clean(a.type, 120);
-  const data = typeof a.data === "string" ? a.data : "";
+  const type = str(a.type, 120);
   if (!ALLOWED_UPLOAD.test(type)) return null;
-  if (!data.startsWith(`data:${type};base64,`)) return null;
-  if (data.length > MAX_ATTACHMENT_CHARS) return null;
-  return {
-    name: clean(a.name, 160),
-    type,
-    size: Number.isFinite(a.size) ? a.size : null,
-    data,
-  };
+  return { name: str(a.name, 160) || "bill", type };
+}
+
+/* Campaign attribution captured on the visitor's landing page (see
+   TrackingBridge). Only these keys, only short strings. */
+const ATTRIBUTION_KEYS = [
+  "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content",
+  "gclid", "fbclid", "msclkid", "landing_page", "referrer",
+];
+
+function cleanAttribution(a) {
+  const out = {};
+  for (const k of ATTRIBUTION_KEYS) out[k] = a && typeof a === "object" ? str(a[k], 300) : "";
+  return out;
 }
 
 export async function POST(request) {
@@ -60,56 +65,13 @@ export async function POST(request) {
     return NextResponse.json({ ok: false, error: "bad_request" }, { status: 400 });
   }
 
-  // Honeypot: a hidden field real people never fill in.
-  if (clean(body.company, 100)) {
-    // Pretend it worked so the bot does not retry, but send nothing on.
-    return NextResponse.json({ ok: true });
-  }
+  // Honeypot: a hidden field real people never fill in. Pretend it worked so
+  // the bot does not retry, but send nothing on.
+  if (str(body.company, 100)) return NextResponse.json({ ok: true });
 
-  const lead = {
-    name: clean(body.name, MAX.name),
-    email: clean(body.email, MAX.email),
-    phone: clean(body.phone, MAX.phone),
-    address: clean(body.address, MAX.address),
-    propertyType: clean(body.propertyType, 40),
-    abn: clean(body.abn, MAX.abn),
-    // Decides whether a battery retrofit is a hybrid swap, an AC-coupled
-    // unit, or an inverter replacement. Worth more to whoever quotes this
-    // than any other optional field on the form.
-    existingInverter: clean(body.existingInverter, 120),
-    interests: Array.isArray(body.interests) ? body.interests.slice(0, 12).map((i) => clean(i, 60)) : [],
-    // The slugs as well as the labels. The labels are for whoever reads the
-    // email; the slugs are stable identifiers for a CRM to route on without
-    // having to string-match human wording that might get reworded later.
-    serviceSlugs: Array.isArray(body.serviceSlugs)
-      ? body.serviceSlugs.slice(0, 12).map((i) => clean(i, 40))
-      : [],
-    chosenPackage: clean(body.chosenPackage, 40),
-    helpMeChoose: body.helpMeChoose === true,
-    wantsFinance: body.wantsFinance === true,
-    /* Marketing consent, recorded as its own field with the time it was
-       given. Under the Spam Act the burden is on the sender to show consent
-       existed, so "they filled in a form once" is not a record: the flag and
-       the timestamp are. Default false, and an absent field is a no. */
-    marketingOptIn: body.marketingOptIn === true,
-    marketingOptInAt: body.marketingOptIn === true ? new Date().toISOString() : null,
-    // Which state's programs the visitor was being shown when they submitted.
-    // Without it, a NSW enquiry quoted against Victorian rebates is an easy
-    // and expensive mistake to make.
-    state: /^(VIC|NSW)$/.test(body.state) ? body.state : "",
-    bill: clean(body.bill, 40),
-    notes: clean(body.notes, MAX.notes),
-    attachment: cleanAttachment(body.attachment),
-    submittedAt: new Date().toISOString(),
-    source: "/get-a-quote",
-  };
-
-  const missing = ["name", "email", "phone", "address"].filter((k) => !lead[k]);
-  if (missing.length) {
-    return NextResponse.json({ ok: false, error: "missing_fields", fields: missing }, { status: 422 });
-  }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(lead.email)) {
-    return NextResponse.json({ ok: false, error: "invalid_email", fields: ["email"] }, { status: 422 });
+  const { errors, values: v } = validateQuote(body, SERVICE_SLUGS);
+  if (Object.keys(errors).length) {
+    return NextResponse.json({ ok: false, error: "validation", errors }, { status: 422 });
   }
 
   const endpoint = process.env.QUOTE_WEBHOOK_URL;
@@ -119,11 +81,76 @@ export async function POST(request) {
     return NextResponse.json({ ok: false, error: "not_configured" }, { status: 503 });
   }
 
+  const commercial = v.property === "commercial";
+  const serviceLabels = v.services.map(labelForSlug);
+  const bill = attachmentInfo(body.attachment);
+  const optIn = body.marketingOptIn === true;
+  const now = new Date().toISOString();
+
+  /* Tags for routing in GHL. Lower-case, hyphenated, stable: the workflow
+     branches on these, so they never change wording with the UI. */
+  const tags = [
+    "website-lead",
+    commercial ? "commercial" : "residential",
+    `state-${v.state.toLowerCase()}`,
+    ...v.services.map((s) => `svc-${s}`),
+    v.helpMeChoose && "help-me-choose",
+    body.wantsFinance === true && "finance-interest",
+    optIn && "marketing-opt-in",
+  ].filter(Boolean);
+
+  const ghl = {
+    // ---- GHL standard contact fields ----
+    first_name: v.firstName,
+    last_name: v.lastName,
+    full_name: v.fullName,
+    email: v.email,
+    phone: v.phone, // +61XXXXXXXXX
+    address1: v.street,
+    city: v.suburb,
+    state: v.state, // VIC | NSW
+    postal_code: v.postcode,
+    country: "AU",
+    company_name: v.businessName,
+    source: "Website - Quote Form",
+
+    // ---- custom fields ----
+    phone_display: v.phoneDisplay,
+    phone_type: v.phoneType, // Mobile | Landline
+    full_address: `${v.street}, ${v.suburb} ${v.state} ${v.postcode}`,
+    property_type: commercial ? "Commercial" : "Residential",
+    services: serviceLabels.join(", "),
+    service_slugs: v.services.join(","),
+    help_me_choose: yesNo(v.helpMeChoose),
+    package: str(body.chosenPackage, 40),
+    power_bill: v.bill,
+    abn: v.abn,
+    existing_inverter: v.existingInverter,
+    finance_interest: yesNo(body.wantsFinance === true),
+    bill_uploaded: yesNo(Boolean(bill)),
+    bill_file_name: bill ? bill.name : "",
+    notes: v.notes,
+    /* Consent as its own field with the time it was given: under the Spam Act
+       the sender has to be able to show consent existed. */
+    marketing_opt_in: yesNo(optIn),
+    marketing_opt_in_at: optIn ? now : "",
+    site_state_selected: /^(VIC|NSW)$/.test(body.siteState) ? body.siteState : "",
+    tags: tags.join(","),
+
+    // ---- attribution ----
+    ...cleanAttribution(body.attribution),
+    page_url: `${SITE.domain}/get-a-quote`,
+    submitted_at: now,
+  };
+
   try {
     const res = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(lead),
+      body: JSON.stringify(ghl),
+      // A hung CRM must not hang the visitor. Ten seconds, then the form
+      // shows the call-or-email fallback.
+      signal: AbortSignal.timeout(10_000),
     });
     if (!res.ok) throw new Error(`upstream ${res.status}`);
   } catch (err) {

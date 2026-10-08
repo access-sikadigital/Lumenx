@@ -1,30 +1,43 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import Select from "@/components/Select";
 import { SITE } from "@/lib/site";
-import { QUOTE_SERVICES, labelForSlug, resolveServiceSlug } from "@/lib/quote-services";
+import { QUOTE_SERVICES, SERVICE_SLUGS, labelForSlug, resolveServiceSlug } from "@/lib/quote-services";
 import { BRIGHTE_APPROVED, NSW_PROGRAM_ACCESS } from "@/lib/finance";
 import { useAuState } from "@/lib/state-context";
 import { EVENTS, track } from "@/lib/track";
+import {
+  BILLS_COMMERCIAL,
+  BILLS_RESIDENTIAL,
+  FIELD_ORDER,
+  LIMITS,
+  SERVICE_STATES,
+  parseAuPhone,
+  suggestEmail,
+  validateQuote,
+} from "@/lib/quote-validation";
+import { readAttribution } from "@/lib/attribution";
 
 /**
  * Quote request form.
  *
- * REBUILT to the client brief, 4 October 2026. The shape it asks for:
- * service tiles, a Residential/Commercial choice, an address, short contact
- * fields, an optional bill upload, "Help me choose", and a 0% finance
- * question.
+ * REBUILT to the client brief, 4 October 2026: service tiles, a
+ * Residential/Commercial choice, an address, short contact fields, an
+ * optional bill upload, "Help me choose", and a 0% finance question.
+ *
+ * VALIDATED 8 October 2026 for the GoHighLevel connection. The rules live in
+ * lib/quote-validation.js and the API route runs the same file, so the form
+ * and the server can never disagree. Errors appear under the field they
+ * belong to: after the visitor leaves a field, and on every field once they
+ * have tried to submit.
  *
  * THE RULE THAT DRIVES THE STATE DESIGN: every selection must survive a
- * validation error. The release checklist calls this out specifically, and it
- * is the classic way a form loses a lead — someone picks four services, fills
- * everything in, mistypes an email, and the server bounces it back with the
- * selections gone. So nothing here is an uncontrolled input. Every value
- * lives in React state, a failed submit only sets an error, and the form
- * re-renders with all of it intact.
+ * validation error. Someone picks four services, fills everything in,
+ * mistypes an email, and nothing they chose is lost. Every value lives in
+ * React state; a failed submit only shows errors.
  */
 
 const PROPERTY = [
@@ -32,21 +45,51 @@ const PROPERTY = [
   { key: "commercial", label: "Commercial" },
 ];
 
-const BILLS = [
-  "Under $400 a quarter",
-  "$400 to $700 a quarter",
-  "$700 to $1,200 a quarter",
-  "Over $1,200 a quarter",
-  "Not sure",
-];
+const STATE_LABELS = SERVICE_STATES.map((s) => s.label);
+const stateCode = (label) => SERVICE_STATES.find((s) => s.label === label)?.code ?? "";
+const stateLabel = (code) => SERVICE_STATES.find((s) => s.code === code)?.label ?? "";
 
-/* 6MB. Phone cameras produce 3 to 5MB photos of a bill, so this has room for
-   a real one without letting someone paste a video into a JSON request. */
+/* 6MB. Phone cameras produce 3 to 5MB photos of a bill. */
 const MAX_UPLOAD = 6 * 1024 * 1024;
 
-const field =
-  "w-full rounded-[14px] border border-blue/15 bg-paper px-4 py-3.5 text-[0.95rem] text-blue outline-none transition-colors duration-300 placeholder:text-ink-soft/70 focus:border-ember focus:ring-2 focus:ring-ember/20";
+const fieldBase =
+  "w-full rounded-[14px] border bg-paper px-4 py-3.5 text-[0.95rem] text-blue outline-none transition-colors duration-300 placeholder:text-ink-soft/70 focus:border-ember focus:ring-2 focus:ring-ember/20";
+const field = (bad) => `${fieldBase} ${bad ? "border-ember/70" : "border-blue/15"}`;
 const labelCls = "mb-2 block text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-ink-soft";
+const optional = (
+  <span className="font-normal normal-case tracking-normal text-ink-soft">(optional)</span>
+);
+
+/** The message under a field. Its id is what the input's aria-describedby points at. */
+function FieldError({ id, msg }) {
+  if (!msg) return null;
+  return (
+    <p id={id} className="mt-2 flex items-start gap-1.5 text-[0.8rem] font-medium leading-snug text-ember">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="mt-px shrink-0">
+        <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.6" />
+        <path d="M8 4.5v4.2M8 11.2v.3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      </svg>
+      <span>{msg}</span>
+    </p>
+  );
+}
+
+function Tick({ on }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-[6px] border-2 ${
+        on ? "border-blue bg-blue" : "border-blue/25"
+      }`}
+    >
+      {on && (
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+          <path d="M2.5 6.2 4.8 8.5 9.5 3.8" stroke="#F8C646" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      )}
+    </span>
+  );
+}
 
 export default function QuoteForm() {
   const router = useRouter();
@@ -55,7 +98,6 @@ export default function QuoteForm() {
 
   const [status, setStatus] = useState("idle"); // idle | sending | sent | error
   const [errorKind, setErrorKind] = useState(null);
-  const [fieldErrors, setFieldErrors] = useState([]);
 
   // ---- everything the visitor has chosen, all controlled ----
   const [property, setProperty] = useState("residential");
@@ -63,35 +105,47 @@ export default function QuoteForm() {
   const [helpMeChoose, setHelpMeChoose] = useState(false);
   const [wantsFinance, setWantsFinance] = useState(false);
   const [bill, setBill] = useState("");
-  /* Marketing consent. SEPARATE from the enquiry, and unticked by default.
-     Bundling the two — "submit this and you agree to receive marketing" — is
-     not consent, it is a condition of getting a quote, and it is the thing
-     the Privacy Act and the Spam Act are both written to catch. Someone must
-     be able to ask for a price without signing up to a mailing list. */
+  /* Marketing consent. SEPARATE from the enquiry, and unticked by default:
+     someone must be able to ask for a price without joining a mailing list
+     (Privacy Act and Spam Act). */
   const [marketingOptIn, setMarketingOptIn] = useState(false);
-  /* The package a visitor picked on the packages page, carried through in the
-     URL. It is EDITABLE here, not locked: someone who chose Gold and then
-     changed their mind should not have to go back and start again. Clearing
-     it simply means "no package chosen". */
+  /* The package picked on the packages page, carried in the URL. Editable,
+     not locked: clearing it means "no package chosen". */
   const [chosenPackage, setChosenPackage] = useState("");
   const [contact, setContact] = useState({
     name: "",
     phone: "",
     email: "",
-    address: "",
+    street: "",
+    suburb: "",
+    state: "",
+    postcode: "",
+    businessName: "",
     abn: "",
-    // Asked for only when it changes the answer. See below.
     existingInverter: "",
     notes: "",
   });
-  const [upload, setUpload] = useState(null); // { name, size, type, data }
+  const [upload, setUpload] = useState(null); // { name, size, type }
   const [uploadError, setUploadError] = useState(null);
 
-  const errorRef = useRef(null);
+  // ---- validation display ----
+  const [touched, setTouched] = useState({});
+  const [attempted, setAttempted] = useState(false);
+  const [serverErrors, setServerErrors] = useState({});
 
-  /* Preselect from ?service=. The hero's three buttons and every service
-     page's quote button arrive here with the service already decided, so
-     asking again would be asking a question the visitor has just answered. */
+  const errorRef = useRef(null);
+  // True once the visitor picks a state themselves; until then it follows the site state.
+  const statePicked = useRef(false);
+
+  const set = (k) => (e) => {
+    const value = e?.target ? e.target.value : e;
+    setContact((c) => ({ ...c, [k]: value }));
+    // A server message is about the value that was sent; editing clears it.
+    setServerErrors((s) => (s[k] ? { ...s, [k]: undefined } : s));
+  };
+  const touch = (k) => () => setTouched((t) => (t[k] ? t : { ...t, [k]: true }));
+
+  /* Preselect from ?service= and ?package=. */
   useEffect(() => {
     const pkg = params.get("package");
     if (pkg) setChosenPackage(pkg.slice(0, 40));
@@ -102,7 +156,13 @@ export default function QuoteForm() {
     if (slug === "commercial") setProperty("commercial");
   }, [params]);
 
-  // Move focus to the error so a keyboard or screen reader user is told.
+  /* Default the address state to the state the visitor is browsing in. The
+     site state loads from storage a moment after first render, so this keeps
+     following it until the visitor picks a state, and never overrides that. */
+  useEffect(() => {
+    if (!statePicked.current) setContact((c) => ({ ...c, state: auState }));
+  }, [auState]);
+
   useEffect(() => {
     if (status === "error") errorRef.current?.focus();
   }, [status]);
@@ -110,14 +170,34 @@ export default function QuoteForm() {
   const visible = QUOTE_SERVICES.filter((s) =>
     property === "commercial" ? s.scope === "commercial" : s.scope === "residential"
   );
-
+  const bills = property === "commercial" ? BILLS_COMMERCIAL : BILLS_RESIDENTIAL;
   const financeOffered = BRIGHTE_APPROVED || (NSW_PROGRAM_ACCESS && auState === "NSW");
+
+  const input = {
+    ...contact,
+    property,
+    services,
+    helpMeChoose,
+    bill,
+  };
+
+  /* Re-run the shared rules on every render. Cheap, and it means an error
+     clears the moment the value becomes valid instead of on the next blur. */
+  const { errors: clientErrors } = useMemo(
+    () => validateQuote(input, SERVICE_SLUGS),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [contact, property, services, helpMeChoose, bill]
+  );
+
+  /** The error to SHOW for a field: only once it has been left, or after a submit attempt. */
+  const err = (k) => serverErrors[k] || ((attempted || touched[k]) && clientErrors[k]) || null;
+  const describe = (k, ...extra) => [err(k) && `${k}-error`, ...extra].filter(Boolean).join(" ") || undefined;
+
+  const emailSuggestion = !clientErrors.email ? suggestEmail(contact.email) : null;
 
   function toggleService(slug) {
     setServices((prev) => {
-      // quote_start fires once, on the first real interaction, not on page
-      // view: a view is not a start and counting it as one inflates every
-      // downstream rate.
+      // quote_start fires once, on the first real interaction.
       if (prev.length === 0) track(EVENTS.QUOTE_START, { service: slug, state: auState });
       return prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug];
     });
@@ -125,17 +205,25 @@ export default function QuoteForm() {
 
   function onProperty(next) {
     setProperty(next);
-    // Drop selections that do not exist in the other scope, so a commercial
-    // enquiry never arrives carrying "Pool heating".
+    // Drop selections that do not exist in the other scope, and the bill
+    // range, because the two scopes use different ranges.
     setServices((prev) =>
       prev.filter((slug) => {
         const s = QUOTE_SERVICES.find((x) => x.slug === slug);
         return s && (next === "commercial" ? s.scope === "commercial" : s.scope === "residential");
       })
     );
+    setBill("");
   }
 
-  async function onFile(e) {
+  /** Tidy a valid phone number into the local format when the visitor leaves the field. */
+  function onPhoneBlur() {
+    touch("phone")();
+    const p = parseAuPhone(contact.phone);
+    if (!p.error) setContact((c) => ({ ...c, phone: p.display }));
+  }
+
+  function onFile(e) {
     const file = e.target.files?.[0];
     setUploadError(null);
     if (!file) {
@@ -148,43 +236,42 @@ export default function QuoteForm() {
       e.target.value = "";
       return;
     }
-    try {
-      const data = await new Promise((resolve, reject) => {
-        const r = new FileReader();
-        r.onload = () => resolve(r.result);
-        r.onerror = () => reject(r.error);
-        r.readAsDataURL(file);
-      });
-      setUpload({ name: file.name, size: file.size, type: file.type, data });
-    } catch {
-      setUploadError("We could not read that file. You can email it to us instead.");
-      e.target.value = "";
-    }
+    setUpload({ name: file.name, size: file.size, type: file.type });
+  }
+
+  function focusFirstError(errs) {
+    const first = FIELD_ORDER.find((k) => errs[k]);
+    if (!first) return;
+    const el = document.getElementById(first === "services" ? "services-group" : first);
+    el?.focus({ preventScroll: true });
+    el?.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
   async function onSubmit(e) {
     e.preventDefault();
     if (status === "sending") return;
 
+    setAttempted(true);
+    if (Object.keys(clientErrors).length) {
+      setStatus("idle");
+      focusFirstError(clientErrors);
+      track(EVENTS.QUOTE_ERROR, { reason: "validation", fields: Object.keys(clientErrors).join(",") });
+      return;
+    }
+
     const payload = {
-      ...contact,
-      propertyType: property === "commercial" ? "Business" : "Home",
-      // Readable labels, not slugs: this lands in someone's inbox or CRM and
-      // "battery-existing-solar" is not a thing a salesperson should decode.
-      interests: services.map(labelForSlug),
-      serviceSlugs: services,
-      helpMeChoose,
-      wantsFinance,
+      ...input,
+      wantsFinance: financeOffered && wantsFinance,
       chosenPackage,
       marketingOptIn,
-      state: auState,
-      bill,
-      attachment: upload,
-      company: "", // honeypot stays empty for real people
+      siteState: auState,
+      attachment: upload ? { name: upload.name, type: upload.type } : null,
+      attribution: readAttribution(),
+      company: e.currentTarget.elements.company?.value || "", // honeypot
     };
 
     setStatus("sending");
-    setFieldErrors([]);
+    setServerErrors({});
     try {
       const res = await fetch("/api/quote", {
         method: "POST",
@@ -198,18 +285,22 @@ export default function QuoteForm() {
         track(EVENTS.QUOTE_SUBMIT, {
           services: services.join(","),
           property,
-          state: auState,
+          state: contact.state,
           wantsFinance,
           helpMeChoose,
           hasAttachment: Boolean(upload),
         });
         // A real URL, because that is what analytics and ad platforms count
-        // as a conversion. No form data in it: this carries a name, a phone
-        // number and a home address.
+        // as a conversion. No form data in it.
         router.push("/thank-you");
         return;
       }
-      setFieldErrors(data.fields || []);
+      if (data.error === "validation" && data.errors) {
+        setServerErrors(data.errors);
+        setStatus("idle");
+        focusFirstError(data.errors);
+        return;
+      }
       setErrorKind(data.error || "unknown");
       setStatus("error");
       track(EVENTS.QUOTE_ERROR, { reason: data.error || "unknown" });
@@ -237,8 +328,7 @@ export default function QuoteForm() {
     );
   }
 
-  const failed = status === "error";
-  const invalid = (k) => fieldErrors.includes(k) || undefined;
+  const shownErrorCount = attempted ? Object.keys({ ...clientErrors, ...serverErrors }).filter((k) => err(k)).length : 0;
 
   return (
     <form onSubmit={onSubmit} noValidate className="relative">
@@ -251,11 +341,7 @@ export default function QuoteForm() {
       {/* ---------- 1. who is asking ---------- */}
       <fieldset>
         <legend className={labelCls}>This is for a</legend>
-        <div
-          role="radiogroup"
-          aria-label="Property type"
-          className="inline-flex rounded-full bg-cloud p-1 ring-1 ring-blue/10"
-        >
+        <div role="radiogroup" aria-label="Property type" className="inline-flex rounded-full bg-cloud p-1 ring-1 ring-blue/10">
           {PROPERTY.map((p) => {
             const on = p.key === property;
             return (
@@ -278,8 +364,13 @@ export default function QuoteForm() {
       </fieldset>
 
       {/* ---------- 2. what they need ---------- */}
-      <fieldset className="mt-8">
-        <legend className={labelCls}>What are you after? Pick as many as apply</legend>
+      <fieldset
+        id="services-group"
+        tabIndex={-1}
+        aria-describedby={describe("services")}
+        className="mt-8 rounded-[18px] outline-none"
+      >
+        <legend className={labelCls}>What are you after? Pick as many as apply *</legend>
 
         <div className="grid gap-2.5 sm:grid-cols-2">
           {visible.map((s) => {
@@ -288,68 +379,29 @@ export default function QuoteForm() {
               <label
                 key={s.slug}
                 className={`flex cursor-pointer items-start gap-3 rounded-[16px] border p-3.5 transition-colors duration-300 ${
-                  on
-                    ? "border-action bg-action/[0.10]"
-                    : "border-blue/12 bg-paper hover:border-blue/25"
+                  on ? "border-action bg-action/[0.10]" : err("services") ? "border-ember/45 bg-paper" : "border-blue/12 bg-paper hover:border-blue/25"
                 }`}
               >
-                <input
-                  type="checkbox"
-                  className="sr-only"
-                  checked={on}
-                  onChange={() => toggleService(s.slug)}
-                />
-                <span
-                  aria-hidden="true"
-                  className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-[6px] border-2 ${
-                    on ? "border-blue bg-blue" : "border-blue/25"
-                  }`}
-                >
-                  {on && (
-                    <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-                      <path d="M2.5 6.2 4.8 8.5 9.5 3.8" stroke="#F8C646" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  )}
-                </span>
+                <input type="checkbox" className="sr-only" checked={on} onChange={() => toggleService(s.slug)} />
+                <Tick on={on} />
                 <span className="min-w-0">
-                  <span className="block text-[0.92rem] font-semibold leading-snug text-blue">
-                    {s.label}
-                  </span>
-                  <span className="mt-0.5 block text-[0.8rem] leading-snug text-ink-soft">
-                    {s.line}
-                  </span>
+                  <span className="block text-[0.92rem] font-semibold leading-snug text-blue">{s.label}</span>
+                  <span className="mt-0.5 block text-[0.8rem] leading-snug text-ink-soft">{s.line}</span>
                 </span>
               </label>
             );
           })}
         </div>
 
-        {/* Help me choose. Separate from the tiles on purpose: it is not a
-            service, it is permission to not know yet, and a visitor who is
-            unsure should not have to guess at a tile to get past this step. */}
+        {/* Help me choose: permission to not know yet, so an unsure visitor
+            does not have to guess at a tile to get past this step. */}
         <label
           className={`mt-2.5 flex cursor-pointer items-start gap-3 rounded-[16px] border border-dashed p-3.5 transition-colors duration-300 ${
             helpMeChoose ? "border-action bg-action/[0.10]" : "border-blue/20 hover:border-blue/35"
           }`}
         >
-          <input
-            type="checkbox"
-            className="sr-only"
-            checked={helpMeChoose}
-            onChange={() => setHelpMeChoose((v) => !v)}
-          />
-          <span
-            aria-hidden="true"
-            className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-[6px] border-2 ${
-              helpMeChoose ? "border-blue bg-blue" : "border-blue/25"
-            }`}
-          >
-            {helpMeChoose && (
-              <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-                <path d="M2.5 6.2 4.8 8.5 9.5 3.8" stroke="#F8C646" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            )}
-          </span>
+          <input type="checkbox" className="sr-only" checked={helpMeChoose} onChange={() => setHelpMeChoose((v) => !v)} />
+          <Tick on={helpMeChoose} />
           <span>
             <span className="block text-[0.92rem] font-semibold text-blue">Help me choose</span>
             <span className="mt-0.5 block text-[0.8rem] leading-snug text-ink-soft">
@@ -357,74 +409,120 @@ export default function QuoteForm() {
             </span>
           </span>
         </label>
+        <FieldError id="services-error" msg={err("services")} />
       </fieldset>
 
-      {/* The package carried in from the packages page. Shown as a summary
-          the visitor can clear, not as a hidden field: an enquiry that says
-          "Gold" when the person has since changed their mind is worse than
-          one that says nothing. */}
       {chosenPackage && (
         <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-[16px] border border-action bg-action/[0.10] px-4 py-3.5">
           <span className="text-[0.9rem] text-blue">
             Package chosen: <strong>{chosenPackage}</strong>
           </span>
-          <button
-            type="button"
-            onClick={() => setChosenPackage("")}
-            className="text-[0.82rem] font-semibold text-ember underline underline-offset-4"
-          >
+          <button type="button" onClick={() => setChosenPackage("")} className="text-[0.82rem] font-semibold text-ember underline underline-offset-4">
             Clear
           </button>
         </div>
       )}
 
-      {/* ---------- 3. where ---------- */}
-      <div className="mt-8">
-        <label htmlFor="address" className={labelCls}>Installation address *</label>
-        <input
-          id="address"
-          name="address"
-          required
-          autoComplete="street-address"
-          className={field}
-          placeholder="Start typing your street address"
-          value={contact.address}
-          onChange={(e) => setContact((c) => ({ ...c, address: e.target.value }))}
-          aria-invalid={invalid("address")}
-          aria-describedby="address-help"
-        />
+      {/* ---------- 3. where ----------
+          Four parts rather than one free-text line: they map straight onto
+          GHL's address fields, and the postcode is checked against the state
+          (rebates, distributor and STC zone all depend on it).
+          NOTE FOR THE NEXT DEV: address SEARCH needs a places provider and an
+          API key, which Lumenx has not supplied. Drop one onto #street and
+          have it fill the other three; validation is unaffected. */}
+      <fieldset className="mt-8">
+        <legend className={labelCls}>Installation address *</legend>
+        <div>
+          <label htmlFor="street" className="sr-only">Street address</label>
+          <input
+            id="street"
+            autoComplete="address-line1"
+            maxLength={LIMITS.street}
+            className={field(err("street"))}
+            placeholder="Street address, e.g. 12 Example Street"
+            value={contact.street}
+            onChange={set("street")}
+            onBlur={touch("street")}
+            aria-invalid={Boolean(err("street")) || undefined}
+            aria-describedby={describe("street")}
+          />
+          <FieldError id="street-error" msg={err("street")} />
+        </div>
+
+        <div className="mt-3 grid gap-3 sm:grid-cols-[1.4fr_1fr_0.8fr]">
+          <div>
+            <label htmlFor="suburb" className="sr-only">Suburb</label>
+            <input
+              id="suburb"
+              autoComplete="address-level2"
+              maxLength={LIMITS.suburb}
+              className={field(err("suburb"))}
+              placeholder="Suburb"
+              value={contact.suburb}
+              onChange={set("suburb")}
+              onBlur={touch("suburb")}
+              aria-invalid={Boolean(err("suburb")) || undefined}
+              aria-describedby={describe("suburb")}
+            />
+            <FieldError id="suburb-error" msg={err("suburb")} />
+          </div>
+          <div>
+            <label htmlFor="state" className="sr-only">State</label>
+            <Select
+              id="state"
+              name="state"
+              value={stateLabel(contact.state)}
+              options={STATE_LABELS}
+              onChange={(label) => {
+                statePicked.current = true;
+                set("state")(stateCode(label));
+                touch("state")();
+              }}
+              placeholder="State"
+              invalid={Boolean(err("state"))}
+              describedBy={describe("state")}
+            />
+            <FieldError id="state-error" msg={err("state")} />
+          </div>
+          <div>
+            <label htmlFor="postcode" className="sr-only">Postcode</label>
+            <input
+              id="postcode"
+              inputMode="numeric"
+              autoComplete="postal-code"
+              maxLength={4}
+              className={field(err("postcode"))}
+              placeholder="Postcode"
+              value={contact.postcode}
+              onChange={(e) => set("postcode")(e.target.value.replace(/\D/g, ""))}
+              onBlur={touch("postcode")}
+              aria-invalid={Boolean(err("postcode")) || undefined}
+              aria-describedby={describe("postcode")}
+            />
+            <FieldError id="postcode-error" msg={err("postcode")} />
+          </div>
+        </div>
         <p id="address-help" className="mt-2 text-[0.8rem] text-ink-soft">
-          We need this to check your roof, your distributor and which rebates apply in your
-          state.
+          We install across Victoria and New South Wales. The address lets us check your roof,
+          your distributor and which rebates apply.
         </p>
-        {/* NOTE FOR THE NEXT DEV: the brief asks for address SEARCH. Real
-            autocomplete needs a places provider and an API key, which Lumenx
-            has not supplied. The field is deliberately a plain, correctly
-            autocompleted input until then rather than a fake suggestion list:
-            a dropdown that cannot find your street is worse than no dropdown.
-            Drop a provider in here and the rest of the form is unaffected. */}
-      </div>
+      </fieldset>
 
       {/* Existing inverter. Shown ONLY when the answer changes what we quote:
-          adding a battery to existing solar, or repairing an inverter. The
-          brand and model decide whether the job is a hybrid swap, an
-          AC-coupled battery beside the existing unit, or a replacement, and
-          those are very different numbers. Asking everyone would be three
-          extra fields of friction for the 80% it does not apply to. */}
+          a battery for existing solar, or an inverter repair. */}
       {(services.includes("battery-existing-solar") || services.includes("inverter-repair")) && (
         <div className="mt-5">
           <label htmlFor="existingInverter" className={labelCls}>
             Your current inverter, brand and model{" "}
-            <span className="font-normal normal-case tracking-normal text-ink-soft">
-              (if you know it)
-            </span>
+            <span className="font-normal normal-case tracking-normal text-ink-soft">(if you know it)</span>
           </label>
           <input
             id="existingInverter"
-            className={field}
+            maxLength={LIMITS.existingInverter}
+            className={field(false)}
             placeholder="e.g. Sungrow SG5K-D, or Fronius Primo 5.0"
             value={contact.existingInverter}
-            onChange={(e) => setContact((c) => ({ ...c, existingInverter: e.target.value }))}
+            onChange={set("existingInverter")}
           />
           <p className="mt-2 text-[0.8rem] text-ink-soft">
             It is on the label on the front of the unit. This is the single thing that lets us
@@ -436,18 +534,36 @@ export default function QuoteForm() {
       {property === "commercial" && (
         <div className="mt-5 grid gap-5 sm:grid-cols-2">
           <div>
-            <label htmlFor="abn" className={labelCls}>ABN</label>
+            <label htmlFor="businessName" className={labelCls}>Business name *</label>
             <input
-              id="abn"
-              className={field}
-              placeholder="11 222 333 444"
-              value={contact.abn}
-              onChange={(e) => setContact((c) => ({ ...c, abn: e.target.value }))}
+              id="businessName"
+              autoComplete="organization"
+              maxLength={LIMITS.businessName}
+              className={field(err("businessName"))}
+              placeholder="Example Pty Ltd"
+              value={contact.businessName}
+              onChange={set("businessName")}
+              onBlur={touch("businessName")}
+              aria-invalid={Boolean(err("businessName")) || undefined}
+              aria-describedby={describe("businessName")}
             />
+            <FieldError id="businessName-error" msg={err("businessName")} />
           </div>
           <div>
-            <label htmlFor="bill-c" className={labelCls}>Monthly power bill</label>
-            <Select id="bill-c" name="bill" value={bill} options={BILLS} onChange={setBill} placeholder="Select a range" />
+            <label htmlFor="abn" className={labelCls}>ABN {optional}</label>
+            <input
+              id="abn"
+              inputMode="numeric"
+              maxLength={LIMITS.abn}
+              className={field(err("abn"))}
+              placeholder="11 222 333 444"
+              value={contact.abn}
+              onChange={(e) => set("abn")(e.target.value.replace(/[^\d\s]/g, ""))}
+              onBlur={touch("abn")}
+              aria-invalid={Boolean(err("abn")) || undefined}
+              aria-describedby={describe("abn")}
+            />
+            <FieldError id="abn-error" msg={err("abn")} />
           </div>
         </div>
       )}
@@ -455,47 +571,99 @@ export default function QuoteForm() {
       {/* ---------- 4. contact ---------- */}
       <div className="mt-8 grid gap-5 sm:grid-cols-2">
         <div>
-          <label htmlFor="name" className={labelCls}>Your name *</label>
+          <label htmlFor="name" className={labelCls}>First and last name *</label>
           <input
-            id="name" required autoComplete="name" className={field} placeholder="Jane Nguyen"
+            id="name"
+            autoComplete="name"
+            maxLength={LIMITS.name}
+            className={field(err("name"))}
+            placeholder="Jane Nguyen"
             value={contact.name}
-            onChange={(e) => setContact((c) => ({ ...c, name: e.target.value }))}
-            aria-invalid={invalid("name")}
+            onChange={set("name")}
+            onBlur={touch("name")}
+            aria-invalid={Boolean(err("name")) || undefined}
+            aria-describedby={describe("name")}
           />
+          <FieldError id="name-error" msg={err("name")} />
         </div>
         <div>
-          <label htmlFor="phone" className={labelCls}>Phone *</label>
+          <label htmlFor="phone" className={labelCls}>Australian phone number *</label>
           <input
-            id="phone" type="tel" required autoComplete="tel" className={field} placeholder="0400 000 000"
+            id="phone"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel-national"
+            maxLength={LIMITS.phone}
+            className={field(err("phone"))}
+            placeholder="0412 345 678"
             value={contact.phone}
-            onChange={(e) => setContact((c) => ({ ...c, phone: e.target.value }))}
-            aria-invalid={invalid("phone")}
+            onChange={set("phone")}
+            onBlur={onPhoneBlur}
+            aria-invalid={Boolean(err("phone")) || undefined}
+            aria-describedby={describe("phone")}
           />
+          <FieldError id="phone-error" msg={err("phone")} />
         </div>
       </div>
 
       <div className="mt-5">
         <label htmlFor="email" className={labelCls}>Email *</label>
         <input
-          id="email" type="email" required autoComplete="email" className={field} placeholder="jane@example.com"
+          id="email"
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          autoCapitalize="none"
+          spellCheck={false}
+          maxLength={LIMITS.email}
+          className={field(err("email"))}
+          placeholder="jane@example.com"
           value={contact.email}
-          onChange={(e) => setContact((c) => ({ ...c, email: e.target.value }))}
-          aria-invalid={invalid("email")}
+          onChange={set("email")}
+          onBlur={touch("email")}
+          aria-invalid={Boolean(err("email")) || undefined}
+          aria-describedby={describe("email", emailSuggestion && "email-suggest")}
         />
+        <FieldError id="email-error" msg={err("email")} />
+        {emailSuggestion && (
+          <p id="email-suggest" className="mt-2 text-[0.8rem] text-ink">
+            Did you mean{" "}
+            <button
+              type="button"
+              onClick={() => set("email")(emailSuggestion)}
+              className="font-semibold text-ember underline underline-offset-4"
+            >
+              {emailSuggestion}
+            </button>
+            ?
+          </p>
+        )}
       </div>
 
-      {property !== "commercial" && (
-        <div className="mt-5">
-          <label htmlFor="bill" className={labelCls}>Roughly what is your power bill?</label>
-          <Select id="bill" name="bill" value={bill} options={BILLS} onChange={setBill} placeholder="Select a range" />
-        </div>
-      )}
+      <div className="mt-5">
+        <label htmlFor="bill" className={labelCls}>
+          {property === "commercial" ? "Roughly what is the monthly power bill? *" : "Roughly what is your power bill? *"}
+        </label>
+        <Select
+          id="bill"
+          name="bill"
+          value={bill}
+          options={bills}
+          onChange={(v) => {
+            setBill(v);
+            touch("bill")();
+          }}
+          placeholder="Select a range"
+          invalid={Boolean(err("bill"))}
+          describedBy={describe("bill")}
+        />
+        <FieldError id="bill-error" msg={err("bill")} />
+      </div>
 
       {/* ---------- 5. optional bill upload ---------- */}
       <div className="mt-5">
         <label htmlFor="billfile" className={labelCls}>
-          Your latest bill {property === "commercial" ? "or 12 months of interval data" : ""}{" "}
-          <span className="font-normal normal-case tracking-normal text-ink-soft">(optional)</span>
+          Your latest bill {property === "commercial" ? "or 12 months of interval data" : ""} {optional}
         </label>
         <input
           id="billfile"
@@ -509,9 +677,7 @@ export default function QuoteForm() {
             Attached: {upload.name} ({Math.round(upload.size / 1024)}KB)
           </p>
         )}
-        {uploadError && (
-          <p role="alert" className="mt-2 text-[0.8rem] text-ember">{uploadError}</p>
-        )}
+        {uploadError && <p role="alert" className="mt-2 text-[0.8rem] text-ember">{uploadError}</p>}
         <p className="mt-2 text-[0.8rem] text-ink-soft">
           A photo of the first page is enough. It lets us size the system on what you actually
           use rather than on an estimate.
@@ -521,28 +687,10 @@ export default function QuoteForm() {
       {/* ---------- 6. finance interest ---------- */}
       {financeOffered && (
         <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-[16px] border border-blue/12 bg-cloud p-4">
-          <input
-            type="checkbox"
-            className="sr-only"
-            checked={wantsFinance}
-            onChange={() => setWantsFinance((v) => !v)}
-          />
-          <span
-            aria-hidden="true"
-            className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-[6px] border-2 ${
-              wantsFinance ? "border-blue bg-blue" : "border-blue/25"
-            }`}
-          >
-            {wantsFinance && (
-              <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-                <path d="M2.5 6.2 4.8 8.5 9.5 3.8" stroke="#F8C646" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            )}
-          </span>
+          <input type="checkbox" className="sr-only" checked={wantsFinance} onChange={() => setWantsFinance((v) => !v)} />
+          <Tick on={wantsFinance} />
           <span>
-            <span className="block text-[0.92rem] font-semibold text-blue">
-              I am interested in 0% finance
-            </span>
+            <span className="block text-[0.92rem] font-semibold text-blue">I am interested in 0% finance</span>
             <span className="mt-0.5 block text-[0.8rem] leading-snug text-ink-soft">
               We will include the repayment options with your quote. Ticking this does not apply
               for anything and does not affect your credit file.
@@ -552,70 +700,48 @@ export default function QuoteForm() {
       )}
 
       <div className="mt-5">
-        <label htmlFor="notes" className={labelCls}>Anything else we should know?</label>
+        <label htmlFor="notes" className={labelCls}>Anything else we should know? {optional}</label>
         <textarea
-          id="notes" rows={4} className={`${field} resize-y`}
+          id="notes"
+          rows={4}
+          maxLength={LIMITS.notes}
+          className={`${field(err("notes"))} resize-y`}
           placeholder="Shading, roof type, an existing system, a deadline: anything that helps us quote accurately."
           value={contact.notes}
-          onChange={(e) => setContact((c) => ({ ...c, notes: e.target.value }))}
+          onChange={set("notes")}
+          aria-invalid={Boolean(err("notes")) || undefined}
+          aria-describedby={describe("notes")}
         />
+        <FieldError id="notes-error" msg={err("notes")} />
       </div>
 
-      {failed && (
-        <div
-          role="alert"
-          ref={errorRef}
-          tabIndex={-1}
-          className="mt-7 rounded-[16px] border border-ember/35 bg-ember/[0.06] p-5 outline-none"
-        >
-          {errorKind === "missing_fields" || errorKind === "invalid_email" ? (
-            <>
-              <p className="text-[0.92rem] font-semibold text-blue">
-                Please check the highlighted fields.
-              </p>
-              <p className="mt-2 text-[0.92rem] leading-relaxed text-ink">
-                Everything else you chose has been kept.
-              </p>
-            </>
-          ) : (
-            <>
-              <p className="text-[0.92rem] font-semibold text-blue">We could not send that just now.</p>
-              <p className="mt-2 text-[0.92rem] leading-relaxed text-ink">
-                Sorry about that. Please call us on{" "}
-                <a href={SITE.phoneHref} className="font-semibold text-ember underline underline-offset-4">{SITE.phone}</a>{" "}
-                or email{" "}
-                <a href={`mailto:${SITE.email}`} className="font-semibold text-ember underline underline-offset-4">{SITE.email}</a>{" "}
-                and we will pick it up straight away.
-              </p>
-            </>
-          )}
+      {shownErrorCount > 0 && (
+        <p role="alert" className="mt-7 rounded-[16px] border border-ember/35 bg-ember/[0.06] p-4 text-[0.9rem] text-blue">
+          <strong>
+            Please fix {shownErrorCount === 1 ? "the highlighted field" : `the ${shownErrorCount} highlighted fields`}.
+          </strong>{" "}
+          Everything else you entered has been kept.
+        </p>
+      )}
+
+      {status === "error" && (
+        <div role="alert" ref={errorRef} tabIndex={-1} className="mt-7 rounded-[16px] border border-ember/35 bg-ember/[0.06] p-5 outline-none">
+          <p className="text-[0.92rem] font-semibold text-blue">We could not send that just now.</p>
+          <p className="mt-2 text-[0.92rem] leading-relaxed text-ink">
+            Sorry about that. Please call us on{" "}
+            <a href={SITE.phoneHref} className="font-semibold text-ember underline underline-offset-4">{SITE.phone}</a>{" "}
+            or email{" "}
+            <a href={`mailto:${SITE.email}`} className="font-semibold text-ember underline underline-offset-4">{SITE.email}</a>{" "}
+            and we will pick it up straight away.
+          </p>
         </div>
       )}
 
       {/* ---------- 7. marketing opt-in, on its own ----------
-          Unticked, optional, and worded so that declining it is obviously
-          fine. It sits ABOVE the submit button rather than below it, because
-          a consent control a reader scrolls past after submitting is not a
-          consent control. */}
+          Unticked, optional, above the submit button. */}
       <label className="mt-6 flex cursor-pointer items-start gap-3">
-        <input
-          type="checkbox"
-          className="sr-only"
-          checked={marketingOptIn}
-          onChange={() => setMarketingOptIn((v) => !v)}
-        />
-        <span
-          aria-hidden="true"
-          className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-[6px] border-2 ${
-            marketingOptIn ? "border-blue bg-blue" : "border-blue/25"
-          }`}
-        >
-          {marketingOptIn && (
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-              <path d="M2.5 6.2 4.8 8.5 9.5 3.8" stroke="#F8C646" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          )}
-        </span>
+        <input type="checkbox" className="sr-only" checked={marketingOptIn} onChange={() => setMarketingOptIn((v) => !v)} />
+        <Tick on={marketingOptIn} />
         <span className="text-[0.86rem] leading-relaxed text-ink">
           Send me occasional updates about rebate changes and new offers.{" "}
           <span className="text-ink-soft">
@@ -628,9 +754,6 @@ export default function QuoteForm() {
         <span>{status === "sending" ? "Sending…" : "Request my free quote"}</span>
       </button>
 
-      {/* Privacy notice. Beside the form and before the data leaves the
-          browser, not buried in the footer: it tells the reader what we
-          collect it for and links to the policy that says the rest. */}
       <p className="mt-5 text-[0.8rem] leading-relaxed text-ink-soft">
         We use your name, contact details and address only to prepare and discuss your quote, to
         check your rebate eligibility and to lodge the paperwork. We do not sell your

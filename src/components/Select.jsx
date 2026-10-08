@@ -40,6 +40,7 @@ export default function Select({
   placeholder,
   required,
   invalid,
+  describedBy,
 }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(() => Math.max(0, options.indexOf(value)));
@@ -149,6 +150,7 @@ export default function Select({
         aria-controls={listId}
         aria-activedescendant={open ? `${id}-opt-${active}` : undefined}
         aria-invalid={invalid || undefined}
+        aria-describedby={describedBy}
         onClick={() => setOpen((v) => !v)}
         onKeyDown={onKeyDown}
         className={`flex w-full items-center justify-between gap-3 rounded-[14px] border bg-paper px-4 py-3.5 text-left text-[0.95rem] outline-none transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-ember/20 ${border} ${

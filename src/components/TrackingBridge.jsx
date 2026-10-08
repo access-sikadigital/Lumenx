@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { EVENTS, track } from "@/lib/track";
+import { captureAttribution } from "@/lib/attribution";
 
 /**
  * Catches the clicks that are scattered across dozens of components.
@@ -20,6 +21,11 @@ import { EVENTS, track } from "@/lib/track";
  * has to be recorded before the browser hands over to the dialler.
  */
 export default function TrackingBridge() {
+  // Keep the ad campaign that brought this visit in, for the quote form.
+  useEffect(() => {
+    captureAttribution();
+  }, []);
+
   useEffect(() => {
     const onClick = (e) => {
       const a = e.target?.closest?.("a[href]");
