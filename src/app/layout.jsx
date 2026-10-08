@@ -70,6 +70,9 @@ export const metadata = {
   // not set its own, which would tell Google those pages are copies of the
   // home page. The home page and each indexed page declare their own.
   icons: { icon: "/favicon.png", apple: "/favicon.png" },
+  // Google Search Console ownership. Backup to public/google46a453612aa98ad8.html;
+  // remove neither, or the property drops out of verification.
+  verification: { google: "7stq0K0C20vj7PyMcFhtNKDcUw1aqv8epsESbUmnGeI" },
   // Default share card. Pages that set their own openGraph.images override it;
   // everything else inherits this, so no Lumenx link is ever shared as a bare
   // grey box. JPEG rather than WebP: some social scrapers still do not read it.
