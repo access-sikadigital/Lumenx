@@ -73,9 +73,7 @@ const HOME_DESCRIPTION =
 export const metadata = {
   title: { absolute: HOME_TITLE },
   description: HOME_DESCRIPTION,
-  // No alternates.canonical: Next.js always strips the trailing slash from a
-  // root canonical, so it could never match the sitemap's "/" entry. The tag
-  // is rendered in HomePage below instead.
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     title: HOME_TITLE,
@@ -87,8 +85,6 @@ export const metadata = {
 export default function HomePage() {
   return (
     <>
-      {/* React hoists this into <head>. Trailing slash to match the sitemap. */}
-      <link rel="canonical" href={`${SITE.domain}/`} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Hero />
       <Marquee />
