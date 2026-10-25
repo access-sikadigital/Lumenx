@@ -31,6 +31,17 @@ const nextConfig = {
       // Pool heating is off the menu and is now a quote-form option. The page
       // itself still exists for anyone searching for it directly, so this is
       // not a redirect — it is just unlinked from the nav.
+
+      // Old WordPress/WooCommerce URLs. Order matters: the first match wins,
+      // so the specific product types sit above the /product-type catch-all.
+      // :path* also matches the bare path (e.g. /shop).
+      { source: "/product-type/solar-panels/:path*", destination: "/residential-solar", permanent: true },
+      { source: "/product-type/batteries/:path*", destination: "/solar-batteries", permanent: true },
+      { source: "/product-type/:path*", destination: "/residential-solar", permanent: true },
+      { source: "/product/:path*", destination: "/", permanent: true },
+      { source: "/shop/:path*", destination: "/", permanent: true },
+      { source: "/about-us", destination: "/about", permanent: true },
+      { source: "/contact-us", destination: "/contact", permanent: true },
     ];
   },
 
