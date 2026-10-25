@@ -1,4 +1,5 @@
 import { Inter_Tight, Noto_Sans_Arabic, Noto_Sans_SC, Roboto } from "next/font/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Header from "@/components/Header";
@@ -118,6 +119,8 @@ export default function RootLayout({ children }) {
       dir="ltr"
       className={`${interTight.variable} ${roboto.variable} ${notoSC.variable} ${notoArabic.variable}`}
     >
+      {/* GA4 and Clarity are configured inside this container, not in code. */}
+      <GoogleTagManager gtmId="GTM-WQJ67PJR" />
       <body>
         <SmoothScroll />
         <TrackingBridge />
