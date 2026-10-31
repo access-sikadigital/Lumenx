@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { validateQuote } from "@/lib/quote-validation";
 import { SERVICE_SLUGS, labelForSlug } from "@/lib/quote-services";
 import { SITE } from "@/lib/site";
+import { BILL_TYPES, MAX_BILL_BYTES, sniffMatches } from "@/lib/bill-file";
+import { billUploadConfigured, upsertContact, uploadBill } from "@/lib/ghl";
 
 /**
  * Quote request endpoint → GoHighLevel inbound webhook.
@@ -27,21 +29,31 @@ import { SITE } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
-/* The bill upload: the browser sends only the file's name and type, never the
-   file. A GHL inbound webhook cannot turn file data into a contact
-   attachment, and a multi-megabyte payload risks the whole lead being
-   rejected. The lead is flagged instead so the team knows to ask for it.
-   See docs/GHL.md, "Bill uploads". */
-const ALLOWED_UPLOAD = /^(image\/(jpeg|png|webp|heic|heif)|application\/pdf|text\/csv|application\/vnd\.openxmlformats-officedocument\.spreadsheetml\.sheet)$/;
-
 const str = (v, max = 300) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 const yesNo = (b) => (b ? "Yes" : "No");
 
-function attachmentInfo(a) {
-  if (!a || typeof a !== "object") return null;
-  const type = str(a.type, 120);
-  if (!ALLOWED_UPLOAD.test(type)) return null;
-  return { name: str(a.name, 160) || "bill", type };
+/* The bill upload. The form posts multipart: "payload" (the JSON) and "bill"
+   (the file, already shrunk and converted in the browser by lib/bill-file).
+   A webhook can only carry text, so the file goes to GHL through the API and
+   is saved on the contact; the webhook then carries a link to it.
+   See docs/GHL.md, "Bill uploads". */
+async function checkBill(file) {
+  if (!file || typeof file === "string" || !file.size) return null;
+  if (file.size > MAX_BILL_BYTES || !BILL_TYPES[file.type]) return { rejected: true };
+  const head = new Uint8Array(await file.slice(0, 1024).arrayBuffer());
+  if (!sniffMatches(head, file.type)) return { rejected: true };
+  return { file };
+}
+
+/** Accepts the form's multipart body, or plain JSON (no file) for tests and tools. */
+async function readBody(request) {
+  const type = request.headers.get("content-type") || "";
+  if (type.startsWith("multipart/form-data")) {
+    const form = await request.formData();
+    const body = JSON.parse(String(form.get("payload") || "{}"));
+    return { body, bill: await checkBill(form.get("bill")) };
+  }
+  return { body: await request.json(), bill: null };
 }
 
 /* Campaign attribution captured on the visitor's landing page (see
@@ -59,8 +71,9 @@ function cleanAttribution(a) {
 
 export async function POST(request) {
   let body;
+  let bill;
   try {
-    body = await request.json();
+    ({ body, bill } = await readBody(request));
   } catch {
     return NextResponse.json({ ok: false, error: "bad_request" }, { status: 400 });
   }
@@ -83,7 +96,6 @@ export async function POST(request) {
 
   const commercial = v.property === "commercial";
   const serviceLabels = v.services.map(labelForSlug);
-  const bill = attachmentInfo(body.attachment);
   const optIn = body.marketingOptIn === true;
   const now = new Date().toISOString();
 
@@ -98,6 +110,33 @@ export async function POST(request) {
     body.wantsFinance === true && "finance-interest",
     optIn && "marketing-opt-in",
   ].filter(Boolean);
+
+  /* Save the bill on the contact in GHL. Any failure here is logged and the
+     lead still goes through: a quote request is worth far more than its
+     attachment, and the team is told to ask for the file. */
+  let billStatus = "";
+  let billUrl = "";
+  let contactUrl = "";
+  if (bill?.rejected) {
+    billStatus = "File was not a valid PDF, photo or spreadsheet. Ask the customer to email it.";
+  } else if (bill?.file && !billUploadConfigured()) {
+    billStatus = "Not saved (bill storage is not set up). Ask the customer to email it.";
+  } else if (bill?.file) {
+    try {
+      const contactId = await upsertContact({
+        firstName: v.firstName,
+        lastName: v.lastName,
+        email: v.email,
+        phone: v.phone,
+      });
+      contactUrl = `https://app.gohighlevel.com/v2/location/${process.env.GHL_LOCATION_ID}/contacts/detail/${contactId}`;
+      billUrl = (await uploadBill(contactId, bill.file)) || "";
+      billStatus = "Saved to the contact in GHL (Bill File field).";
+    } catch (err) {
+      console.error("[quote] bill upload failed:", err.message);
+      billStatus = "Upload to GHL failed. Ask the customer to email it.";
+    }
+  }
 
   const ghl = {
     // ---- GHL standard contact fields ----
@@ -128,7 +167,12 @@ export async function POST(request) {
     existing_inverter: v.existingInverter,
     finance_interest: yesNo(body.wantsFinance === true),
     bill_uploaded: yesNo(Boolean(bill)),
-    bill_file_name: bill ? bill.name : "",
+    bill_file_name: bill?.file ? bill.file.name : "",
+    // Opens the file. Falls back to the contact page when GHL's response did
+    // not include a direct file link (the file is on the contact either way).
+    bill_file_url: billUrl || contactUrl,
+    bill_file_status: billStatus,
+    ghl_contact_url: contactUrl,
     notes: v.notes,
     /* Consent as its own field with the time it was given: under the Spam Act
        the sender has to be able to show consent existed. */

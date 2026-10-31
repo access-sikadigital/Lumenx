@@ -20,6 +20,7 @@ import {
   validateQuote,
 } from "@/lib/quote-validation";
 import { readAttribution } from "@/lib/attribution";
+import { BILL_ACCEPT, prepareBillFile } from "@/lib/bill-file";
 
 /**
  * Quote request form.
@@ -49,8 +50,6 @@ const STATE_LABELS = SERVICE_STATES.map((s) => s.label);
 const stateCode = (label) => SERVICE_STATES.find((s) => s.label === label)?.code ?? "";
 const stateLabel = (code) => SERVICE_STATES.find((s) => s.code === code)?.label ?? "";
 
-/* 6MB. Phone cameras produce 3 to 5MB photos of a bill. */
-const MAX_UPLOAD = 6 * 1024 * 1024;
 
 const fieldBase =
   "w-full rounded-[14px] border bg-paper px-4 py-3.5 text-[0.95rem] text-blue outline-none transition-colors duration-300 placeholder:text-ink-soft/70 focus:border-ember focus:ring-2 focus:ring-ember/20";
@@ -125,8 +124,10 @@ export default function QuoteForm() {
     existingInverter: "",
     notes: "",
   });
-  const [upload, setUpload] = useState(null); // { name, size, type }
+  // The bill, already converted and shrunk for GHL: { file, name, size }.
+  const [upload, setUpload] = useState(null);
   const [uploadError, setUploadError] = useState(null);
+  const [preparing, setPreparing] = useState(false);
 
   // ---- validation display ----
   const [touched, setTouched] = useState({});
@@ -223,20 +224,28 @@ export default function QuoteForm() {
     if (!p.error) setContact((c) => ({ ...c, phone: p.display }));
   }
 
-  function onFile(e) {
-    const file = e.target.files?.[0];
+  /* Converted and shrunk the moment it is picked (lib/bill-file), so the
+     visitor sees straight away whether it will go through, and submitting
+     does not wait on it. Photos become a readable JPEG of a few hundred KB. */
+  async function onFile(e) {
+    const input = e.target;
+    const picked = input.files?.[0];
     setUploadError(null);
-    if (!file) {
-      setUpload(null);
+    setUpload(null);
+    if (!picked) return;
+
+    setPreparing(true);
+    const { file, error } = await prepareBillFile(picked).catch(() => ({
+      error: "We could not read that file. You can email it to us instead.",
+    }));
+    setPreparing(false);
+
+    if (error) {
+      setUploadError(error);
+      input.value = "";
       return;
     }
-    if (file.size > MAX_UPLOAD) {
-      setUploadError("That file is over 6MB. Send a photo of the first page, or email it to us.");
-      setUpload(null);
-      e.target.value = "";
-      return;
-    }
-    setUpload({ name: file.name, size: file.size, type: file.type });
+    setUpload({ file, name: file.name, size: file.size });
   }
 
   function focusFirstError(errs) {
@@ -265,7 +274,6 @@ export default function QuoteForm() {
       chosenPackage,
       marketingOptIn,
       siteState: auState,
-      attachment: upload ? { name: upload.name, type: upload.type } : null,
       attribution: readAttribution(),
       company: e.currentTarget.elements.company?.value || "", // honeypot
     };
@@ -275,8 +283,14 @@ export default function QuoteForm() {
     try {
       const res = await fetch("/api/quote", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        // Multipart so the bill can travel with the form; the route reads
+        // "payload" as JSON and "bill" as the file.
+        body: (() => {
+          const fd = new FormData();
+          fd.append("payload", JSON.stringify(payload));
+          if (upload?.file) fd.append("bill", upload.file, upload.name);
+          return fd;
+        })(),
       });
       const data = await res.json().catch(() => ({}));
 
@@ -668,10 +682,11 @@ export default function QuoteForm() {
         <input
           id="billfile"
           type="file"
-          accept="image/*,.pdf,.csv,.xlsx"
+          accept={BILL_ACCEPT}
           onChange={onFile}
           className="block w-full cursor-pointer rounded-[14px] border border-dashed border-blue/20 bg-paper px-4 py-3.5 text-[0.9rem] text-ink file:mr-4 file:rounded-full file:border-0 file:bg-cloud file:px-4 file:py-2 file:text-[0.82rem] file:font-semibold file:text-blue hover:border-blue/35"
         />
+        {preparing && <p className="mt-2 text-[0.8rem] text-ink-soft">Preparing your file…</p>}
         {upload && (
           <p className="mt-2 text-[0.8rem] text-green-ink">
             Attached: {upload.name} ({Math.round(upload.size / 1024)}KB)
@@ -750,7 +765,7 @@ export default function QuoteForm() {
         </span>
       </label>
 
-      <button type="submit" disabled={status === "sending"} className="btn btn-primary mt-7 w-full disabled:opacity-70">
+      <button type="submit" disabled={status === "sending" || preparing} className="btn btn-primary mt-7 w-full disabled:opacity-70">
         <span>{status === "sending" ? "Sending…" : "Request my free quote"}</span>
       </button>
 
