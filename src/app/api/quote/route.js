@@ -131,7 +131,7 @@ export async function POST(request) {
       });
       contactUrl = `https://app.gohighlevel.com/v2/location/${process.env.GHL_LOCATION_ID}/contacts/detail/${contactId}`;
       billUrl = (await uploadBill(contactId, bill.file)) || "";
-      billStatus = "Saved to the contact in GHL (Bill File field).";
+      billStatus = "Saved to the contact in GHL (Bill Upload field).";
     } catch (err) {
       console.error("[quote] bill upload failed:", err.message);
       billStatus = "Upload to GHL failed. Ask the customer to email it.";

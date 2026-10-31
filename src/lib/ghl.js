@@ -5,13 +5,13 @@
  * Why this exists alongside the inbound webhook: a webhook can only carry
  * text. The bill is a file, so it goes in through the API: find or create the
  * contact (upsert, matched on email/phone exactly as the workflow's own
- * Create Contact step does), then upload the file to its "Bill File" field.
+ * Create Contact step does), then upload the file to its "Bill Upload" field.
  * The webhook that follows updates the same contact.
  *
  * Environment variables (see docs/GHL.md):
  *   GHL_API_TOKEN      Private Integration token for the Lumenx sub-account
  *   GHL_LOCATION_ID    the sub-account ID
- *   GHL_BILL_FIELD_ID  optional: the "Bill File" field's ID (found by name
+ *   GHL_BILL_FIELD_ID  optional: the "Bill Upload" field's ID (found by key
  *                      automatically when not set)
  * Without the first two, `billUploadConfigured()` is false and the lead is
  * still delivered, flagged so the team knows to ask for the bill.
@@ -25,9 +25,15 @@ export function billUploadConfigured() {
   return Boolean(process.env.GHL_API_TOKEN && process.env.GHL_LOCATION_ID);
 }
 
-/* The "Bill File" field's ID. GHL_BILL_FIELD_ID wins if set; otherwise it is
-   looked up once by the field's key (contact.bill_file, which GHL gives a
-   field named "Bill File") and remembered for the life of the server. */
+/* The "Bill Upload" field's ID. GHL_BILL_FIELD_ID wins if set; otherwise it is
+   looked up once by the field's key (contact.bill_upload) and remembered for
+   the life of the server.
+
+   THE FIELD MUST BE A *PUBLIC* FILE UPLOAD FIELD. Tested 31 October 2026:
+   /forms/upload-custom-files returns "500 Internal server error" for a
+   field created with "Private files", and only works with a public one.
+   GHL fixes that setting when the field is created, so a private field
+   cannot be repaired, only replaced. */
 let billFieldId = process.env.GHL_BILL_FIELD_ID || null;
 
 async function getBillFieldId() {
@@ -37,9 +43,9 @@ async function getBillFieldId() {
     headers: headers(),
   });
   const field = (data?.customFields || []).find(
-    (f) => f?.fieldKey === "contact.bill_file" || f?.name === "Bill File"
+    (f) => f?.fieldKey === "contact.bill_upload" || f?.name === "Bill Upload"
   );
-  if (!field?.id) throw new Error('GHL has no "Bill File" custom field');
+  if (!field?.id) throw new Error('GHL has no "Bill Upload" custom field');
   billFieldId = field.id;
   return billFieldId;
 }
@@ -110,7 +116,7 @@ function findUrl(value) {
 }
 
 /**
- * Upload the bill to the contact's "Bill File" field. Returns the file's GHL
+ * Upload the bill to the contact's "Bill Upload" field. Returns the file's GHL
  * link when GHL's response includes one (null if it does not; the file is
  * still on the contact either way).
  */
@@ -127,8 +133,18 @@ export async function uploadBill(contactId, file) {
     body: form,
   });
 
-  // GHL returns the updated contact. Read the URL out of this field's value.
-  const fields = data?.contact?.customFields || data?.customFields || [];
+  // GHL returns the updated contact; the field's value is
+  // { "<uuid>": { meta: {...}, url: "https://…/contacts/file/download?id=…" } }.
+  const fromReply = urlForField(data?.contact, fieldId);
+  if (fromReply) return fromReply;
+
+  // Not always in the reply, so read the contact back once.
+  const contact = await call(`/contacts/${contactId}`, { method: "GET", headers: headers() });
+  return urlForField(contact?.contact, fieldId);
+}
+
+function urlForField(contact, fieldId) {
+  const fields = contact?.customFields;
   const ours = Array.isArray(fields) ? fields.find((f) => f?.id === fieldId) : null;
-  return findUrl(ours?.value ?? ours) || null;
+  return ours ? findUrl(ours.value) : null;
 }
