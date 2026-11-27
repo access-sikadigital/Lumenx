@@ -1,12 +1,13 @@
 import SystemsHubPage from "@/components/SystemsHubPage";
 import { SYSTEMS_HUB, SYSTEM_SIZES } from "@/lib/systems";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 export const metadata = {
   title: SYSTEMS_HUB.seoTitle,
   description: SYSTEMS_HUB.seoDescription,
   alternates: { canonical: "/solar-systems" },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: SYSTEMS_HUB.seoTitle,
     description: SYSTEMS_HUB.seoDescription,

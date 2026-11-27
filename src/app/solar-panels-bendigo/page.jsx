@@ -1,6 +1,6 @@
 import LocationPage from "@/components/LocationPage";
 import { getLocation } from "@/lib/locations";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const SLUG = "solar-panels-bendigo";
 const l = getLocation(SLUG);
@@ -10,6 +10,7 @@ export const metadata = {
   description: l.seoDescription,
   alternates: { canonical: `/${SLUG}` },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: l.seoTitle,
     description: l.seoDescription,

@@ -1,12 +1,13 @@
 import ContactPage from "@/components/ContactPage";
 import { CONTACT } from "@/lib/contact";
-import { SITE, OFFICES } from "@/lib/site";
+import { SITE, OFFICES, OG_IMAGE } from "@/lib/site";
 
 export const metadata = {
   title: CONTACT.seoTitle,
   description: CONTACT.seoDescription,
   alternates: { canonical: "/contact" },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: CONTACT.seoTitle,
     description: CONTACT.seoDescription,

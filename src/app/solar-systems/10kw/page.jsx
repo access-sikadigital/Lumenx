@@ -1,6 +1,6 @@
 import SystemSizePage from "@/components/SystemSizePage";
 import { getSize } from "@/lib/systems";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const SLUG = "10kw";
 const s = getSize(SLUG);
@@ -10,6 +10,7 @@ export const metadata = {
   description: s.seoDescription,
   alternates: { canonical: `/solar-systems/${SLUG}` },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: s.seoTitle,
     description: s.seoDescription,

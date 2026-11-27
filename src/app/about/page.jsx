@@ -1,12 +1,13 @@
 import AboutPage from "@/components/AboutPage";
 import { ABOUT } from "@/lib/about";
-import { SITE, OFFICES } from "@/lib/site";
+import { SITE, OFFICES, OG_IMAGE } from "@/lib/site";
 
 export const metadata = {
   title: ABOUT.seoTitle,
   description: ABOUT.seoDescription,
   alternates: { canonical: "/about" },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: ABOUT.seoTitle,
     description: ABOUT.seoDescription,

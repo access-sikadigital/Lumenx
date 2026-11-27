@@ -1,6 +1,6 @@
 import BlogHubPage from "@/components/BlogHubPage";
 import { BLOG_HUB, GUIDE_CARDS, POSTS } from "@/lib/blog";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const SLUG = "blog";
 
@@ -9,6 +9,7 @@ export const metadata = {
   description: BLOG_HUB.seoDescription,
   alternates: { canonical: `/${SLUG}` },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: BLOG_HUB.seoTitle,
     description: BLOG_HUB.seoDescription,

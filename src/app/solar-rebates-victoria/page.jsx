@@ -1,6 +1,6 @@
 import RebatesPage from "@/components/RebatesPage";
 import { REBATES_PAGE } from "@/lib/rebates";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const SLUG = "solar-rebates-victoria";
 
@@ -9,6 +9,7 @@ export const metadata = {
   description: REBATES_PAGE.seoDescription,
   alternates: { canonical: `/${SLUG}` },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: REBATES_PAGE.seoTitle,
     description: REBATES_PAGE.seoDescription,

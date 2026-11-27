@@ -1,6 +1,6 @@
 import ProductsHubPage from "@/components/ProductsHubPage";
 import { PRODUCTS_HUB } from "@/lib/products";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const SLUG = "solar-products";
 
@@ -9,6 +9,7 @@ export const metadata = {
   description: PRODUCTS_HUB.seoDescription,
   alternates: { canonical: `/${SLUG}` },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: PRODUCTS_HUB.seoTitle,
     description: PRODUCTS_HUB.seoDescription,

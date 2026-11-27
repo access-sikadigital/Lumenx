@@ -1,7 +1,7 @@
 import CommercialPage from "@/components/CommercialPage";
 import CTA from "@/components/CTA";
 import { SERVICE_PAGES } from "@/lib/services";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const SLUG = "commercial-solar";
 const s = SERVICE_PAGES[SLUG];
@@ -11,6 +11,7 @@ export const metadata = {
   description: s.seoDescription,
   alternates: { canonical: `/${SLUG}` },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: s.seoTitle,
     description: s.seoDescription,

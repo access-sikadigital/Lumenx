@@ -1,6 +1,6 @@
 import RebateCheckPage from "@/components/RebateCheckPage";
 import { REBATE_CHECK } from "@/lib/calculators";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const SLUG = "solar-rebate-eligibility";
 
@@ -9,6 +9,7 @@ export const metadata = {
   description: REBATE_CHECK.seoDescription,
   alternates: { canonical: `/${SLUG}` },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: REBATE_CHECK.seoTitle,
     description: REBATE_CHECK.seoDescription,
