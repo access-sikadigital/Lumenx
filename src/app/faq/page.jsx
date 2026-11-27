@@ -1,6 +1,6 @@
 import FaqLibraryPage from "@/components/FaqLibraryPage";
 import { FAQ_PAGE, allFaqs } from "@/lib/faq-groups";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const SLUG = "faq";
 
@@ -9,6 +9,7 @@ export const metadata = {
   description: FAQ_PAGE.seoDescription,
   alternates: { canonical: `/${SLUG}` },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: FAQ_PAGE.seoTitle,
     description: FAQ_PAGE.seoDescription,

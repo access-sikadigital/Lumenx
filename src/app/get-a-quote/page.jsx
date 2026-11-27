@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import TrustBadges from "@/components/TrustBadges";
 import QuoteForm from "@/components/QuoteForm";
-import { SITE, TRUST, OFFICES, CTA_PROMISES } from "@/lib/site";
+import { SITE, TRUST, OFFICES, CTA_PROMISES, OG_IMAGE } from "@/lib/site";
 
 // The layout template appends " | Lumenx", so the brand is not repeated here.
 const TITLE = "Get a Free Solar, Battery & EV Charger Quote";
@@ -16,7 +16,7 @@ export const metadata = {
   // A conversion page has no business in search results competing with the
   // service hubs, and it should never be indexed with form state in the URL.
   robots: { index: false, follow: true },
-  openGraph: { type: "website", title: `${TITLE} | Lumenx`, description: DESCRIPTION, url: "/get-a-quote" },
+  openGraph: { images: [OG_IMAGE], type: "website", title: `${TITLE} | Lumenx`, description: DESCRIPTION, url: "/get-a-quote" },
 };
 
 const STEPS = [

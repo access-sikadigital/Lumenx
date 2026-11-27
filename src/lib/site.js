@@ -2,6 +2,15 @@
 // Brand name is ALWAYS written "Lumenx" (capital L, lowercase x).
 // Copy is original, written in the Lumenx voice: confident, warm, plain-spoken.
 
+// Default share card (1200x630 JPEG). Pages that set their own openGraph must
+// pass this in openGraph.images, or Next drops the layout's image for that page.
+export const OG_IMAGE = {
+  url: "/og-default.jpg",
+  width: 1200,
+  height: 630,
+  alt: "Solar panels on a rooftop at sunset, Lumenx",
+};
+
 export const SITE = {
   name: "Lumenx",
   legalName: "Lumenx",

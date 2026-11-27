@@ -1,6 +1,6 @@
 import ToolsHubPage from "@/components/ToolsHubPage";
 import { TOOLS_HUB, CALCULATORS, REBATE_CHECK } from "@/lib/calculators";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const SLUG = "tools";
 
@@ -9,6 +9,7 @@ export const metadata = {
   description: TOOLS_HUB.seoDescription,
   alternates: { canonical: `/${SLUG}` },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: TOOLS_HUB.seoTitle,
     description: TOOLS_HUB.seoDescription,

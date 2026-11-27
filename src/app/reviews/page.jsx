@@ -1,12 +1,13 @@
 import ReviewsPage from "@/components/ReviewsPage";
 import { REVIEWS_PAGE } from "@/lib/reviews";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 export const metadata = {
   title: REVIEWS_PAGE.seoTitle,
   description: REVIEWS_PAGE.seoDescription,
   alternates: { canonical: "/reviews" },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: REVIEWS_PAGE.seoTitle,
     description: REVIEWS_PAGE.seoDescription,

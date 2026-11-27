@@ -1,6 +1,6 @@
 import LegalPage from "@/components/LegalPage";
 import { PRIVACY } from "@/lib/legal";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const SLUG = "privacy-policy";
 
@@ -9,6 +9,7 @@ export const metadata = {
   description: PRIVACY.seoDescription,
   alternates: { canonical: `/${SLUG}` },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: PRIVACY.seoTitle,
     description: PRIVACY.seoDescription,

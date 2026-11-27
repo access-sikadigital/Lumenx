@@ -1,6 +1,6 @@
 import ServicePage from "@/components/ServicePage";
 import { SERVICE_PAGES, serviceUrl } from "@/lib/services";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const SLUG = "tesla-powerwall";
 const URL_PATH = "/solar-batteries/tesla-powerwall";
@@ -11,6 +11,7 @@ export const metadata = {
   description: s.seoDescription,
   alternates: { canonical: URL_PATH },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: s.seoTitle,
     description: s.seoDescription,

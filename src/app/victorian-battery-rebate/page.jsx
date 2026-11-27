@@ -1,6 +1,6 @@
 import GuidePage from "@/components/GuidePage";
 import { getGuide } from "@/lib/guides";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const SLUG = "victorian-battery-rebate";
 const g = getGuide(SLUG);
@@ -10,6 +10,7 @@ export const metadata = {
   description: g.seoDescription,
   alternates: { canonical: `/${SLUG}` },
   openGraph: {
+    images: [OG_IMAGE],
     type: "article",
     title: g.seoTitle,
     description: g.seoDescription,

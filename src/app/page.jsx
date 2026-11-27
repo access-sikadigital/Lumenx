@@ -9,7 +9,7 @@ import RebatesBand from "@/components/RebatesBand";
 import Reviews from "@/components/Reviews";
 import Faq from "@/components/Faq";
 import CTA from "@/components/CTA";
-import { SITE, OFFICES, SERVICES } from "@/lib/site";
+import { SITE, OFFICES, SERVICES, OG_IMAGE } from "@/lib/site";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -75,6 +75,7 @@ export const metadata = {
   description: HOME_DESCRIPTION,
   alternates: { canonical: "/" },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: HOME_TITLE,
     description: HOME_DESCRIPTION,

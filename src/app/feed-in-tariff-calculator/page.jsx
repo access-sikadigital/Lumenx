@@ -1,6 +1,6 @@
 import CalculatorPage from "@/components/CalculatorPage";
 import { getCalculator } from "@/lib/calculators";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 const SLUG = "feed-in-tariff-calculator";
 const c = getCalculator(SLUG);
@@ -10,6 +10,7 @@ export const metadata = {
   description: c.seoDescription,
   alternates: { canonical: `/${SLUG}` },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: c.seoTitle,
     description: c.seoDescription,

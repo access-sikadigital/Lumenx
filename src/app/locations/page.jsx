@@ -1,12 +1,13 @@
 import LocationsHubPage from "@/components/LocationsHubPage";
 import { LOCATIONS, LOCATIONS_HUB } from "@/lib/locations";
-import { SITE } from "@/lib/site";
+import { SITE, OG_IMAGE } from "@/lib/site";
 
 export const metadata = {
   title: LOCATIONS_HUB.seoTitle,
   description: LOCATIONS_HUB.seoDescription,
   alternates: { canonical: "/locations" },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     title: LOCATIONS_HUB.seoTitle,
     description: LOCATIONS_HUB.seoDescription,
